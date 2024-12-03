@@ -34,7 +34,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Notifications (
     NotifID INT AUTO_INCREMENT PRIMARY KEY,
-    CreatedBy INT,
+    CreatedBy INT NOT NULL,
     Text TEXT,
     Active BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
@@ -44,7 +44,7 @@ CREATE TABLE Notifications (
 
 CREATE TABLE Student (
     StuID INT AUTO_INCREMENT PRIMARY KEY,
-    Year INT,
+    Year INT NOT NULL,
     NumPreviousCoOps INT,
     PayTransparency BOOLEAN DEFAULT FALSE,
     Companies VARCHAR(100),
@@ -92,13 +92,13 @@ CREATE TABLE User_Type (
 
 CREATE TABLE SupportTickets (
     TikNum INT AUTO_INCREMENT PRIMARY KEY,
-    UserID INT,
+    UserID INT NOT NULL,
     StartedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     Category VARCHAR(100),
     RespondedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     Active BOOLEAN DEFAULT FALSE,
-    Text VARCHAR(500),
-    Urgency INT,
+    Text VARCHAR(500) NOT NULL,
+    Urgency INT NOT NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
@@ -106,7 +106,7 @@ CREATE TABLE Job_Postings (
     JobPostingID INT AUTO_INCREMENT PRIMARY KEY,
     Text TEXT,
     SalaryRange VARCHAR(30),
-    Title VARCHAR(30),
+    Title VARCHAR(30) NOT NULL,
     GPA_Range VARCHAR(30),
     Location VARCHAR(50),
     Deadline DATE,
@@ -129,7 +129,7 @@ CREATE TABLE Interactions (
 
 CREATE TABLE Contact (
     ContactID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(50),
+    Name VARCHAR(50) NOT NULL,
     Phone VARCHAR(20),
     Email VARCHAR(50),
     FOREIGN KEY (ContactID) REFERENCES Users(UserID)
@@ -137,7 +137,7 @@ CREATE TABLE Contact (
 
 CREATE TABLE Industry (
     IndustryID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(40),
+    Name VARCHAR(40) NOT NULL,
     NUCollege VARCHAR(50)
 );
 
