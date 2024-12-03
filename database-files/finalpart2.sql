@@ -23,10 +23,10 @@ CREATE TABLE Users (
     UserID INT AUTO_INCREMENT PRIMARY KEY,
     RegisteredAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     Occupation VARCHAR(100),
-    Location VARCHAR(40),
-    Name VARCHAR(40),
-    Age INT,
-    Bio VARCHAR(300),
+    Location VARCHAR(40) NOT NULL,
+    Name VARCHAR(40) NOT NULL,
+    Age INT NOT NULL,
+    Bio VARCHAR(300) NOT NULL,
     ReferredBy INT,
     Online BOOLEAN DEFAULT FALSE,
     Admin BOOLEAN DEFAULT FALSE
@@ -150,69 +150,80 @@ CREATE TABLE User_Industry (
 );
 
 
-INSERT INTO Users (RegisteredAt, Occupation, Location, Name, Age, Bio, Online, Admin)
-VALUES
-('2023-11-01', 'Student', 'New York', 'Gabe John', 22, 'CS Major', TRUE, FALSE),
-('2023-10-15', 'Faculty', 'Boston', 'Bobby Smith', 45, 'Professor of CS', FALSE, FALSE);
+-- FAKE DATA -- 
 
-INSERT INTO Student (Year, NumPreviousCoOps, PayTransparency, Companies, Skills)
-VALUES
-(3, 2, TRUE, 'Mckinsey, Khoury', 'Python, SQL'),
-(2, 1, FALSE, 'BCG', 'Excel, R');
-
-INSERT INTO Faculty (ClassesTaught, Skills)
-VALUES
-('Database Design, Machine Learning', 'SQL, Python'),
-('Software Engineering, Intro to DS', 'Java, JS');
-
-INSERT INTO Company (CompanyName, CompanyDescription)
-VALUES
-('Khoury', 'College of Comp Sci'),
-('BCG', 'Consulting Firm');
-
-INSERT INTO Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID)
-VALUES
-('Java, SQL', 3.5, 'Teamwork, Communication', TRUE, 1),
-('Python, Pandas', 3.2, 'Critical Thinking', FALSE, 2);
-
-INSERT INTO User_Type (UserID, StuID, FacID, EmpID)
-VALUES
-(1, 1, NULL, NULL),
-(2, NULL, 2, NULL);
-
-INSERT INTO SupportTickets (UserID, StartedAt, Category, Active, Text, Urgency)
-VALUES
-(1, '2023-11-18', 'New Feature Request', TRUE, 'Would love to be able to filter based on GPA', 1),
-(2, '2023-11-19', 'Bug Report', FALSE, 'Unable to upload resume.', 2);
-
-INSERT INTO Job_Postings (Text, SalaryRange, Title, GPA_Range, Location, Deadline, Experience_Level)
-VALUES
-('Software Developer Internship', '$30-$40/hour', 'Intern', '3.5+', 'New York', '2024-12-31', 'Entry'),
-('Data Analyst Position', '$60K-$70K', 'Analyst', '3.0+', 'Boston', '2025-01-15', 'Intermediate');
-
-INSERT INTO Interactions (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume)
-VALUES
-('Message', 2, 1, 'Question', 'How are you?', NULL, NULL),
-('Job Application', NULL, 2, 'Data Analyst', 'My Application', 1, 'jacobresume.pdf');
-
-INSERT INTO Notifications (CreatedBy, Text, Active)
-VALUES
-(1, 'System is down for fixing', TRUE),
-(2, 'The app is now launched!', FALSE);
-
-INSERT INTO Contact (Name, Phone, Email)
-VALUES
-('Jacob B', '123-456-7890', 'benesch.j@northeastern.edu'),
-('Eesha D', '987-654-3210', 'eeshad@gmail.com');
-
-INSERT INTO Industry (Name, NUCollege)
-VALUES
-('Technology', 'COE'),
-('Consulting', 'DAmore Mckim');
-
-INSERT INTO User_Industry (UserID, IndustryID)
-VALUES
-(1, 1),
-(2, 2);
-
-
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (1, 'Staff Scientist', 'China', 'ofaustin0@phpbb.com', 'trist0', 97, 'fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 21);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (2, 'Computer Systems Analyst IV', 'Angola', 'nniven1@google.ru', 'aashcroft1', 70, 'consequat varius integer ac leo pellentesque ultrices mattis odio donec', 22);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (3, 'Teacher', 'Portugal', 'cgiacobilio2@storify.com', 'egiacoppo2', 7, 'magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum', 35);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (4, 'Data Coordinator', 'Mexico', 'jashbrook3@umich.edu', 'rtenbrug3', 92, 'sit amet', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (5, 'Community Outreach Specialist', 'Ukraine', 'ainmett4@bing.com', 'kpriestland4', 54, 'ullamcorper augue a', 38);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (6, 'Systems Administrator I', 'Brazil', 'fsellack5@sphinn.com', 'gwoodfin5', 27, 'morbi', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (7, 'Office Assistant II', 'Finland', 'sadame6@issuu.com', 'maizkovitch6', 57, 'praesent blandit lacinia erat vestibulum sed magna at nunc', 13);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (8, 'VP Quality Control', 'China', 'styas7@diigo.com', 'mglewe7', 55, 'amet nulla quisque arcu libero rutrum ac lobortis vel dapibus', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (9, 'Electrical Engineer', 'Slovenia', 'mkillick8@newyorker.com', 'kmingaud8', 56, 'ut volutpat sapien arcu sed augue aliquam', 54);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (10, 'Environmental Specialist', 'Greece', 'hmycock9@google.com.br', 'bstrachan9', 97, 'felis ut at dolor quis odio consequat', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (11, 'Analog Circuit Design manager', 'Brazil', 'rsnodaya@sciencedirect.com', 'abarcrofta', 25, 'ut dolor', 29);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (12, 'Senior Sales Associate', 'Azerbaijan', 'cscarlanb@t.co', 'twitherbedb', 19, 'id consequat in consequat ut nulla sed accumsan felis', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (13, 'Speech Pathologist', 'Poland', 'sshubothamc@google.co.uk', 'cecobc', 30, 'etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem', 33);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (14, 'Payment Adjustment Coordinator', 'Micronesia', 'rreussd@mapy.cz', 'wiorid', 24, 'sociis natoque penatibus et magnis', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (15, 'Senior Quality Engineer', 'Indonesia', 'mstatherse@opera.com', 'dcuncliffee', 57, 'justo in blandit ultrices enim', 61);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (16, 'Physical Therapy Assistant', 'Philippines', 'mmayhof@psu.edu', 'dmcnuttf', 6, 'placerat ante nulla justo aliquam quis turpis eget elit', 22);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (17, 'Senior Sales Associate', 'Philippines', 'bwhitingtong@huffingtonpost.com', 'jmonteithg', 93, 'quis orci', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (18, 'Programmer Analyst III', 'Tanzania', 'myurkevichh@oaic.gov.au', 'lcheneryh', 83, 'vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (19, 'Senior Sales Associate', 'China', 'apittendreighi@usda.gov', 'kcooli', 14, 'in faucibus orci luctus', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (20, 'Senior Editor', 'Indonesia', 'lwinkettj@scientificamerican.com', 'aertelj', 17, 'eget nunc donec quis orci eget', 30);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (21, 'Biostatistician IV', 'Philippines', 'acutridgek@theglobeandmail.com', 'gkenank', 59, 'nec euismod scelerisque quam', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (22, 'Media Manager IV', 'Indonesia', 'tcoppensl@surveymonkey.com', 'lkitcattl', 54, 'volutpat dui maecenas tristique est et', 63);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (23, 'Structural Engineer', 'Armenia', 'myssonm@vistaprint.com', 'jbenkinm', 76, 'blandit ultrices enim', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (24, 'Dental Hygienist', 'China', 'yyeelln@sogou.com', 'qyesinovn', 83, 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (25, 'Web Designer IV', 'United States', 'kdominyo@miibeian.gov.cn', 'agullamo', 9, 'sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede', 68);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (26, 'Speech Pathologist', 'China', 'jnixp@weibo.com', 'lallikerp', 60, 'ac consequat metus sapien', 16);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (27, 'Internal Auditor', 'Portugal', 'mbensonq@php.net', 'imccrostieq', 30, 'aenean sit amet justo morbi ut odio cras mi', 85);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (28, 'Marketing Manager', 'Philippines', 'hpassmanr@slate.com', 'slitzmannr', 14, 'pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus', 70);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (29, 'Human Resources Manager', 'Egypt', 'mboyers@infoseek.co.jp', 'imenarys', 88, 'eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas', 29);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (30, 'Account Representative I', 'Colombia', 'hmarshlandt@google.nl', 'pchithamt', 94, 'nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel', 40);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (31, 'Data Coordinator', 'Thailand', 'plegionu@fastcompany.com', 'jlampetu', 57, 'pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie', 33);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (32, 'Business Systems Development Analyst', 'Indonesia', 'acrosbyv@jigsy.com', 'bcossarv', 60, 'in quis justo maecenas rhoncus aliquam lacus morbi quis tortor', 12);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (33, 'Teacher', 'Honduras', 'acopelandw@nsw.gov.au', 'awarretw', 70, 'in quis', 14);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (34, 'Recruiting Manager', 'China', 'rreinax@shop-pro.jp', 'gshielx', 93, 'aliquam erat volutpat in congue etiam justo etiam', 26);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (35, 'Geologist II', 'Indonesia', 'kpellery@blinklist.com', 'gbrainey', 76, 'sit amet lobortis sapien sapien non', 44);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (36, 'Senior Developer', 'Colombia', 'ylombardoz@gov.uk', 'lroadz', 99, 'at diam nam tristique tortor', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (37, 'Civil Engineer', 'Argentina', 'rwastell10@nature.com', 'jchettle10', 65, 'ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam', 81);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (38, 'VP Quality Control', 'Indonesia', 'ahassekl11@about.com', 'mjackes11', 40, 'adipiscing lorem vitae mattis', 98);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (39, 'Associate Professor', 'Philippines', 'pcostley12@livejournal.com', 'bbranthwaite12', 55, 'felis ut at dolor quis odio consequat varius integer ac leo pellentesque', 55);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (40, 'Software Test Engineer III', 'Indonesia', 'rjacomb13@virginia.edu', 'kmitchiner13', 63, 'eu orci', 38);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (41, 'Nuclear Power Engineer', 'Greece', 'ueingerfield14@google.co.uk', 'zmcart14', 4, 'suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque', 47);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (42, 'Dental Hygienist', 'Japan', 'cstilgoe15@squarespace.com', 'splose15', 51, 'dui maecenas tristique est et tempus', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (43, 'Account Coordinator', 'China', 'rswinney16@dion.ne.jp', 'fcamus16', 28, 'vel pede', 72);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (44, 'Cost Accountant', 'China', 'whobben17@yelp.com', 'bstockow17', 63, 'arcu sed augue aliquam erat volutpat', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (45, 'Technical Writer', 'China', 'mhellwig18@tripadvisor.com', 'vscalera18', 47, 'odio condimentum id luctus nec', 97);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (46, 'Social Worker', 'China', 'vkopfen19@sphinn.com', 'rbeeke19', 9, 'pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (47, 'Teacher', 'Ukraine', 'gstreak1a@webmd.com', 'fmcgrill1a', 31, 'ut erat curabitur gravida nisi at nibh in hac habitasse', 80);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (48, 'Occupational Therapist', 'Russia', 'lshillito1b@quantcast.com', 'mdrought1b', 95, 'praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum', 39);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (49, 'Accounting Assistant IV', 'China', 'bmclagan1c@illinois.edu', 'hwoolstenholmes1c', 69, 'diam in magna bibendum imperdiet', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (50, 'Safety Technician III', 'Israel', 'gbanasevich1d@wikipedia.org', 'mmacteggart1d', 45, 'sit amet lobortis sapien', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (51, 'Account Executive', 'China', 'nashmore1e@ycombinator.com', 'fshallcrass1e', 44, 'eget orci vehicula condimentum curabitur in libero ut massa volutpat', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (52, 'Physical Therapy Assistant', 'Cuba', 'abosward1f@artisteer.com', 'edibden1f', 5, 'volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo', 79);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (53, 'Research Associate', 'China', 'rbrody1g@spiegel.de', 'krossin1g', 68, 'vestibulum sagittis', 22);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (54, 'Senior Developer', 'Micronesia', 'jfalls1h@mapquest.com', 'hmuress1h', 80, 'viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (55, 'Social Worker', 'Argentina', 'abartomeu1i@whitehouse.gov', 'ecollomosse1i', 58, 'in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia', 21);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (56, 'Compensation Analyst', 'United States', 'oscipsey1j@g.co', 'lbougen1j', 93, 'elit sodales scelerisque mauris', 44);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (57, 'Quality Control Specialist', 'Iran', 'agosart1k@altervista.org', 'nmargrett1k', 4, 'sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque', 40);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (58, 'Administrative Assistant II', 'Philippines', 'ldayton1l@dmoz.org', 'lseignior1l', 48, 'morbi a ipsum integer a nibh in quis', 55);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (59, 'Senior Cost Accountant', 'Denmark', 'vwakely1m@netscape.com', 'caddison1m', 54, 'cras', 75);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (60, 'Physical Therapy Assistant', 'China', 'mbiddiss1n@exblog.jp', 'ggalpen1n', 17, 'neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (61, 'Software Consultant', 'China', 'ewetter1o@icq.com', 'kpettendrich1o', 60, 'vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris', 56);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (62, 'Staff Accountant IV', 'Panama', 'vbedding1p@hp.com', 'pfurmagier1p', 87, 'morbi', 1);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (63, 'Project Manager', 'Lithuania', 'atinner1q@rambler.ru', 'lblencowe1q', 92, 'sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit', 34);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (64, 'Mechanical Systems Engineer', 'China', 'wkrug1r@elegantthemes.com', 'lbasten1r', 95, 'dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (65, 'Web Designer III', 'Belarus', 'afrank1s@pinterest.com', 'mspuffard1s', 31, 'lorem quisque ut', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (66, 'Chemical Engineer', 'China', 'dneeson1t@umich.edu', 'eangelo1t', 47, 'sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (67, 'Desktop Support Technician', 'Mexico', 'jculshaw1u@economist.com', 'jbresland1u', 82, 'turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (68, 'Software Engineer IV', 'Chad', 'ibernakiewicz1v@privacy.gov.au', 'jgulland1v', 36, 'risus auctor sed tristique in tempus sit amet sem fusce', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (69, 'Senior Cost Accountant', 'Armenia', 'vshacklady1w@blogs.com', 'cmedcraft1w', 40, 'pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed', 18);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (70, 'Nurse', 'Russia', 'hpestricke1x@myspace.com', 'dclapston1x', 98, 'accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (71, 'Community Outreach Specialist', 'China', 'rredborn1y@arstechnica.com', 'glibby1y', 15, 'dapibus dolor', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (72, 'Information Systems Manager', 'Estonia', 'kingles1z@ebay.com', 'rmachoste1z', 4, 'magna at nunc commodo placerat', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (73, 'Account Coordinator', 'Indonesia', 'cevill20@businesswire.com', 'ealeshkov20', 18, 'parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (74, 'Senior Editor', 'Greece', 'hburgoin21@princeton.edu', 'acolson21', 17, 'purus phasellus', null);
+insert into Users  (UserID, Occupation, Location, email, Name, Age, Bio, ReferredBy) values (75, 'Media Manager II', 'Indonesia', 'wmoxom22@cam.ac.uk', 'gbenford22', 19, 'sit amet cursus id turpis integer aliquet massa', null);
