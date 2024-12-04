@@ -13,11 +13,11 @@ students = Blueprint('students', __name__)
 def get_students():
 
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT students.userID
-                   FROM students 
-                   JOIN faculty ON students.userID = faculty.userID
+    cursor.execute('''SELECT Student.StuID
+                   FROM Student 
+                   JOIN faculty ON Student.StuID = faculty.userID
                    JOIN employers ON faculty.userID = employers.userID
-                   WHERE students.skills = ‘Python’ 
+                   WHERE Student.Skills = ‘Python’ 
 
     ''') 
 
@@ -32,11 +32,11 @@ def get_students():
 def get_students():
 
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT  students.userID, employers.uderID
-                   FROM students
-                   JOIN faculty ON students.userID = faculty.userID
+    cursor.execute('''SELECT  Student.StuID, employer.userID
+                   FROM Student
+                   JOIN faculty ON Student.StuID = faculty.userID
                    JOIN employer ON faculty.userID = employer.userID
-                   WHERE students.PayTransparency = ‘Yes’ AND employer.payoffered = ‘Yes’ 
+                   WHERE Students.PayTransparency = ‘Yes’ AND employer.payoffered = ‘Yes’ 
 
 
     ''')  
@@ -46,3 +46,20 @@ def get_students():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200 
     return the_response 
+
+
+# Deleting a user 
+@students.route('/students', methods=['DELETE'])
+def get_students():
+    current_app.logger.info('DELETE /students route') 
+    cust_info = request.json
+    cust_userid = cust_info['StuID'] 
+
+    query = 'DELETE FROM Student WHERE StuID = %s'
+    data = (cust_userid) 
+    cursor = db.get_db().cursor() 
+    r = cursor.execute(query, data) 
+    db.get_db().commit() 
+    
+
+    return 'student deleted!'  
