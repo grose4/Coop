@@ -48,7 +48,7 @@ def get_students():
     return the_response 
 
 
-# Deleting a user 
+# Deleting a student 
 @students.route('/students', methods=['DELETE'])
 def get_students():
     current_app.logger.info('DELETE /students route') 
@@ -63,3 +63,19 @@ def get_students():
     
 
     return 'student deleted!'  
+
+#Updating a Student's Skills
+@students.route('/students', methods=['PUT'])
+def get_students():
+    current_app.logger.info('PUT /students route') 
+    cust_info = request.json
+    cust_skills = cust_info['Skills']
+    cust_userid = cust_info['StuID'] 
+
+    query = 'UPDATE students SET Skills = %s WHERE StuID = %s'
+    data = (cust_skills, cust_userid) 
+    cursor = db.get_db().cursor() 
+    r = cursor.execute(query, data) 
+    db.get_db().commit() 
+    
+    return 'student skills updated!'   
