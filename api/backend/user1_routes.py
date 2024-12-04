@@ -51,3 +51,18 @@ def delete_user():
     cursor.execute(query, (user_id,))
     db.get_db().commit()
     return 'User deleted successfully!'
+
+
+# ------------------------------------------------------------
+# SUPPORT-TICKETS ENDPOINTS
+# ------------------------------------------------------------
+
+# Get all support tickets
+@api.route('/support-tickets', methods=['GET'])
+def get_support_tickets():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, user_id, issue_description, status FROM support_tickets')
+    tickets = cursor.fetchall()
+    response = make_response(jsonify(tickets))
+    response.status_code = 200
+    return response
