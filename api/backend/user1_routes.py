@@ -72,3 +72,13 @@ def delete_support_ticket():
     cursor.execute(query, (ticket_id,))
     db.get_db().commit()
     return 'Support ticket deleted successfully!'
+
+# Get interaction data 
+@api.route('/interactions', methods=['GET'])
+def get_interactions():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM interactions')
+    interactions = cursor.fetchall()
+    response = make_response(jsonify(interactions))
+    response.status_code = 200
+    return response
