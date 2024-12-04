@@ -1,0 +1,74 @@
+########################################################
+# Sample customers blueprint of endpoints
+# Remove this file if you are not using it in your project
+########################################################
+from flask import Blueprint
+from flask import request
+from flask import jsonify
+from flask import make_response
+from flask import current_app
+from backend.db_connection import db
+from backend.ml_models.model01 import predict
+
+# Create a new Blueprint object
+api = Blueprint('api', __name__)
+
+# USERS ENDPOINTS
+
+# Get all users
+@api.route('/users', methods=['GET'])
+def get_users():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, username, email FROM users')
+    users = cursor.fetchall()
+    response = make_response(jsonify(users))
+    response.status_code = 200
+    return response
+
+# Update user info 
+@api.route('/users', methods=['PUT'])
+def update_user():
+    user_info = request.json
+    user_id = user_info['id']
+    username = user_info['username']
+    email = user_info['email']
+
+    query = 'UPDATE users SET username = %s, email = %s WHERE id = %s'
+    data = (username, email, user_id)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return 'user updated!'
+
+# Delete a user 
+@api.route('/users', methods=['DELETE'])
+def delete_user():
+    user_id = request.args.get('id')
+    query = 'DELETE FROM users WHERE id = %s'
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (user_id,))
+    db.get_db().commit()
+    return 'User deleted successfully!'
+
+
+# SUPPORT-TICKETS ENDPOINTS
+
+# Get all support tickets
+@api.route('/support-tickets', methods=['GET'])
+def get_support_tickets():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, user_id, issue_description, status FROM support_tickets')
+    tickets = cursor.fetchall()
+    response = make_response(jsonify(tickets))
+    response.status_code = 200
+    return response
+
+# Delete a support ticket 
+@api.route('/support-tickets', methods=['DELETE'])
+def delete_support_ticket():
+    ticket_id = request.args.get('id')
+    query = 'DELETE FROM support_tickets WHERE id = %s'
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (ticket_id,))
+    db.get_db().commit()
+    return 'Support ticket deleted successfully!'
