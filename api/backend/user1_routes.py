@@ -1,83 +1,100 @@
-########################################################
-# Sample customers blueprint of endpoints
-# Remove this file if you are not using it in your project
-########################################################
+
 from flask import Blueprint
 from flask import request
 from flask import jsonify
 from flask import make_response
-from flask import current_app
 from backend.db_connection import db
-from backend.ml_models.model01 import predict
 
-#------------------------------------------------------------
-# Create a new Blueprint object, which is a collection of 
-# routes.
-customers = Blueprint('customers', __name__)
+# Create a new Blueprint object
+api = Blueprint('api', __name__)
 
+# USERS ENDPOINTS
 
-#------------------------------------------------------------
-# Get all customers from the system
-@customers.route('/customers', methods=['GET'])
-def get_customers():
-
+# Get all users
+@api.route('/users', methods=['GET'])
+def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT id, company, last_name,
-                    first_name, job_title, business_phone FROM customers
-    ''')
-    
-    theData = cursor.fetchall()
-    
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
+    cursor.execute('SELECT id, username, email FROM users')
+    users = cursor.fetchall()
+    response = make_response(jsonify(users))
+    response.status_code = 200
+    return response
 
-#------------------------------------------------------------
-# Update customer info for customer with particular userID
-#   Notice the manner of constructing the query.
-@customers.route('/customers', methods=['PUT'])
-def update_customer():
-    current_app.logger.info('PUT /customers route')
-    cust_info = request.json
-    cust_id = cust_info['id']
-    first = cust_info['first_name']
-    last = cust_info['last_name']
-    company = cust_info['company']
+# Update user info 
+@api.route('/users', methods=['PUT'])
+def update_user():
+    user_info = request.json
+    user_id = user_info['id']
+    username = user_info['username']
+    email = user_info['email']
 
-    query = 'UPDATE customers SET first_name = %s, last_name = %s, company = %s where id = %s'
-    data = (first, last, company, cust_id)
+    query = 'UPDATE users SET username = %s, email = %s WHERE id = %s'
+    data = (username, email, user_id)
     cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
+    cursor.execute(query, data)
     db.get_db().commit()
-    return 'customer updated!'
+    return 'user updated!'
 
-#------------------------------------------------------------
-# Get customer detail for customer with particular userID
-#   Notice the manner of constructing the query. 
-@customers.route('/customers/<userID>', methods=['GET'])
-def get_customer(userID):
-    current_app.logger.info('GET /customers/<userID> route')
+# Delete a user 
+@api.route('/users', methods=['DELETE'])
+def delete_user():
+    user_id = request.args.get('id')
+    query = 'DELETE FROM users WHERE id = %s'
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, first_name, last_name FROM customers WHERE id = {0}'.format(userID))
+    cursor.execute(query, (user_id,))
+    db.get_db().commit()
+    return 'User deleted successfully!'
+
+
+# SUPPORT-TICKETS ENDPOINTS
+
+# Get all support tickets
+@api.route('/support-tickets', methods=['GET'])
+def get_support_tickets():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, user_id, issue_description, status FROM support_tickets')
+    tickets = cursor.fetchall()
+    response = make_response(jsonify(tickets))
+    response.status_code = 200
+    return response
+
+# Delete a support ticket 
+@api.route('/support-tickets', methods=['DELETE'])
+def delete_support_ticket():
+    ticket_id = request.args.get('id')
+    query = 'DELETE FROM support_tickets WHERE id = %s'
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (ticket_id,))
+    db.get_db().commit()
+    return 'Support ticket deleted successfully!'
+
+# Get interaction data 
+@api.route('/interactions', methods=['GET'])
+def get_interactions():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM interactions')
+    interactions = cursor.fetchall()
+    response = make_response(jsonify(interactions))
+    response.status_code = 200
+    return response
+
+@api.route('/notifications', methods=['POST'])
+def send_notification():
+    notification_data = request.json
     
-    theData = cursor.fetchall()
-    
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
+    user_id = notification_data['user_id']
+    title = notification_data['title']
+    message = notification_data['message']
 
-#------------------------------------------------------------
-# Makes use of the very simple ML model in to predict a value
-# and returns it to the user
-@customers.route('/prediction/<var01>/<var02>', methods=['GET'])
-def predict_value(var01, var02):
-    current_app.logger.info(f'var01 = {var01}')
-    current_app.logger.info(f'var02 = {var02}')
 
-    returnVal = predict(var01, var02)
-    return_dict = {'result': returnVal}
+    query = '''
+        INSERT INTO notifications (user_id, title, message, created_at)
+        VALUES (%s, %s, %s, NOW())
+    '''
+    data = (user_id, title, message)
 
-    the_response = make_response(jsonify(return_dict))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+
+    return 'Notification Sent'
