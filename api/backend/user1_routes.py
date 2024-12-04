@@ -82,3 +82,24 @@ def get_interactions():
     response = make_response(jsonify(interactions))
     response.status_code = 200
     return response
+
+@api.route('/notifications', methods=['POST'])
+def send_notification():
+    notification_data = request.json
+    
+    user_id = notification_data['user_id']
+    title = notification_data['title']
+    message = notification_data['message']
+
+
+    query = '''
+        INSERT INTO notifications (user_id, title, message, created_at)
+        VALUES (%s, %s, %s, NOW())
+    '''
+    data = (user_id, title, message)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+
+    return 'Notification Sent'
