@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 
 # Set up the base URL for your API
-API_URL = "http://your_api_base_url_here"
+API_URL = "http://web-api:4000/p"
 
 def fetch_users():
     """
