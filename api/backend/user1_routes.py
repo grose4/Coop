@@ -86,7 +86,6 @@ def send_notification():
     title = notification_data['title']
     message = notification_data['message']
 
-
     query = '''
         INSERT INTO notifications (user_id, title, message, created_at)
         VALUES (%s, %s, %s, NOW())

@@ -34,7 +34,7 @@ SideBarLinks(show_home=True)
 
 # set the title of the page and provide a simple prompt. 
 logger.info("Loading the Home page of the app")
-st.title('Welcome to COOP!')
+st.title('Coop - A new kind of networking')
 st.write('\n\n')
 st.write('### HI! As which user would you like to log in?')
 
