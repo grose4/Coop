@@ -73,7 +73,7 @@ if st.button('Act as an employer',
     st.session_state['first_name'] = 'Employer'
     st.switch_page('pages/20_Admin_Home.py')
 
-if st.button('Act as System Administrator', 
+if st.button('Act as Jacob, a Systems Adminstrator', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
