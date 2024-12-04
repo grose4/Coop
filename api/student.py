@@ -79,3 +79,20 @@ def get_students():
     db.get_db().commit() 
     
     return 'student skills updated!'   
+
+#Updating a Student's Skills
+@students.route('/students', methods=['POST'])
+def get_students():
+    current_app.logger.info('POST /students route') 
+    cust_info = request.json
+    cust_YEAR = cust_info['Year']
+    cust_Coops = cust_info['NumPreviousCoOps'] 
+
+    query = '''INSERT into students 
+               VALUES (%s, %s, %s, %s, %s, %s)''' 
+    data = (cust_YEAR, cust_Coops) 
+    cursor = db.get_db().cursor() 
+    r = cursor.execute(query, data) 
+    db.get_db().commit() 
+    
+    return 'student skills updated!'   
