@@ -26,3 +26,28 @@ def get_users():
     response = make_response(jsonify(users))
     response.status_code = 200
     return response
+
+# Update user info 
+@api.route('/users', methods=['PUT'])
+def update_user():
+    user_info = request.json
+    user_id = user_info['id']
+    username = user_info['username']
+    email = user_info['email']
+
+    query = 'UPDATE users SET username = %s, email = %s WHERE id = %s'
+    data = (username, email, user_id)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return 'user updated!'
+
+# Delete a user 
+@api.route('/users', methods=['DELETE'])
+def delete_user():
+    user_id = request.args.get('id')
+    query = 'DELETE FROM users WHERE id = %s'
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (user_id,))
+    db.get_db().commit()
+    return 'User deleted successfully!'
