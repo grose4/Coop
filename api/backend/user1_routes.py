@@ -1,14 +1,9 @@
-########################################################
-# Sample customers blueprint of endpoints
-# Remove this file if you are not using it in your project
-########################################################
+
 from flask import Blueprint
 from flask import request
 from flask import jsonify
 from flask import make_response
-from flask import current_app
 from backend.db_connection import db
-from backend.ml_models.model01 import predict
 
 # Create a new Blueprint object
 api = Blueprint('api', __name__)
@@ -72,3 +67,34 @@ def delete_support_ticket():
     cursor.execute(query, (ticket_id,))
     db.get_db().commit()
     return 'Support ticket deleted successfully!'
+
+# Get interaction data 
+@api.route('/interactions', methods=['GET'])
+def get_interactions():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM interactions')
+    interactions = cursor.fetchall()
+    response = make_response(jsonify(interactions))
+    response.status_code = 200
+    return response
+
+@api.route('/notifications', methods=['POST'])
+def send_notification():
+    notification_data = request.json
+    
+    user_id = notification_data['user_id']
+    title = notification_data['title']
+    message = notification_data['message']
+
+
+    query = '''
+        INSERT INTO notifications (user_id, title, message, created_at)
+        VALUES (%s, %s, %s, NOW())
+    '''
+    data = (user_id, title, message)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+
+    return 'Notification Sent'
