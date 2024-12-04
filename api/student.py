@@ -15,8 +15,8 @@ def get_students():
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT Student.StuID
                    FROM Student 
-                   JOIN faculty ON Student.StuID = faculty.userID
-                   JOIN employers ON faculty.userID = employers.userID
+                   JOIN Faculty ON Student.StuID = Faculty.userID
+                   JOIN Employer ON Faculty.userID = Employer.userID
                    WHERE Student.Skills = ‘Python’ 
 
     ''') 
@@ -32,11 +32,11 @@ def get_students():
 def get_students():
 
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT  Student.StuID, employer.userID
+    cursor.execute('''SELECT  Student.StuID, Employer.userID
                    FROM Student
-                   JOIN faculty ON Student.StuID = faculty.userID
-                   JOIN employer ON faculty.userID = employer.userID
-                   WHERE Students.PayTransparency = ‘Yes’ AND employer.payoffered = ‘Yes’ 
+                   JOIN Faculty ON Student.StuID = Faculty.userID
+                   JOIN employer ON Faculty.userID = Employer.userID
+                   WHERE Student.PayTransparency = ‘Yes’ AND Employer.payoffered = ‘Yes’ 
 
 
     ''')  
@@ -72,7 +72,7 @@ def get_students():
     cust_skills = cust_info['Skills']
     cust_userid = cust_info['StuID'] 
 
-    query = 'UPDATE students SET Skills = %s WHERE StuID = %s'
+    query = 'UPDATE Student SET Skills = %s WHERE StuID = %s'
     data = (cust_skills, cust_userid) 
     cursor = db.get_db().cursor() 
     r = cursor.execute(query, data) 
@@ -87,10 +87,14 @@ def get_students():
     cust_info = request.json
     cust_YEAR = cust_info['Year']
     cust_Coops = cust_info['NumPreviousCoOps'] 
+    cust_Pay = cust_info['PayTransparency'] 
+    cust_companies = cust_info['Companies']
+    cust_skills = cust_info['Skills']
+    cust_id = cust_info['StuID'] 
 
-    query = '''INSERT into students 
+    query = '''INSERT into Student 
                VALUES (%s, %s, %s, %s, %s, %s)''' 
-    data = (cust_YEAR, cust_Coops) 
+    data = (cust_YEAR, cust_Coops, cust_Pay, cust_companies, cust_skills, cust_id) 
     cursor = db.get_db().cursor() 
     r = cursor.execute(query, data) 
     db.get_db().commit() 
