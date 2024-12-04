@@ -13,9 +13,7 @@ from backend.ml_models.model01 import predict
 # Create a new Blueprint object
 api = Blueprint('api', __name__)
 
-# ------------------------------------------------------------
 # USERS ENDPOINTS
-# ------------------------------------------------------------
 
 # Get all users
 @api.route('/users', methods=['GET'])
@@ -53,9 +51,7 @@ def delete_user():
     return 'User deleted successfully!'
 
 
-# ------------------------------------------------------------
 # SUPPORT-TICKETS ENDPOINTS
-# ------------------------------------------------------------
 
 # Get all support tickets
 @api.route('/support-tickets', methods=['GET'])
@@ -66,3 +62,13 @@ def get_support_tickets():
     response = make_response(jsonify(tickets))
     response.status_code = 200
     return response
+
+# Delete a support ticket 
+@api.route('/support-tickets', methods=['DELETE'])
+def delete_support_ticket():
+    ticket_id = request.args.get('id')
+    query = 'DELETE FROM support_tickets WHERE id = %s'
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (ticket_id,))
+    db.get_db().commit()
+    return 'Support ticket deleted successfully!'
