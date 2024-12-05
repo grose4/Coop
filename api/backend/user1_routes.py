@@ -86,20 +86,27 @@ def get_interactions():
 
 @api.route('/notifications', methods=['POST'])
 def send_notification():
-    notification_data = request.json
-    
-    user_id = notification_data['user_id']
-    title = notification_data['title']
-    message = notification_data['message']
+    try:
+        notification_data = request.json
+        user_id = notification_data.get('user_id')  
+        message = notification_data.get('message')
 
-    query = '''
-        INSERT INTO notifications (user_id, title, message, created_at)
-        VALUES (%s, %s, %s, NOW())
-    '''
-    data = (user_id, title, message)
+        if not message:
+            return {"error": "Notification message is required."}, 400
 
-    cursor = db.get_db().cursor()
-    cursor.execute(query, data)
-    db.get_db().commit()
+        query = '''
+            INSERT INTO Notifications (CreatedBy, Text, Active)
+            VALUES (%s, %s, TRUE)
+        '''
+        data = (user_id, message)
 
-    return 'Notification Sent'
+        # Execute query
+        cursor = db.get_db().cursor()
+        cursor.execute(query, data)
+        db.get_db().commit()
+
+        return {"message": "Notification sent successfully!"}, 200
+    except Exception as e:
+        current_app.logger.error(f"Error sending notification: {e}")
+        return {"error": str(e)}, 500
+
