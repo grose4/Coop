@@ -11,6 +11,9 @@ SideBarLinks()
 
 st.title('System Admin Home Page')
 
+with st.container():
+    col1, col2 = st.columns(2)
+
 if st.button('View Full User Data', 
              type='primary',
              use_container_width=True):
@@ -30,3 +33,8 @@ if st.button('Support Tickets Dashboard',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/24_Support_Tickets.py')
+
+if st.button('Delete Support Ticket', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/25_Delete_Tickets.py')
