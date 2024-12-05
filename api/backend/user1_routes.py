@@ -78,7 +78,7 @@ def delete_support_ticket(TikNum):
 @api.route('/interactions', methods=['GET'])
 def get_interactions():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM Interactions')
+    cursor.execute('SELECT * FROM Interactions')
     interactions = cursor.fetchall()
     response = make_response(jsonify(interactions))
     response.status_code = 200

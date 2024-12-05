@@ -38,3 +38,8 @@ if st.button('Delete Support Ticket',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/25_Delete_Tickets.py')
+
+if st.button('View Interaction Data', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/26_View_Interactions.py')
