@@ -20,3 +20,8 @@ if st.button('Update User Data',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/22_Update_User.py')
+
+if st.button('Delete a User', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/23_Delete_User.py')
