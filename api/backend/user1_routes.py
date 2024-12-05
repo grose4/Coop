@@ -26,21 +26,22 @@ def get_users():
 
 
 @api.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id, field, value):
+def update_user(user_id):
+    user_info = request.json
+    field = user_info.get('field')
+    value = user_info.get('value')
+
+
+    query = f"UPDATE Users SET {field} = %s WHERE UserID = %s"
+    data = (value, user_id)
+
     try:
-        # Treat empty strings as NULL
-        payload = {"field": field, "value": None if value == "" else value}
-        
-        # Send the PUT request
-        response = requests.put(f"{BASE_API_URL}/users/{user_id}", json=payload)
-        response.raise_for_status()  # Raise an error if the status is not 200
-        return True
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error updating user: {e}")
-        return False
-
-
-
+        cursor = db.get_db().cursor()
+        cursor.execute(query, data)
+        db.get_db().commit()
+        return {"message": "User updated successfully"}, 200
+    except Exception as e:
+        return {"error": str(e)}, 500
 
 
 # Delete a user 
@@ -57,7 +58,7 @@ def delete_user():
 # SUPPORT-TICKETS ENDPOINTS
 
 # Get all support tickets
-@api.route('/support-tickets', methods=['GET'])
+@api.route('/SupportTickets', methods=['GET'])
 def get_support_tickets():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT id, user_id, issue_description, status FROM SupportTickets')
@@ -67,7 +68,7 @@ def get_support_tickets():
     return response
 
 # Delete a support ticket 
-@api.route('/support-tickets', methods=['DELETE'])
+@api.route('/SupportTickets/<int:ticket_id>', methods=['DELETE'])
 def delete_support_ticket():
     ticket_id = request.args.get('id')
     query = 'DELETE FROM SupportTickets WHERE id = %s'

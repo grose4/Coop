@@ -60,6 +60,9 @@ def AdminPageNav():
     st.sidebar.page_link(
         "pages/23_Delete_User.py", label = "Delete User View", icon="🛜"
     )
+    st.sidebar.page_link(
+        "pages/24_Support_Tickets.py", label = "Support Tickets Dashboard", icon="🛜"
+    )
 
 
 # --------------------------------Links Function -----------------------------------------------

@@ -25,3 +25,8 @@ if st.button('Delete a User',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/23_Delete_User.py')
+
+if st.button('Support Tickets Dashboard', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/24_Support_Tickets.py')
