@@ -14,7 +14,7 @@ api = Blueprint('api', __name__)
 @api.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, username, Email FROM Users')
+    cursor.execute('SELECT UserID, Name, Bio FROM Users')
     users = cursor.fetchall()
     response = make_response(jsonify(users))
     response.status_code = 200
