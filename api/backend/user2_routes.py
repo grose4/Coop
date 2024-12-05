@@ -7,10 +7,10 @@ from backend.db_connection import db
 from backend.ml_models.model01 import predict
 
 # create blueprint object
-users = Blueprint('customers', __name__)
+api2 = Blueprint('api2', __name__)
 
 # Get users from specific industries:
-@api.route('/users/<industry>', methods=['GET'])
+@api2.route('/users/<industry>', methods=['GET'])
 def get_users_by_industry(industry):
     
     query = f'''
@@ -32,7 +32,7 @@ def get_users_by_industry(industry):
     return the_response
 
 # update user info
-@api.route('/users/<userID>', methods=['PUT'])
+@api2.route('/users/<userID>', methods=['PUT'])
 def update_user(userID):
     # log and make cursor
     current_app.logger.info('PUT /users/<userID> route')
@@ -54,7 +54,7 @@ def update_user(userID):
     return 'customer updated!'
 
 # search users by their skills
-@users.route('/users/by-skills', methods=['GET'])
+@api2.route('/users/by-skills', methods=['GET'])
 def get_users_by_skills():
     
     soft_skills = request.args.get('soft_skills')
@@ -80,7 +80,7 @@ def get_users_by_skills():
     return the_response
 
 # create a new user
-@users.route('/users', methods=['POST'])
+@api2.route('/users', methods=['POST'])
 def add_new_user():
     
     the_data = request.json
@@ -112,7 +112,7 @@ def add_new_user():
 
 
 # create a notification
-@notifications.route('/notifications', methods=['POST'])
+@api2.route('/notifications', methods=['POST'])
 def create_notification():
     
     the_data = request.json
@@ -138,7 +138,7 @@ def create_notification():
     return response
 
 # delete a user
-@users.route('/users/<userID>', methods = ['DELETE'])
+@api2.route('/users/<userID>', methods = ['DELETE'])
 def delete_user(userID):
 
     # log the deletion
@@ -156,3 +156,25 @@ def delete_user(userID):
     response.status_code = 200
     
     return response
+
+
+@api2.route('/users/view/<int:UserID>', methods=['GET'])
+def get_users_by_industry(UserID):
+    
+    query = f'''
+    SELECT u.UserID, u.Name, u.Bio, u.Location, u.Occupation, u.Location, i.Name AS Industry, i.NUCollege
+    FROM Users u
+	JOIN User_Industry ui ON u.UserID = ui.UserID
+	JOIN Industry i ON i.IndustryID = ui.IndustryID
+    WHERE u.UserID = {UserID}
+    '''
+
+    current_app.logger.info('GET /users/view/<int:UserID> route')
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
