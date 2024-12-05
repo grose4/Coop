@@ -1,51 +1,44 @@
 import streamlit as st
 import pandas as pd
 import requests
-from modules.nav import SideBarLinks  # Assuming this is your navigation module
+from modules.nav import SideBarLinks
 
-# Set up Sidebar Links
 SideBarLinks()
 
-# Base API URL
-BASE_API_URL = "http://api:4000/a"
-
-def main():
-    st.title("Support Tickets")
-    st.subheader("View All Support Tickets")
-
-    # Fetch Support Tickets from API
-    tickets = fetch_support_tickets()
-
-    if tickets is not None:
-        # Convert tickets to DataFrame
-        df = pd.DataFrame(tickets)
-        
-        # Map column names for better readability
-        column_mapping = {
-            "TikNum": "Ticket Number",
-            "UserID": "User ID",
-            "StartedAt": "Started At",
-            "Category": "Category",
-            "RespondedAt": "Responded At",
-            "Active": "Active",
-            "Text": "Description",
-            "Urgency": "Urgency Level"
-        }
-        df.rename(columns=column_mapping, inplace=True)
-        
-        # Display DataFrame as a Streamlit Table
-        st.dataframe(df, use_container_width=True)
-    else:
-        st.error("Failed to load support tickets. Please try again later.")
+# Define the base URL for your Flask API
+API_URL = "http://api:4000/a/SupportTickets"
 
 def fetch_support_tickets():
+    """
+    Fetch support tickets from the Flask API.
+    Returns a Pandas DataFrame if successful, otherwise None.
+    """
     try:
-        response = requests.get(f"{BASE_API_URL}/SupportTickets")
-        response.raise_for_status()
-        return response.json()
+        response = requests.get(API_URL)
+        response.raise_for_status() 
+        tickets = response.json() 
+        ticket_data = pd.DataFrame(tickets, columns=["TikNum", "UserID", "StartedAt", "Category", "RespondedAt", "Active", "Text", "Urgency"])
+        return ticket_data
     except requests.exceptions.RequestException as e:
-        st.error(f"Error fetching support tickets: {e}")
+        st.error(f"Failed to fetch data from the API: {e}")
         return None
+
+def main():
+    """
+    Main function to render the Streamlit app.
+    """
+    st.title("Support Tickets Dashboard")
+    st.header("Support Tickets Table")
+    st.write("Below is the list of all support tickets.")
+
+    # Fetch support ticket data from the API
+    ticket_data = fetch_support_tickets()
+
+    if ticket_data is not None and not ticket_data.empty:
+        st.success("Successfully fetched data from the API.")
+        st.dataframe(ticket_data)
+    else:
+        st.warning("No support ticket data available.")
 
 if __name__ == "__main__":
     main()

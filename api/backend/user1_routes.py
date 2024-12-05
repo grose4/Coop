@@ -57,15 +57,14 @@ def delete_user():
 
 # SUPPORT-TICKETS ENDPOINTS
 
-# Get all support tickets
 @api.route('/SupportTickets', methods=['GET'])
 def get_support_tickets():
-    cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, user_id, issue_description, status FROM SupportTickets')
-    tickets = cursor.fetchall()
-    response = make_response(jsonify(tickets))
-    response.status_code = 200
-    return response
+        cursor = db.get_db().cursor()
+        cursor.execute('SELECT TikNum, UserID, StartedAt, Category, RespondedAt, Active, Text, Urgency FROM SupportTickets')
+        tickets = cursor.fetchall()
+        return jsonify(tickets), 200
+
+
 
 # Delete a support ticket 
 @api.route('/SupportTickets/<int:ticket_id>', methods=['DELETE'])
