@@ -3,6 +3,7 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
+import requests
 
 st.set_page_config(layout = 'wide')
 
@@ -18,7 +19,7 @@ st.write('\n\n')
 # populated when form is displayed. 
 try:
     # Access /p/categories with a GET request
-    categories_response = requests.get('http://api:4000/p/categories')
+    categories_response = requests.get('http://localhost:4000/users')
     
     # 200 means the request was successful
     if categories_response.status_code == 200:
@@ -53,37 +54,21 @@ with st.form("add_product_form"):
     # Validate all fields are filled when form is submitted
     if submit_button:
         if not industry:
-            st.error("Please enter an industry")
+            # search by skills instead
             if not soft_skills:
                 st.error("Please enter a soft skill")
             if not product_price:
                 st.error("Please enter a technical skil")
-        elif not product_category:
-            st.error("Please select a product category")
+        #if not product_category:
+            #st.error("Please select a product category")
         else:
-            # We only get into this else clause if all the input fields have something 
-            # in them. 
-            #
-            # Package the data up that the user entered into 
-            # a dictionary (which is just like JSON in this case)
-            search_data = {
-                "industry": industry,
-                "soft_skills": soft_skills,
-                "tech_skills": tech_skills,
-                "product_category": product_category
-            }
-            
-            # printing out the data - will show up in the Docker Desktop logs tab
-            # for the web-app container 
-            logger.info(f"Product form submitted with data: {search_data}")
-            
-            # Now, we try to make a POST request to the proper end point
+            logger.info(f"search form submitted with data: {industry}")
             try:
                 # using the requests library to POST to /p/product.  Passing
                 # product_data to the endpoint through the json parameter.
                 # This particular end point is located in the products_routes.py
                 # file found in api/backend/products folder. 
-                response = requests.post('http://api:4000/p/user', json=product_data)
+                response = requests.get(f'http://localhost:4000/users/{industry}', json=product_data)
                 if response.status_code == 200:
                     st.success("Product added successfully!")
                 else:
