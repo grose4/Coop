@@ -4,6 +4,7 @@ from flask import request
 from flask import jsonify
 from flask import make_response
 from backend.db_connection import db
+import logging
 
 # Create a new Blueprint object
 api = Blueprint('api', __name__)
@@ -24,38 +25,25 @@ def get_users():
 
 
 
-# Update user info
-@api.route('/users', methods=['PUT'])
-def update_user():
+@api.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
     user_info = request.json
-    user_id = user_info.get('UserID')
+    field = user_info.get('field')
+    value = user_info.get('value')
 
-    fields = {
-        "Name": user_info.get('Name'),
-        "Bio": user_info.get('Bio'),
-        "Occupation": user_info.get('Occupation'),
-        "Location": user_info.get('Location'),
-        "Age": user_info.get('Age'),
-        "ReferredBy": user_info.get('ReferredBy'),
-        "Online": user_info.get('Online'),
-        "Admin": user_info.get('Admin')
-    }
 
-    # Filters out fields that are None
-    updates = {key: value for key, value in fields.items() if value is not None}
+    query = f"UPDATE Users SET {field} = %s WHERE UserID = %s"
+    data = (value, user_id)
 
-    if not updates:
-        return {"error": "No valid fields provided for update"}, 400
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute(query, data)
+        db.get_db().commit()
+        return {"message": "User updated successfully"}, 200
+    except Exception as e:
+        return {"error": str(e)}, 500
 
-    set_clause = ", ".join(f"{key} = %s" for key in updates.keys())
-    query = f"UPDATE Users SET {set_clause} WHERE UserID = %s"
-    data = tuple(updates.values()) + (user_id,)
 
-    cursor = db.get_db().cursor()
-    cursor.execute(query, data)
-    db.get_db().commit()
-
-    return {"message": "User updated successfully!"}, 200
 
 
 # Delete a user 
