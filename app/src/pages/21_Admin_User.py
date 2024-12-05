@@ -13,15 +13,16 @@ def fetch_user_data():
     """
     try:
         response = requests.get(API_URL)
-        print(response)
+        print(response)  # Debugging: Log the response object
         response.raise_for_status()  # Raise an HTTPError for bad responses
         users = response.json()  # Convert response to JSON
-        # Assuming the API returns a list of dictionaries with "id", "username", "email"
-        user_data = pd.DataFrame(users, columns=["id", "username", "email"])
+        # Correctly map the API response to DataFrame columns
+        user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio"])
         return user_data
     except requests.exceptions.RequestException as e:
         st.error(f"Failed to fetch user data from the API: {e}")
         return None
+
 
 def main():
     """

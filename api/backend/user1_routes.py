@@ -10,15 +10,19 @@ api = Blueprint('api', __name__)
 
 # USERS ENDPOINTS
 
-# Get all users
+import sys
+
 @api.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT UserID, Name, Bio FROM Users')
+    cursor.execute('SELECT * FROM Users')
     users = cursor.fetchall()
+    print(users, flush=True)  # Flush the output to ensure it appears in logs
     response = make_response(jsonify(users))
     response.status_code = 200
     return response
+
+
 
 # Update user info 
 @api.route('/users', methods=['PUT'])
