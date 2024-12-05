@@ -1,23 +1,25 @@
 services:
   app:
     build: ./app
-    container_name: web-app  
+    container_name: web-app
     hostname: web-app
-    volumes: ['./app/src:/appcode']
+    volumes:
+      - ./app/src:/appcode
     ports:
       - 8501:8501
+    depends_on:
+      - api
 
   api:
     build: ./api
     container_name: web-api
     hostname: web-api
-    volumes: ['./api:/apicode']
+    volumes:
+      - ./api:/apicode
     ports:
       - 4000:4000
 
   db:
-    env_file:
-      - ./api/.env
     image: mysql:9
     container_name: mysql_db
     hostname: db
@@ -25,5 +27,3 @@ services:
       - ./database-files:/docker-entrypoint-initdb.d/:ro
     ports:
       - 3200:3306
-
-
