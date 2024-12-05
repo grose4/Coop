@@ -5,7 +5,6 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-# Correctly define the API URL as a string
 API_URL = "http://api:4000/users"
 
 def main():
