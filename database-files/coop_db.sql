@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS finalpart2;
 CREATE DATABASE finalpart2;
 USE finalpart2;
 
-
+-- Drop tables in reverse dependency order to avoid errors
 DROP TABLE IF EXISTS User_Industry;
 DROP TABLE IF EXISTS Industry;
 DROP TABLE IF EXISTS Contact;
@@ -17,8 +17,7 @@ DROP TABLE IF EXISTS Faculty;
 DROP TABLE IF EXISTS Student;
 DROP TABLE IF EXISTS Users;
 
-
-
+-- Create Users table
 CREATE TABLE Users (
     UserID INT AUTO_INCREMENT PRIMARY KEY,
     RegisteredAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -32,6 +31,7 @@ CREATE TABLE Users (
     Admin BOOLEAN DEFAULT FALSE
 );
 
+-- Create Notifications table
 CREATE TABLE Notifications (
     NotifID INT AUTO_INCREMENT PRIMARY KEY,
     CreatedBy INT NOT NULL,
@@ -40,8 +40,7 @@ CREATE TABLE Notifications (
     FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
 );
 
-
-
+-- Create Student table
 CREATE TABLE Student (
     StuID INT AUTO_INCREMENT PRIMARY KEY,
     Year INT NOT NULL,
@@ -52,6 +51,7 @@ CREATE TABLE Student (
     FOREIGN KEY (StuID) REFERENCES Users(UserID)
 );
 
+-- Create Faculty table
 CREATE TABLE Faculty (
     FacID INT AUTO_INCREMENT PRIMARY KEY,
     ClassesTaught VARCHAR(100),
@@ -59,12 +59,14 @@ CREATE TABLE Faculty (
     FOREIGN KEY (FacID) REFERENCES Users(UserID)
 );
 
+-- Create Company table
 CREATE TABLE Company (
     CompanyID INT AUTO_INCREMENT PRIMARY KEY,
     CompanyName VARCHAR(200),
     CompanyDescription TEXT
 );
 
+-- Create Employer table
 CREATE TABLE Employer (
     EmpID INT AUTO_INCREMENT PRIMARY KEY,
     TechnicalSkills VARCHAR(100),
@@ -76,20 +78,19 @@ CREATE TABLE Employer (
     FOREIGN KEY (CompanyID) REFERENCES Company(CompanyID)
 );
 
+-- Create User_Type table
 CREATE TABLE User_Type (
-    UserID INT AUTO_INCREMENT PRIMARY KEY,
-    StuID INT,
-    FacID INT,
-    EmpID INT,
+    UserID INT PRIMARY KEY,
+    StuID INT UNIQUE,
+    FacID INT UNIQUE,
+    EmpID INT UNIQUE,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (StuID) REFERENCES Student(StuID),
     FOREIGN KEY (FacID) REFERENCES Faculty(FacID),
     FOREIGN KEY (EmpID) REFERENCES Employer(EmpID)
 );
 
-
-
-
-
+-- Create SupportTickets table
 CREATE TABLE SupportTickets (
     TikNum INT AUTO_INCREMENT PRIMARY KEY,
     UserID INT NOT NULL,
@@ -102,6 +103,7 @@ CREATE TABLE SupportTickets (
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
+-- Create Job_Postings table
 CREATE TABLE Job_Postings (
     JobPostingID INT AUTO_INCREMENT PRIMARY KEY,
     Text TEXT,
@@ -113,6 +115,7 @@ CREATE TABLE Job_Postings (
     Experience_Level VARCHAR(30)
 );
 
+-- Create Interactions table
 CREATE TABLE Interactions (
     InteractionID INT AUTO_INCREMENT PRIMARY KEY,
     Type VARCHAR(50),
@@ -126,7 +129,7 @@ CREATE TABLE Interactions (
     FOREIGN KEY (JobPostingID) REFERENCES Job_Postings(JobPostingID)
 );
 
-
+-- Create Contact table
 CREATE TABLE Contact (
     ContactID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(50) NOT NULL,
@@ -135,12 +138,14 @@ CREATE TABLE Contact (
     FOREIGN KEY (ContactID) REFERENCES Users(UserID)
 );
 
+-- Create Industry table
 CREATE TABLE Industry (
     IndustryID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(40) NOT NULL,
     NUCollege VARCHAR(50)
 );
 
+-- Create User_Industry table
 CREATE TABLE User_Industry (
     UserID INT,
     IndustryID INT,
@@ -151,82 +156,58 @@ CREATE TABLE User_Industry (
 
 
 -- FAKE DATA -- 
+INSERT INTO Users (UserID, Occupation, Location, Name, Age, Bio, ReferredBy) VALUES 
+(1, 'Staff Scientist', 'China', 'trist0', 97, 'fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 21),
+(2, 'Computer Systems Analyst IV', 'Angola', 'aashcroft1', 70, 'consequat varius integer ac leo pellentesque ultrices mattis odio donec', 22),
+(3, 'Teacher', 'Portugal', 'egiacoppo2', 7, 'magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum', 35),
+(4, 'Data Coordinator', 'Mexico', 'rtenbrug3', 92, 'sit amet', NULL),
+(5, 'Community Outreach Specialist', 'Ukraine', 'kpriestland4', 54, 'ullamcorper augue a', 38),
+(6, 'Systems Administrator I', 'Brazil', 'gwoodfin5', 27, 'morbi', NULL),
+(7, 'Office Assistant II', 'Finland', 'maizkovitch6', 57, 'praesent blandit lacinia erat vestibulum sed magna at nunc', 13),
+(8, 'VP Quality Control', 'China', 'mglewe7', 55, 'amet nulla quisque arcu libero rutrum ac lobortis vel dapibus', NULL),
+(9, 'Electrical Engineer', 'Slovenia', 'kmingaud8', 56, 'ut volutpat sapien arcu sed augue aliquam', 54),
+(10, 'Environmental Specialist', 'Greece', 'bstrachan9', 97, 'felis ut at dolor quis odio consequat', NULL),
+(11, 'Analog Circuit Design manager', 'Brazil', 'abarcrofta', 25, 'ut dolor', 29),
+(12, 'Senior Sales Associate', 'Azerbaijan', 'twitherbedb', 19, 'id consequat in consequat ut nulla sed accumsan felis', NULL),
+(13, 'Speech Pathologist', 'Poland', 'cecobc', 30, 'etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem', 33),
+(14, 'Payment Adjustment Coordinator', 'Micronesia', 'wiorid', 24, 'sociis natoque penatibus et magnis', NULL),
+(15, 'Senior Quality Engineer', 'Indonesia', 'dcuncliffee', 57, 'justo in blandit ultrices enim', 61),
+(16, 'Physical Therapy Assistant', 'Philippines', 'dmcnuttf', 6, 'placerat ante nulla justo aliquam quis turpis eget elit', 22),
+(17, 'Senior Sales Associate', 'Philippines', 'jmonteithg', 93, 'quis orci', NULL),
+(18, 'Programmer Analyst III', 'Tanzania', 'lcheneryh', 83, 'vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis', NULL),
+(19, 'Senior Sales Associate', 'China', 'kcooli', 14, 'in faucibus orci luctus', NULL),
+(20, 'Senior Editor', 'Indonesia', 'aertelj', 17, 'eget nunc donec quis orci eget', 30),
+(21, 'Biostatistician IV', 'Philippines', 'gkenank', 59, 'nec euismod scelerisque quam', NULL),
+(22, 'Media Manager IV', 'Indonesia', 'lkitcattl', 54, 'volutpat dui maecenas tristique est et', 63),
+(23, 'Structural Engineer', 'Armenia', 'jbenkinm', 76, 'blandit ultrices enim', NULL),
+(24, 'Dental Hygienist', 'China', 'qyesinovn', 83, 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet', NULL),
+(25, 'Web Designer IV', 'United States', 'agullamo', 9, 'sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede', 68),
+(26, 'Speech Pathologist', 'China', 'lallikerp', 60, 'ac consequat metus sapien', 16),
+(27, 'Internal Auditor', 'Portugal', 'imccrostieq', 30, 'aenean sit amet justo morbi ut odio cras mi', 85),
+(28, 'Marketing Manager', 'Philippines', 'slitzmannr', 14, 'pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus', 70),
+(29, 'Human Resources Manager', 'Egypt', 'imenarys', 88, 'eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas', 29),
+(30, 'Account Representative I', 'Colombia', 'pchithamt', 94, 'nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel', 40),
+(31, 'Data Coordinator', 'Thailand', 'jlampetu', 57, 'pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie', 33),
+(32, 'Business Systems Development Analyst', 'Indonesia', 'bcossarv', 60, 'in quis justo maecenas rhoncus aliquam lacus morbi quis tortor', 12),
+(33, 'Teacher', 'Honduras', 'awarretw', 70, 'in quis', 14),
+(34, 'Recruiting Manager', 'China', 'gshielx', 93, 'aliquam erat volutpat in congue etiam justo etiam', 26),
+(35, 'Geologist II', 'Indonesia', 'gbrainey', 76, 'sit amet lobortis sapien sapien non', 44),
+(36, 'Senior Developer', 'Colombia', 'lroadz', 99, 'at diam nam tristique tortor', NULL),
+(37, 'Civil Engineer', 'Argentina', 'jchettle10', 65, 'ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam', 81),
+(38, 'VP Quality Control', 'Indonesia', 'mjackes11', 40, 'adipiscing lorem vitae mattis', 98),
+(39, 'Associate Professor', 'Philippines', 'bbranthwaite12', 55, 'felis ut at dolor quis odio consequat varius integer ac leo pellentesque', 55),
+(40, 'Software Test Engineer III', 'Indonesia', 'kmitchiner13', 63, 'eu orci', 38),
+(41, 'Nuclear Power Engineer', 'Greece', 'zmcart14', 4, 'suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque', 47),
+(42, 'Dental Hygienist', 'Japan', 'splose15', 51, 'dui maecenas tristique est et tempus', NULL),
+(43, 'Account Coordinator', 'China', 'fcamus16', 28, 'vel pede', 72),
+(44, 'Cost Accountant', 'China', 'bstockow17', 63, 'arcu sed augue aliquam erat volutpat', NULL),
+(45, 'Technical Writer', 'China', 'vscalera18', 47, 'odio condimentum id luctus nec', 97),
+(46, 'Social Worker', 'China', 'rbeeke19', 9, 'pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst', NULL),
+(47, 'Teacher', 'Ukraine', 'fmcgrill1a', 31, 'ut erat curabitur gravida nisi at nibh in hac habitasse', 80),
+(48, 'Occupational Therapist', 'Russia', 'mdrought1b', 95, 'praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum', 39),
+(49, 'Accounting Assistant IV', 'China', 'hwoolstenholmes1c', 69, 'diam in magna bibendum imperdiet', NULL),
+(50, 'Safety Technician III', 'Israel', 'mmacteggart1d', 45, 'sit amet lobortis sapien', NULL);
 
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (1, 'Staff Scientist', 'China', 'ofaustin0@phpbb.com', 'trist0', 97, 'fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 21);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (2, 'Computer Systems Analyst IV', 'Angola', 'nniven1@google.ru', 'aashcroft1', 70, 'consequat varius integer ac leo pellentesque ultrices mattis odio donec', 22);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (3, 'Teacher', 'Portugal', 'cgiacobilio2@storify.com', 'egiacoppo2', 7, 'magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum', 35);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (4, 'Data Coordinator', 'Mexico', 'jashbrook3@umich.edu', 'rtenbrug3', 92, 'sit amet', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (5, 'Community Outreach Specialist', 'Ukraine', 'ainmett4@bing.com', 'kpriestland4', 54, 'ullamcorper augue a', 38);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (6, 'Systems Administrator I', 'Brazil', 'fsellack5@sphinn.com', 'gwoodfin5', 27, 'morbi', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (7, 'Office Assistant II', 'Finland', 'sadame6@issuu.com', 'maizkovitch6', 57, 'praesent blandit lacinia erat vestibulum sed magna at nunc', 13);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (8, 'VP Quality Control', 'China', 'styas7@diigo.com', 'mglewe7', 55, 'amet nulla quisque arcu libero rutrum ac lobortis vel dapibus', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (9, 'Electrical Engineer', 'Slovenia', 'mkillick8@newyorker.com', 'kmingaud8', 56, 'ut volutpat sapien arcu sed augue aliquam', 54);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (10, 'Environmental Specialist', 'Greece', 'hmycock9@google.com.br', 'bstrachan9', 97, 'felis ut at dolor quis odio consequat', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (11, 'Analog Circuit Design manager', 'Brazil', 'rsnodaya@sciencedirect.com', 'abarcrofta', 25, 'ut dolor', 29);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (12, 'Senior Sales Associate', 'Azerbaijan', 'cscarlanb@t.co', 'twitherbedb', 19, 'id consequat in consequat ut nulla sed accumsan felis', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (13, 'Speech Pathologist', 'Poland', 'sshubothamc@google.co.uk', 'cecobc', 30, 'etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem', 33);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (14, 'Payment Adjustment Coordinator', 'Micronesia', 'rreussd@mapy.cz', 'wiorid', 24, 'sociis natoque penatibus et magnis', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (15, 'Senior Quality Engineer', 'Indonesia', 'mstatherse@opera.com', 'dcuncliffee', 57, 'justo in blandit ultrices enim', 61);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (16, 'Physical Therapy Assistant', 'Philippines', 'mmayhof@psu.edu', 'dmcnuttf', 6, 'placerat ante nulla justo aliquam quis turpis eget elit', 22);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (17, 'Senior Sales Associate', 'Philippines', 'bwhitingtong@huffingtonpost.com', 'jmonteithg', 93, 'quis orci', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (18, 'Programmer Analyst III', 'Tanzania', 'myurkevichh@oaic.gov.au', 'lcheneryh', 83, 'vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (19, 'Senior Sales Associate', 'China', 'apittendreighi@usda.gov', 'kcooli', 14, 'in faucibus orci luctus', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (20, 'Senior Editor', 'Indonesia', 'lwinkettj@scientificamerican.com', 'aertelj', 17, 'eget nunc donec quis orci eget', 30);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (21, 'Biostatistician IV', 'Philippines', 'acutridgek@theglobeandmail.com', 'gkenank', 59, 'nec euismod scelerisque quam', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (22, 'Media Manager IV', 'Indonesia', 'tcoppensl@surveymonkey.com', 'lkitcattl', 54, 'volutpat dui maecenas tristique est et', 63);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (23, 'Structural Engineer', 'Armenia', 'myssonm@vistaprint.com', 'jbenkinm', 76, 'blandit ultrices enim', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (24, 'Dental Hygienist', 'China', 'yyeelln@sogou.com', 'qyesinovn', 83, 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (25, 'Web Designer IV', 'United States', 'kdominyo@miibeian.gov.cn', 'agullamo', 9, 'sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede', 68);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (26, 'Speech Pathologist', 'China', 'jnixp@weibo.com', 'lallikerp', 60, 'ac consequat metus sapien', 16);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (27, 'Internal Auditor', 'Portugal', 'mbensonq@php.net', 'imccrostieq', 30, 'aenean sit amet justo morbi ut odio cras mi', 85);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (28, 'Marketing Manager', 'Philippines', 'hpassmanr@slate.com', 'slitzmannr', 14, 'pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus', 70);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (29, 'Human Resources Manager', 'Egypt', 'mboyers@infoseek.co.jp', 'imenarys', 88, 'eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas', 29);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (30, 'Account Representative I', 'Colombia', 'hmarshlandt@google.nl', 'pchithamt', 94, 'nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel', 40);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (31, 'Data Coordinator', 'Thailand', 'plegionu@fastcompany.com', 'jlampetu', 57, 'pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie', 33);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (32, 'Business Systems Development Analyst', 'Indonesia', 'acrosbyv@jigsy.com', 'bcossarv', 60, 'in quis justo maecenas rhoncus aliquam lacus morbi quis tortor', 12);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (33, 'Teacher', 'Honduras', 'acopelandw@nsw.gov.au', 'awarretw', 70, 'in quis', 14);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (34, 'Recruiting Manager', 'China', 'rreinax@shop-pro.jp', 'gshielx', 93, 'aliquam erat volutpat in congue etiam justo etiam', 26);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (35, 'Geologist II', 'Indonesia', 'kpellery@blinklist.com', 'gbrainey', 76, 'sit amet lobortis sapien sapien non', 44);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (36, 'Senior Developer', 'Colombia', 'ylombardoz@gov.uk', 'lroadz', 99, 'at diam nam tristique tortor', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (37, 'Civil Engineer', 'Argentina', 'rwastell10@nature.com', 'jchettle10', 65, 'ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam', 81);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (38, 'VP Quality Control', 'Indonesia', 'ahassekl11@about.com', 'mjackes11', 40, 'adipiscing lorem vitae mattis', 98);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (39, 'Associate Professor', 'Philippines', 'pcostley12@livejournal.com', 'bbranthwaite12', 55, 'felis ut at dolor quis odio consequat varius integer ac leo pellentesque', 55);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (40, 'Software Test Engineer III', 'Indonesia', 'rjacomb13@virginia.edu', 'kmitchiner13', 63, 'eu orci', 38);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (41, 'Nuclear Power Engineer', 'Greece', 'ueingerfield14@google.co.uk', 'zmcart14', 4, 'suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque', 47);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (42, 'Dental Hygienist', 'Japan', 'cstilgoe15@squarespace.com', 'splose15', 51, 'dui maecenas tristique est et tempus', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (43, 'Account Coordinator', 'China', 'rswinney16@dion.ne.jp', 'fcamus16', 28, 'vel pede', 72);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (44, 'Cost Accountant', 'China', 'whobben17@yelp.com', 'bstockow17', 63, 'arcu sed augue aliquam erat volutpat', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (45, 'Technical Writer', 'China', 'mhellwig18@tripadvisor.com', 'vscalera18', 47, 'odio condimentum id luctus nec', 97);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (46, 'Social Worker', 'China', 'vkopfen19@sphinn.com', 'rbeeke19', 9, 'pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (47, 'Teacher', 'Ukraine', 'gstreak1a@webmd.com', 'fmcgrill1a', 31, 'ut erat curabitur gravida nisi at nibh in hac habitasse', 80);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (48, 'Occupational Therapist', 'Russia', 'lshillito1b@quantcast.com', 'mdrought1b', 95, 'praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum', 39);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (49, 'Accounting Assistant IV', 'China', 'bmclagan1c@illinois.edu', 'hwoolstenholmes1c', 69, 'diam in magna bibendum imperdiet', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (50, 'Safety Technician III', 'Israel', 'gbanasevich1d@wikipedia.org', 'mmacteggart1d', 45, 'sit amet lobortis sapien', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (51, 'Account Executive', 'China', 'nashmore1e@ycombinator.com', 'fshallcrass1e', 44, 'eget orci vehicula condimentum curabitur in libero ut massa volutpat', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (52, 'Physical Therapy Assistant', 'Cuba', 'abosward1f@artisteer.com', 'edibden1f', 5, 'volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo', 79);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (53, 'Research Associate', 'China', 'rbrody1g@spiegel.de', 'krossin1g', 68, 'vestibulum sagittis', 22);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (54, 'Senior Developer', 'Micronesia', 'jfalls1h@mapquest.com', 'hmuress1h', 80, 'viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (55, 'Social Worker', 'Argentina', 'abartomeu1i@whitehouse.gov', 'ecollomosse1i', 58, 'in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia', 21);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (56, 'Compensation Analyst', 'United States', 'oscipsey1j@g.co', 'lbougen1j', 93, 'elit sodales scelerisque mauris', 44);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (57, 'Quality Control Specialist', 'Iran', 'agosart1k@altervista.org', 'nmargrett1k', 4, 'sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque', 40);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (58, 'Administrative Assistant II', 'Philippines', 'ldayton1l@dmoz.org', 'lseignior1l', 48, 'morbi a ipsum integer a nibh in quis', 55);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (59, 'Senior Cost Accountant', 'Denmark', 'vwakely1m@netscape.com', 'caddison1m', 54, 'cras', 75);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (60, 'Physical Therapy Assistant', 'China', 'mbiddiss1n@exblog.jp', 'ggalpen1n', 17, 'neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (61, 'Software Consultant', 'China', 'ewetter1o@icq.com', 'kpettendrich1o', 60, 'vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris', 56);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (62, 'Staff Accountant IV', 'Panama', 'vbedding1p@hp.com', 'pfurmagier1p', 87, 'morbi', 1);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (63, 'Project Manager', 'Lithuania', 'atinner1q@rambler.ru', 'lblencowe1q', 92, 'sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit', 34);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (64, 'Mechanical Systems Engineer', 'China', 'wkrug1r@elegantthemes.com', 'lbasten1r', 95, 'dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (65, 'Web Designer III', 'Belarus', 'afrank1s@pinterest.com', 'mspuffard1s', 31, 'lorem quisque ut', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (66, 'Chemical Engineer', 'China', 'dneeson1t@umich.edu', 'eangelo1t', 47, 'sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (67, 'Desktop Support Technician', 'Mexico', 'jculshaw1u@economist.com', 'jbresland1u', 82, 'turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (68, 'Software Engineer IV', 'Chad', 'ibernakiewicz1v@privacy.gov.au', 'jgulland1v', 36, 'risus auctor sed tristique in tempus sit amet sem fusce', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (69, 'Senior Cost Accountant', 'Armenia', 'vshacklady1w@blogs.com', 'cmedcraft1w', 40, 'pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed', 18);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (70, 'Nurse', 'Russia', 'hpestricke1x@myspace.com', 'dclapston1x', 98, 'accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (71, 'Community Outreach Specialist', 'China', 'rredborn1y@arstechnica.com', 'glibby1y', 15, 'dapibus dolor', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (72, 'Information Systems Manager', 'Estonia', 'kingles1z@ebay.com', 'rmachoste1z', 4, 'magna at nunc commodo placerat', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (73, 'Account Coordinator', 'Indonesia', 'cevill20@businesswire.com', 'ealeshkov20', 18, 'parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (74, 'Senior Editor', 'Greece', 'hburgoin21@princeton.edu', 'acolson21', 17, 'purus phasellus', null);
-insert into Users  (UserID, Occupation, Location, Email, Name, Age, Bio, ReferredBy) values (75, 'Media Manager II', 'Indonesia', 'wmoxom22@cam.ac.uk', 'gbenford22', 19, 'sit amet cursus id turpis integer aliquet massa', null);
 
 insert into Notifications  (CreatedBy, Text) values (1, 'volutpat convallis morbi odio odio elementum eu');
 insert into Notifications  (CreatedBy, Text) values (2, 'primis in faucibus orci luctus et ultrices');
@@ -465,56 +446,39 @@ insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, Comp
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('cursus urna', 2.79, 'Class III Medical Devices', null, 49);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('enim lorem ipsum', 3.98, 'WebLogic', null, 50);
 
-insert into User_Type (StuID, FacID, EmpID) values (1, null, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 2, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 3, 3);
-insert into User_Type (StuID, FacID, EmpID) values (4, null, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 5, null);
-insert into User_Type (StuID, FacID, EmpID) values (6, null, 6);
-insert into User_Type (StuID, FacID, EmpID) values (7, 7, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 8, 8);
-insert into User_Type (StuID, FacID, EmpID) values (9, 9, 9);
-insert into User_Type (StuID, FacID, EmpID) values (10, 10, 10);
-insert into User_Type (StuID, FacID, EmpID) values (11, 11, 11);
-insert into User_Type (StuID, FacID, EmpID) values (null, 12, 12);
-insert into User_Type (StuID, FacID, EmpID) values (13, null, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 14, 14);
-insert into User_Type (StuID, FacID, EmpID) values (null, 15, 15);
-insert into User_Type (StuID, FacID, EmpID) values (null, 16, 16);
-insert into User_Type (StuID, FacID, EmpID) values (null, null, 17);
-insert into User_Type (StuID, FacID, EmpID) values (18, 18, 18);
-insert into User_Type (StuID, FacID, EmpID) values (19, 19, null);
-insert into User_Type (StuID, FacID, EmpID) values (20, null, 20);
-insert into User_Type (StuID, FacID, EmpID) values (21, 21, 21);
-insert into User_Type (StuID, FacID, EmpID) values (22, null, 22);
-insert into User_Type (StuID, FacID, EmpID) values (23, 23, null);
-insert into User_Type (StuID, FacID, EmpID) values (24, null, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 25, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 26, null);
-insert into User_Type (StuID, FacID, EmpID) values (27, 27, 27);
-insert into User_Type (StuID, FacID, EmpID) values (28, 28, 28);
-insert into User_Type (StuID, FacID, EmpID) values (29, null, 29);
-insert into User_Type (StuID, FacID, EmpID) values (null, 30, null);
-insert into User_Type (StuID, FacID, EmpID) values (31, null, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 32, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 33, 33);
-insert into User_Type (StuID, FacID, EmpID) values (34, 34, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, null, null);
-insert into User_Type (StuID, FacID, EmpID) values (null, 36, null);
-insert into User_Type (StuID, FacID, EmpID) values (37, null, 37);
-insert into User_Type (StuID, FacID, EmpID) values (null, 38, 38);
-insert into User_Type (StuID, FacID, EmpID) values (null, 39, 39);
-insert into User_Type (StuID, FacID, EmpID) values (null, 40, 40);
-insert into User_Type (StuID, FacID, EmpID) values (null, 41, 41);
-insert into User_Type (StuID, FacID, EmpID) values (42, 42, null);
-insert into User_Type (StuID, FacID, EmpID) values (43, 43, null);
-insert into User_Type (StuID, FacID, EmpID) values (44, 44, null);
-insert into User_Type (StuID, FacID, EmpID) values (45, 45, null);
-insert into User_Type (StuID, FacID, EmpID) values (46, 46, null);
-insert into User_Type (StuID, FacID, EmpID) values (47, null, 47);
-insert into User_Type (StuID, FacID, EmpID) values (48, 48, 48);
-insert into User_Type (StuID, FacID, EmpID) values (null, 49, 49);
-insert into User_Type (StuID, FacID, EmpID) values (50, 50, 50);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (1, 1, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (2, NULL, 2, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (3, NULL, 3, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (4, 4, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (5, NULL, 5, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (6, NULL, NULL, 6);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (7, 7, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (8, NULL, NULL, 8);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (9, NULL, NULL, 9);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (10, NULL, NULL, 10);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (11, NULL, NULL, 11);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (12, NULL, 12, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (13, 13, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (14, NULL, 14, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (15, NULL, 15, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (16, NULL, 16, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (17, NULL, NULL, 17);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (18, NULL, NULL, 18);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (19, NULL, NULL, 19);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (20, 20, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (21, 21, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (22, NULL, NULL, 22);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (23, NULL, NULL, 23);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (24, NULL, NULL, 24);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (25, 25, NULL, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (26, NULL, 26, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (27, NULL, 27, NULL);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (28, NULL, NULL, 28);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (29, NULL, NULL, 29);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (30, NULL, NULL, 30);
+
+
+
 
 
 insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (1, null, 1, 'curae duis faucibus accumsan odio', 2);
@@ -568,57 +532,46 @@ insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (48
 insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (49, null, null, 'turpis', 1);
 insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (50, null, 50, 'at velit vivamus vel nulla eget eros elementum pellentesque quisque', 1);
 
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('quisque ut erat curabitur gravida nisi at nibh in hac', 498, 2.37, 'Mexico', '1/31/2024', 1);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('turpis integer aliquet massa id lobortis convallis tortor risus dapibus', 95, 1.85, 'Indonesia', '11/12/2024', 9);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('elit proin interdum mauris non ligula pellentesque ultrices phasellus', null, 2.23, 'Brazil', '11/28/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('volutpat quam pede', 226, 3.43, 'Indonesia', '3/18/2024', 6);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('sapien', 250, 3.79, 'Colombia', '5/27/2024', 1);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('id ligula suspendisse ornare consequat lectus in est risus auctor', null, 2.78, 'Poland', '7/18/2024', 8);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('platea dictumst morbi vestibulum velit id pretium iaculis', null, 3.64, 'China', '11/26/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('luctus cum', 81, 1.56, 'Panama', '9/22/2024', 8);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('vestibulum quam sapien varius', null, 3.76, 'Dominican Republic', '2/24/2024', 9);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('sapien ut nunc vestibulum ante ipsum primis', 419, 2.82, 'Czech Republic', '5/11/2024', 1);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('consectetuer eget', null, 2.21, 'Ethiopia', '9/5/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('auctor gravida sem praesent id massa id nisl venenatis lacinia', 28, 2.13, 'Russia', '1/22/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('nullam sit amet turpis', 48, 3.8, 'China', '5/25/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('elit sodales scelerisque', null, 1.52, 'Indonesia', '12/3/2023', 2);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl', 422, 1.06, 'Georgia', '5/23/2024', 6);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('accumsan tortor quis turpis sed ante vivamus tortor duis mattis', 60, 2.07, 'Indonesia', '11/29/2024', 6);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('nec nisi volutpat eleifend donec ut dolor morbi', null, 2.48, 'Israel', '3/29/2024', 7);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('quis orci nullam molestie nibh in', 406, 2.96, 'France', '12/10/2023', 4);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('quis', null, 3.34, 'Tajikistan', '10/22/2024', 8);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('ut erat curabitur gravida nisi at', null, 1.27, 'Portugal', '4/10/2024', 1);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('donec ut dolor morbi vel lectus in', 265, 2.62, 'Ukraine', '3/3/2024', 4);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('integer tincidunt ante vel', 159, 1.17, 'Russia', '8/17/2024', 6);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('porta volutpat erat quisque erat eros', 77, 3.15, 'Yemen', '11/25/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('sem praesent id massa id nisl venenatis lacinia', 462, 3.7, 'South Korea', '1/17/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('eu magna vulputate luctus cum', null, 1.19, 'Myanmar', '10/29/2024', 9);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('augue vestibulum ante ipsum primis in', null, 1.29, 'Russia', '6/20/2024', 10);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('posuere', 107, 2.8, 'China', '7/2/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('semper rutrum nulla nunc purus', null, 1.32, 'Portugal', '12/31/2023', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('vel ipsum praesent blandit lacinia erat vestibulum sed', 69, 1.56, 'France', '3/8/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('aliquet massa id lobortis convallis tortor risus dapibus augue', null, 2.27, 'Peru', '6/30/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('cubilia curae nulla dapibus dolor vel est donec', 240, 3.98, 'Poland', '4/1/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('pellentesque quisque', 480, 2.6, 'Brazil', '3/15/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('nisi volutpat eleifend donec', null, 3.7, 'Argentina', '7/30/2024', 8);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('curae nulla dapibus dolor vel est donec odio justo', 316, 3.25, 'Trinidad and Tobago', '7/7/2024', 6);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('viverra pede ac diam cras pellentesque volutpat', 284, 2.1, 'Brazil', '7/26/2024', 7);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('donec diam neque vestibulum eget vulputate', 461, 2.38, 'China', '8/19/2024', 9);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('consequat varius integer ac leo pellentesque ultrices mattis odio donec', 260, 2.25, 'Czech Republic', '3/3/2024', 6);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('proin leo odio porttitor id consequat', null, 3.96, 'Argentina', '3/22/2024', 8);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('ut nulla sed accumsan felis ut at dolor quis', null, 1.55, 'Russia', '1/13/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('ut odio cras mi pede malesuada in', 152, 2.02, 'China', '7/11/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('viverra eget congue eget', 183, 1.47, 'Spain', '3/6/2024', 5);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('purus aliquet at feugiat non pretium quis lectus suspendisse', null, 1.22, 'Portugal', '11/26/2024', 7);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('ac lobortis vel dapibus at diam nam tristique tortor', 160, 2.11, 'Poland', '5/7/2024', 3);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('erat tortor sollicitudin mi sit amet lobortis sapien sapien non', 214, 3.59, 'Peru', '6/25/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('id lobortis convallis tortor risus dapibus augue vel accumsan', 293, 2.32, 'Indonesia', '12/25/2023', 7);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('pede ac diam cras pellentesque volutpat dui', 325, 2.85, 'Thailand', '9/25/2024', 5);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('quam sollicitudin vitae consectetuer eget rutrum at lorem integer', 427, 3.54, 'Brazil', '2/9/2024', null);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('pharetra magna ac', 469, 3.79, 'Russia', '4/10/2024', 4);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('sit amet', 113, 3.14, 'Thailand', '1/27/2024', 7);
-insert into Job_Postings  (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) values ('id sapien in', null, 1.64, 'China', '7/12/2024', null);
-
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('quisque ut erat curabitur gravida nisi at nibh in hac', 498, 2.37, 'Mexico', '2024-01-31', 1);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('turpis integer aliquet massa id lobortis convallis tortor risus dapibus', 95, 1.85, 'Indonesia', '2024-11-12', 9);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('elit proin interdum mauris non ligula pellentesque ultrices phasellus', null, 2.23, 'Brazil', '2024-11-28', null);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('volutpat quam pede', 226, 3.43, 'Indonesia', '2024-03-18', 6);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('sapien', 250, 3.79, 'Colombia', '2024-05-27', 1);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('id ligula suspendisse ornare consequat lectus in est risus auctor', null, 2.78, 'Poland', '2024-07-18', 8);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('platea dictumst morbi vestibulum velit id pretium iaculis', null, 3.64, 'China', '2024-11-26', 3);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('luctus cum', 81, 1.56, 'Panama', '2024-09-22', 8);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('vestibulum quam sapien varius', null, 3.76, 'Dominican Republic', '2024-02-24', 9);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('sapien ut nunc vestibulum ante ipsum primis', 419, 2.82, 'Czech Republic', '2024-05-11', 1);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('consectetuer eget', null, 2.21, 'Ethiopia', '2024-09-05', 3);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('auctor gravida sem praesent id massa id nisl venenatis lacinia', 28, 2.13, 'Russia', '2024-01-22', null);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('nullam sit amet turpis', 48, 3.8, 'China', '2024-05-25', 3);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('elit sodales scelerisque', null, 1.52, 'Indonesia', '2023-12-03', 2);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl', 422, 1.06, 'Georgia', '2024-05-23', 6);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('accumsan tortor quis turpis sed ante vivamus tortor duis mattis', 60, 2.07, 'Indonesia', '2024-11-29', 6);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('nec nisi volutpat eleifend donec ut dolor morbi', null, 2.48, 'Israel', '2024-03-29', 7);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('quis orci nullam molestie nibh in', 406, 2.96, 'France', '2023-12-10', 4);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('quis', null, 3.34, 'Tajikistan', '2024-10-22', 8);
+INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES ('ut erat curabitur gravida nisi at', null, 1.27, 'Portugal', '2024-04-10', 1);
 
 insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('tellus', null, 1, 'vel est', 'nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum', null, 'Psychotherapy');
 insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ultrices posuere', null, 2, 'est phasellus', 'ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui', null, 'Toyota Production System');
@@ -823,3 +776,6 @@ insert into User_Industry (UserID, IndustryID) values (47, 47);
 insert into User_Industry (UserID, IndustryID) values (48, 48);
 insert into User_Industry (UserID, IndustryID) values (49, 49);
 insert into User_Industry (UserID, IndustryID) values (50, 50);
+
+SELECT *
+From Student;

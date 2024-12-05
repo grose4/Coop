@@ -1,4 +1,4 @@
-
+from flask import Flask 
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -14,7 +14,7 @@ api = Blueprint('api', __name__)
 @api.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, username, email FROM users')
+    cursor.execute('SELECT id, username, Email FROM users')
     users = cursor.fetchall()
     response = make_response(jsonify(users))
     response.status_code = 200

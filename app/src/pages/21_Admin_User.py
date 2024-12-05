@@ -4,7 +4,7 @@ import requests
 
 
 # Define the base URL for your Flask API
-API_URL = "http://api:4000/users"
+API_URL = "http://api:4000/a/users"
 
 def fetch_user_data():
     """
@@ -13,6 +13,7 @@ def fetch_user_data():
     """
     try:
         response = requests.get(API_URL)
+        print(response)
         response.raise_for_status()  # Raise an HTTPError for bad responses
         users = response.json()  # Convert response to JSON
         # Assuming the API returns a list of dictionaries with "id", "username", "email"
@@ -39,5 +40,4 @@ def main():
     else:
         st.warning("No user data available.")
 
-if __name__ == "__main__":
-    main()
+main()
