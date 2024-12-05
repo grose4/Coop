@@ -5,7 +5,6 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-# Define the base URL for your Flask API
 API_URL = "http://api:4000/a/SupportTickets"
 
 def fetch_support_tickets():
@@ -31,7 +30,6 @@ def main():
     st.header("Support Tickets Table")
     st.write("Below is the list of all support tickets.")
 
-    # Fetch support ticket data from the API
     ticket_data = fetch_support_tickets()
 
     if ticket_data is not None and not ticket_data.empty:
@@ -40,5 +38,4 @@ def main():
     else:
         st.warning("No support ticket data available.")
 
-if __name__ == "__main__":
-    main()
+main()
