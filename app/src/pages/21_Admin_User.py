@@ -1,32 +1,42 @@
-import logging
 import streamlit as st
 import pandas as pd
 import requests
 
-logger = logging.getLogger(__name__)
+# Define the base URL for your Flask API
+API_URL = "http://web-api:4000/users"
 
-API_URL = "http://api:4000/users"
+def fetch_user_data():
+    """
+    Fetch user data from the Flask API.
+    Returns a Pandas DataFrame if successful, otherwise None.
+    """
+    try:
+        response = requests.get(API_URL)
+        response.raise_for_status()  # Raise an HTTPError for bad responses
+        users = response.json()  # Convert response to JSON
+        # Assuming the API returns a list of dictionaries with "id", "username", "email"
+        user_data = pd.DataFrame(users, columns=["id", "username", "email"])
+        return user_data
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to fetch user data from the API: {e}")
+        return None
 
 def main():
+    """
+    Main function to render the Streamlit app.
+    """
     st.title("User Management Dashboard")
-
     st.header("User Data Table")
     st.write("Below is the list of all users fetched from the REST API.")
 
-    try:
-        response = requests.get(API_URL)
-        response.raise_for_status()  
-        users = response.json() 
+    # Fetch user data from the API
+    user_data = fetch_user_data()
 
-        user_data = pd.DataFrame(users, columns=["id", "username", "email"])
-        st.write("Successfully fetched data from the API.")
-        
-        if not user_data.empty:
-            st.dataframe(user_data)
-        else:
-            st.write("No user data available.")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to fetch user data from the API: {e}")
-        logger.error(f"API request failed: {e}")
+    if user_data is not None and not user_data.empty:
+        st.success("Successfully fetched data from the API.")
+        st.dataframe(user_data)
+    else:
+        st.warning("No user data available.")
 
-main()
+if __name__ == "__main__":
+    main()
