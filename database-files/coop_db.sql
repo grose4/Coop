@@ -90,6 +90,9 @@ CREATE TABLE User_Type (
     FOREIGN KEY (EmpID) REFERENCES Employer(EmpID)
 );
 
+
+
+
 -- Create SupportTickets table
 CREATE TABLE SupportTickets (
     TikNum INT AUTO_INCREMENT PRIMARY KEY,
@@ -532,97 +535,95 @@ insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (48
 insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (49, null, null, 'turpis', 1);
 insert into SupportTickets  (UserID, Category, Active, Text, Urgency) values (50, null, 50, 'at velit vivamus vel nulla eget eros elementum pellentesque quisque', 1);
 
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('quisque ut erat curabitur gravida nisi at nibh in hac', 498, 2.37, 'Mexico', '2024-01-31', 1);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('turpis integer aliquet massa id lobortis convallis tortor risus dapibus', 95, 1.85, 'Indonesia', '2024-11-12', 9);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('elit proin interdum mauris non ligula pellentesque ultrices phasellus', null, 2.23, 'Brazil', '2024-11-28', null);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('volutpat quam pede', 226, 3.43, 'Indonesia', '2024-03-18', 6);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('sapien', 250, 3.79, 'Colombia', '2024-05-27', 1);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('id ligula suspendisse ornare consequat lectus in est risus auctor', null, 2.78, 'Poland', '2024-07-18', 8);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('platea dictumst morbi vestibulum velit id pretium iaculis', null, 3.64, 'China', '2024-11-26', 3);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('luctus cum', 81, 1.56, 'Panama', '2024-09-22', 8);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('vestibulum quam sapien varius', null, 3.76, 'Dominican Republic', '2024-02-24', 9);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('sapien ut nunc vestibulum ante ipsum primis', 419, 2.82, 'Czech Republic', '2024-05-11', 1);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('consectetuer eget', null, 2.21, 'Ethiopia', '2024-09-05', 3);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('auctor gravida sem praesent id massa id nisl venenatis lacinia', 28, 2.13, 'Russia', '2024-01-22', null);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('nullam sit amet turpis', 48, 3.8, 'China', '2024-05-25', 3);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('elit sodales scelerisque', null, 1.52, 'Indonesia', '2023-12-03', 2);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl', 422, 1.06, 'Georgia', '2024-05-23', 6);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('accumsan tortor quis turpis sed ante vivamus tortor duis mattis', 60, 2.07, 'Indonesia', '2024-11-29', 6);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('nec nisi volutpat eleifend donec ut dolor morbi', null, 2.48, 'Israel', '2024-03-29', 7);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('quis orci nullam molestie nibh in', 406, 2.96, 'France', '2023-12-10', 4);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('quis', null, 3.34, 'Tajikistan', '2024-10-22', 8);
-INSERT INTO Job_Postings (Text, SalaryRange, GPA_Range, Location, Deadline, Experience_Level) 
-VALUES ('ut erat curabitur gravida nisi at', null, 1.27, 'Portugal', '2024-04-10', 1);
+INSERT INTO Job_Postings (Text, SalaryRange, Title, GPA_Range, Location, Deadline, Experience_Level) 
+VALUES 
+('Build and optimize data pipelines and architectures.', '55000-75000', 'Data Engineer', '3.5', 'USA', '2024-06-01 00:00:00', 'Mid-Level'),
+('Collaborate on innovative technology solutions.', '70000-90000', 'Software Developer', '3.8', 'Canada', '2024-07-15 00:00:00', 'Senior'),
+('Lead cross-functional teams in agile projects.', '90000-120000', 'Project Manager', '3.6', 'UK', '2024-08-20 00:00:00', 'Senior'),
+('Design cutting-edge web applications.', '60000-80000', 'Frontend Developer', '3.7', 'Germany', '2024-09-01 00:00:00', 'Mid-Level'),
+('Develop machine learning models.', '100000-130000', 'ML Engineer', '3.9', 'India', '2024-05-10 00:00:00', 'Senior'),
+('Optimize cybersecurity protocols.', '75000-95000', 'Cybersecurity Analyst', '3.4', 'Netherlands', '2024-04-20 00:00:00', 'Junior'),
+('Maintain cloud infrastructures.', '65000-85000', 'Cloud Engineer', '3.6', 'Japan', '2024-07-30 00:00:00', 'Mid-Level'),
+('Analyze financial data for key insights.', '60000-80000', 'Financial Analyst', '3.5', 'Singapore', '2024-06-15 00:00:00', 'Junior'),
+('Create compelling UI designs.', '55000-75000', 'UI Designer', '3.7', 'USA', '2024-05-05 00:00:00', 'Mid-Level'),
+('Implement scalable backend solutions.', '70000-100000', 'Backend Developer', '3.8', 'Australia', '2024-08-01 00:00:00', 'Mid-Level'),
+('Support agile product development.', '50000-70000', 'Scrum Master', '3.4', 'France', '2024-07-10 00:00:00', 'Mid-Level'),
+('Oversee digital transformation initiatives.', '110000-150000', 'Digital Transformation Lead', '3.8', 'Germany', '2024-09-15 00:00:00', 'Senior'),
+('Develop automated testing tools.', '65000-85000', 'QA Engineer', '3.5', 'UK', '2024-06-20 00:00:00', 'Junior'),
+('Streamline IT operations for global teams.', '85000-110000', 'IT Manager', '3.7', 'Canada', '2024-04-25 00:00:00', 'Senior'),
+('Manage large-scale software deployments.', '95000-120000', 'Deployment Manager', '3.6', 'USA', '2024-08-05 00:00:00', 'Senior'),
+('Support database management and optimization.', '60000-80000', 'Database Administrator', '3.4', 'India', '2024-05-15 00:00:00', 'Mid-Level'),
+('Create real-time data visualization dashboards.', '80000-100000', 'Data Visualization Engineer', '3.6', 'Netherlands', '2024-06-25 00:00:00', 'Mid-Level'),
+('Integrate APIs for enhanced functionality.', '70000-90000', 'API Specialist', '3.7', 'USA', '2024-09-05 00:00:00', 'Junior'),
+('Design innovative customer experiences.', '60000-80000', 'CX Designer', '3.6', 'Singapore', '2024-04-10 00:00:00', 'Mid-Level'),
+('Ensure compliance with industry standards.', '75000-95000', 'Compliance Officer', '3.5', 'Japan', '2024-07-20 00:00:00', 'Senior'),
+('Architect large-scale distributed systems.', '120000-150000', 'Solutions Architect', '3.9', 'USA', '2024-05-25 00:00:00', 'Senior'),
+('Create engaging content strategies.', '50000-70000', 'Content Strategist', '3.4', 'India', '2024-06-10 00:00:00', 'Junior'),
+('Lead talent acquisition strategies.', '60000-85000', 'HR Manager', '3.5', 'Canada', '2024-07-25 00:00:00', 'Senior'),
+('Develop AI-powered chatbots.', '80000-100000', 'AI Developer', '3.8', 'UK', '2024-08-10 00:00:00', 'Mid-Level'),
+('Coordinate supply chain logistics.', '70000-90000', 'Supply Chain Manager', '3.7', 'Germany', '2024-09-20 00:00:00', 'Senior'),
+('Design sustainable energy solutions.', '85000-110000', 'Energy Engineer', '3.8', 'France', '2024-05-20 00:00:00', 'Mid-Level'),
+('Manage digital advertising campaigns.', '55000-75000', 'Digital Marketer', '3.6', 'Australia', '2024-06-30 00:00:00', 'Junior'),
+('Analyze consumer behavior trends.', '50000-70000', 'Market Research Analyst', '3.5', 'Netherlands', '2024-07-05 00:00:00', 'Mid-Level'),
+('Develop e-commerce platforms.', '95000-120000', 'E-Commerce Developer', '3.7', 'USA', '2024-08-15 00:00:00', 'Senior'),
+('Train staff in advanced software tools.', '70000-95000', 'Training Specialist', '3.5', 'India', '2024-05-30 00:00:00', 'Junior'),
+('Plan business growth strategies.', '80000-110000', 'Business Development Manager', '3.6', 'UK', '2024-06-20 00:00:00', 'Mid-Level'),
+('Develop secure mobile applications.', '90000-120000', 'Mobile App Developer', '3.8', 'Canada', '2024-07-15 00:00:00', 'Senior'),
+('Lead hardware prototyping projects.', '85000-115000', 'Hardware Engineer', '3.7', 'USA', '2024-08-01 00:00:00', 'Mid-Level'),
+('Manage on-site construction projects.', '95000-120000', 'Construction Manager', '3.6', 'Germany', '2024-09-10 00:00:00', 'Senior'),
+('Conduct user experience research.', '55000-80000', 'UX Researcher', '3.5', 'France', '2024-05-10 00:00:00', 'Junior'),
+('Create engaging social media content.', '50000-65000', 'Social Media Manager', '3.4', 'Australia', '2024-06-15 00:00:00', 'Mid-Level'),
+('Perform advanced data cleaning and preprocessing.', '65000-85000', 'Data Wrangler', '3.6', 'Netherlands', '2024-07-25 00:00:00', 'Mid-Level'),
+('Manage enterprise-level ERP systems.', '90000-130000', 'ERP Administrator', '3.7', 'Japan', '2024-08-20 00:00:00', 'Senior'),
+('Coordinate global marketing strategies.', '85000-110000', 'Global Marketing Manager', '3.8', 'UK', '2024-09-05 00:00:00', 'Senior'),
+('Streamline DevOps pipelines.', '75000-95000', 'DevOps Engineer', '3.6', 'USA', '2024-05-15 00:00:00', 'Mid-Level');
 
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('tellus', null, 1, 'vel est', 'nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum', null, 'Psychotherapy');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ultrices posuere', null, 2, 'est phasellus', 'ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui', null, 'Toyota Production System');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('laoreet ut', null, 3, 'quis', 'vel augue', null, 'JVs');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('nam', 4, 4, 'in ante vestibulum', 'augue vel accumsan tellus nisi eu orci mauris lacinia sapien', null, 'Recombinant DNA');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('nulla quisque', 5, 5, 'id consequat in consequat', 'convallis', null, 'PFMEA');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('rutrum nulla', null, 6, 'nec nisi vulputate', 'neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus', null, 'TV Production');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('id', 7, 7, 'praesent id massa id nisl', 'metus sapien ut nunc vestibulum', null, 'TPT');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('mauris', 8, 8, 'nunc proin at turpis a', 'amet eleifend pede libero quis orci nullam molestie', null, 'Quality Patient Care');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('posuere', null, 9, 'felis ut at', 'lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus', 9, 'Shopping Centers');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('praesent lectus', 10, 10, 'quam fringilla rhoncus', 'erat eros viverra eget congue eget semper rutrum nulla nunc purus', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('habitasse platea', null, 11, 'elit', 'primis', 11, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('a ipsum', 12, 12, 'nonummy integer', 'aenean fermentum donec', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('in', 13, 13, 'lacus at turpis', 'ac lobortis vel dapibus at diam nam tristique tortor', null, 'Ocular Disease');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('lectus', 14, 14, 'duis bibendum', 'leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus', null, 'Galleries');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('lectus pellentesque', 15, 15, 'suscipit ligula in', 'sed vel enim sit amet nunc', 15, 'GC-MS');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('duis', 16, 16, 'ut erat id mauris vulputate', 'molestie', 16, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('aliquam lacus', null, 17, 'felis fusce posuere', 'quam suspendisse potenti nullam', null, 'RF Systems');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('vivamus', null, 18, 'fusce congue diam id ornare', 'montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ac leo', 19, 19, 'risus praesent lectus vestibulum quam', 'vestibulum vestibulum ante ipsum primis in faucibus orci', null, 'IBM Content Manager');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ut erat', null, 20, 'nisl venenatis', 'pellentesque volutpat dui maecenas tristique', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('vestibulum sagittis', 21, 21, 'risus dapibus augue vel accumsan', 'tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet', 21, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ipsum dolor', null, 22, 'nulla', 'consequat in consequat ut nulla sed accumsan felis ut at dolor quis', 22, 'ESL');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ac', null, 23, 'est quam pharetra magna', 'aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('interdum', 24, 24, 'quis turpis eget elit', 'pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('cras non', 25, 25, 'non lectus aliquam sit', 'id nulla ultrices aliquet', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ipsum', null, 26, 'magna ac consequat', 'orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed', 26, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('eu est', null, 27, 'non mauris', 'tincidunt in leo maecenas', null, 'Aesthetic Surgery');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('pede', 28, 28, 'eros elementum pellentesque quisque porta', 'amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('praesent id', 29, 29, 'dolor quis', 'et commodo', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('in', 30, 30, 'odio', 'rhoncus aliquet pulvinar sed nisl nunc rhoncus', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('dis', 31, 31, 'justo', 'vulputate nonummy maecenas tincidunt lacus at velit vivamus vel', null, 'DDR3');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('platea dictumst', null, 32, 'sapien varius ut blandit', 'venenatis turpis enim blandit', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('amet', 33, 33, 'magna at nunc commodo', 'nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi', null, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('lobortis convallis', null, 34, 'sapien non', 'est risus', null, 'Offshore Oil &amp; Gas');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ac nibh', 35, 35, 'eget eros elementum', 'sem', 35, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('vulputate', null, 36, 'quisque erat eros viverra', 'blandit non interdum in ante vestibulum ante ipsum', null, 'TMMi');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('curabitur', null, 37, 'adipiscing lorem vitae mattis', 'ornare consequat lectus in est risus auctor sed tristique in', null, 'Financial Accounting');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('id lobortis', 38, 38, 'tincidunt', 'tincidunt eget tempus vel pede morbi porttitor', 38, 'Zines');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('elit', 39, 39, 'libero', 'nibh quisque id justo sit amet sapien', null, 'CPOE');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('arcu sed', null, 40, 'platea dictumst', 'convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque', null, 'WPS');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('sapien cum', null, 41, 'ligula', 'primis in faucibus orci luctus et ultrices posuere cubilia curae mauris', 41, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('orci vehicula', null, 42, 'nisi venenatis tristique fusce congue', 'orci nullam molestie nibh in lectus pellentesque at nulla suspendisse', 42, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('quis turpis', 43, 43, 'primis in faucibus orci luctus', 'ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci', 43, 'DFMA');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('odio cras', 44, 44, 'eu sapien cursus', 'id ornare imperdiet sapien urna pretium nisl ut', 44, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('platea dictumst', null, 45, 'eget', 'auctor gravida sem praesent id massa id nisl venenatis lacinia aenean', 45, 'Gifts');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('erat', null, 46, 'amet lobortis', 'ultrices aliquet maecenas leo', 46, 'RHEV');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('rutrum', null, 47, 'dignissim vestibulum', 'pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh', null, 'Pediatrics');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ipsum primis', null, 48, 'molestie sed justo pellentesque', 'sapien quis libero nullam sit amet', 48, null);
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('ac tellus', null, 49, 'lorem quisque ut erat', 'elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat', null, 'Affordable Housing');
-insert into Interactions  (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) values ('id', 50, 50, 'suspendisse', 'risus praesent lectus vestibulum quam sapien', 50, null);
+
+
+
+INSERT INTO Interactions (Type, ToUserID, FromUserID, Subject, Text, JobPostingID, Resume) VALUES 
+('tellus', NULL, 1, 'vel est', 'interaction text 1', 1, 'Resume1.pdf'),
+('ultrices posuere', NULL, 2, 'est phasellus', 'interaction text 2', 2, 'Resume2.pdf'),
+('laoreet ut', NULL, 3, 'quis', 'interaction text 3', 3, 'Resume3.pdf'),
+('nam', NULL, 4, 'in ante vestibulum', 'interaction text 4', 4, 'Resume4.pdf'),
+('nulla quisque', NULL, 5, 'id consequat', 'interaction text 5', 5, 'Resume5.pdf'),
+('rutrum nulla', NULL, 6, 'nec nisi vulputate', 'interaction text 6', 6, 'Resume6.pdf'),
+('id', NULL, 7, 'praesent id massa', 'interaction text 7', 7, 'Resume7.pdf'),
+('mauris', NULL, 8, 'nunc proin', 'interaction text 8', 8, 'Resume8.pdf'),
+('posuere', NULL, 9, 'felis ut at', 'interaction text 9', 9, 'Resume9.pdf'),
+('praesent lectus', NULL, 10, 'quam fringilla', 'interaction text 10', 10, 'Resume10.pdf'),
+('habitasse platea', NULL, 11, 'elit', 'interaction text 11', 11, 'Resume11.pdf'),
+('a ipsum', NULL, 12, 'nonummy integer', 'interaction text 12', 12, 'Resume12.pdf'),
+('in', NULL, 13, 'lacus at turpis', 'interaction text 13', 13, 'Resume13.pdf'),
+('lectus', NULL, 14, 'duis bibendum', 'interaction text 14', 14, 'Resume14.pdf'),
+('lectus pellentesque', NULL, 15, 'suscipit ligula', 'interaction text 15', 15, 'Resume15.pdf'),
+('duis', NULL, 16, 'ut erat', 'interaction text 16', 16, 'Resume16.pdf'),
+('aliquam lacus', NULL, 17, 'felis fusce', 'interaction text 17', 17, 'Resume17.pdf'),
+('vivamus', NULL, 18, 'fusce congue', 'interaction text 18', 18, 'Resume18.pdf'),
+('ac leo', NULL, 19, 'risus praesent', 'interaction text 19', 19, 'Resume19.pdf'),
+('ut erat', NULL, 20, 'nisl venenatis', 'interaction text 20', 20, 'Resume20.pdf'),
+('vestibulum sagittis', NULL, 21, 'risus dapibus', 'interaction text 21', 21, 'Resume21.pdf'),
+('ipsum dolor', NULL, 22, 'nulla', 'interaction text 22', 22, 'Resume22.pdf'),
+('ac', NULL, 23, 'est quam', 'interaction text 23', 23, 'Resume23.pdf'),
+('interdum', NULL, 24, 'quis turpis', 'interaction text 24', 24, 'Resume24.pdf'),
+('cras non', NULL, 25, 'non lectus', 'interaction text 25', 25, 'Resume25.pdf'),
+('ipsum', NULL, 26, 'magna ac', 'interaction text 26', 26, 'Resume26.pdf'),
+('eu est', NULL, 27, 'non mauris', 'interaction text 27', 27, 'Resume27.pdf'),
+('pede', NULL, 28, 'eros elementum', 'interaction text 28', 28, 'Resume28.pdf'),
+('praesent id', NULL, 29, 'dolor quis', 'interaction text 29', 29, 'Resume29.pdf'),
+('in', NULL, 30, 'odio', 'interaction text 30', 30, 'Resume30.pdf'),
+('dis', NULL, 31, 'justo', 'interaction text 31', 31, 'Resume31.pdf'),
+('platea dictumst', NULL, 32, 'sapien varius', 'interaction text 32', 32, 'Resume32.pdf'),
+('amet', NULL, 33, 'magna at nunc', 'interaction text 33', 33, 'Resume33.pdf'),
+('lobortis convallis', NULL, 34, 'sapien non', 'interaction text 34', 34, 'Resume34.pdf'),
+('ac nibh', NULL, 35, 'eget eros', 'interaction text 35', 35, 'Resume35.pdf'),
+('vulputate', NULL, 36, 'quisque erat', 'interaction text 36', 36, 'Resume36.pdf'),
+('curabitur', NULL, 37, 'adipiscing lorem', 'interaction text 37', 37, 'Resume37.pdf'),
+('id lobortis', NULL, 38, 'tincidunt', 'interaction text 38', 38, 'Resume38.pdf'),
+('elit', NULL, 39, 'libero', 'interaction text 39', 39, 'Resume39.pdf'),
+('arcu sed', NULL, 40, 'platea dictumst', 'interaction text 40', 40, 'Resume40.pdf');
+
+
 
 insert into Contact (Name, Phone, Email) values ('vestibulum velit', '298-328-2781', 'mheadrick0@rediff.com');
 insert into Contact (Name, Phone, Email) values ('faucibus orci', null, null);
@@ -777,5 +778,3 @@ insert into User_Industry (UserID, IndustryID) values (48, 48);
 insert into User_Industry (UserID, IndustryID) values (49, 49);
 insert into User_Industry (UserID, IndustryID) values (50, 50);
 
-SELECT *
-From Student;
