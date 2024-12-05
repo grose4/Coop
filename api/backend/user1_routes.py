@@ -14,7 +14,7 @@ api = Blueprint('api', __name__)
 @api.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, username, Email FROM users')
+    cursor.execute('SELECT id, username, Email FROM Users')
     users = cursor.fetchall()
     response = make_response(jsonify(users))
     response.status_code = 200
@@ -52,7 +52,7 @@ def delete_user():
 @api.route('/support-tickets', methods=['GET'])
 def get_support_tickets():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, user_id, issue_description, status FROM support_tickets')
+    cursor.execute('SELECT id, user_id, issue_description, status FROM SupportTickets')
     tickets = cursor.fetchall()
     response = make_response(jsonify(tickets))
     response.status_code = 200
@@ -62,7 +62,7 @@ def get_support_tickets():
 @api.route('/support-tickets', methods=['DELETE'])
 def delete_support_ticket():
     ticket_id = request.args.get('id')
-    query = 'DELETE FROM support_tickets WHERE id = %s'
+    query = 'DELETE FROM SupportTickets WHERE id = %s'
     cursor = db.get_db().cursor()
     cursor.execute(query, (ticket_id,))
     db.get_db().commit()
@@ -72,7 +72,7 @@ def delete_support_ticket():
 @api.route('/interactions', methods=['GET'])
 def get_interactions():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM interactions')
+    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM Interactions')
     interactions = cursor.fetchall()
     response = make_response(jsonify(interactions))
     response.status_code = 200

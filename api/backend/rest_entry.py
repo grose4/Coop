@@ -28,7 +28,7 @@ def create_app():
     app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD').strip()
     app.config['MYSQL_DATABASE_HOST'] = os.getenv('DB_HOST').strip()
     app.config['MYSQL_DATABASE_PORT'] = int(os.getenv('DB_PORT').strip())
-    app.config['MYSQL_DATABASE_DB'] = 'finalpart2' # Change this to your DB name
+    app.config['MYSQL_DATABASE_DB'] = os.getenv('DB_NAME', 'finalpart2')
 
     # Initialize the database object with the settings above. 
     app.logger.info('current_app(): starting the database connection')
@@ -44,3 +44,9 @@ def create_app():
 
     # Don't forget to return the app object
     return app
+
+    print("DB_USER:", os.getenv('DB_USER'))
+    print("MYSQL_ROOT_PASSWORD:", os.getenv('MYSQL_ROOT_PASSWORD'))
+    print("DB_HOST:", os.getenv('DB_HOST'))
+    print("DB_PORT:", os.getenv('DB_PORT'))
+    print("DB_NAME:", os.getenv('DB_NAME'))

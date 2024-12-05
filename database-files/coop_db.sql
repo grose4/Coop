@@ -778,3 +778,6 @@ insert into User_Industry (UserID, IndustryID) values (48, 48);
 insert into User_Industry (UserID, IndustryID) values (49, 49);
 insert into User_Industry (UserID, IndustryID) values (50, 50);
 
+ALTER USER 'root'@'172.18.0.2' IDENTIFIED BY 'YES';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.18.0.2';
+FLUSH PRIVILEGES;
