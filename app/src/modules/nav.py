@@ -57,6 +57,9 @@ def AdminPageNav():
     st.sidebar.page_link(
         "pages/22_Update_User.py", label = "Update User View", icon="🏢"
     )
+    st.sidebar.page_link(
+        "pages/23_Delete_User.py", label = "Delete User View", icon="🏢"
+    )
 
 
 # --------------------------------Links Function -----------------------------------------------
