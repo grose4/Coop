@@ -9,6 +9,7 @@ services:
       - 8501:8501
     depends_on:
       - api
+    restart: unless-stopped  
 
   api:
     build: ./api
@@ -18,12 +19,16 @@ services:
       - ./api:/apicode
     ports:
       - 4000:4000
+    restart: unless-stopped   
 
   db:
     image: mysql:9
     container_name: mysql_db
     hostname: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword 
     volumes:
       - ./database-files:/docker-entrypoint-initdb.d/:ro
     ports:
       - 3200:3306
+    restart: unless-stopped   
