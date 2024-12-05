@@ -28,7 +28,7 @@ def main():
     """
     st.title("User Management Dashboard")
     st.header("User Data Table")
-    st.write("Below is the list of all users fetched from the REST API.")
+    st.write("Below is the list of all users.")
 
     # Fetch user data from the API
     user_data = fetch_user_data()

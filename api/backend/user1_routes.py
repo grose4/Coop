@@ -24,20 +24,39 @@ def get_users():
 
 
 
-# Update user info 
+# Update user info
 @api.route('/users', methods=['PUT'])
 def update_user():
     user_info = request.json
-    user_id = user_info['id']
-    username = user_info['username']
-    email = user_info['email']
+    user_id = user_info.get('UserID')
 
-    query = 'UPDATE users SET username = %s, email = %s WHERE id = %s'
-    data = (username, email, user_id)
+    fields = {
+        "Name": user_info.get('Name'),
+        "Bio": user_info.get('Bio'),
+        "Occupation": user_info.get('Occupation'),
+        "Location": user_info.get('Location'),
+        "Age": user_info.get('Age'),
+        "ReferredBy": user_info.get('ReferredBy'),
+        "Online": user_info.get('Online'),
+        "Admin": user_info.get('Admin')
+    }
+
+    # Filters out fields that are None
+    updates = {key: value for key, value in fields.items() if value is not None}
+
+    if not updates:
+        return {"error": "No valid fields provided for update"}, 400
+
+    set_clause = ", ".join(f"{key} = %s" for key in updates.keys())
+    query = f"UPDATE Users SET {set_clause} WHERE UserID = %s"
+    data = tuple(updates.values()) + (user_id,)
+
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
-    return 'user updated!'
+
+    return {"message": "User updated successfully!"}, 200
+
 
 # Delete a user 
 @api.route('/users', methods=['DELETE'])
