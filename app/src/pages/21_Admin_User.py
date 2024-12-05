@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 import requests
 
+
 # Define the base URL for your Flask API
-API_URL = "http://web-api:4000/users"
+API_URL = "http://api:4000/users"
 
 def fetch_user_data():
     """

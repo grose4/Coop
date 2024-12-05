@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS ProjectDatabase;
-CREATE DATABASE ProjectDatabase;
-USE ProjectDatabase;
+DROP DATABASE IF EXISTS finalpart2;
+CREATE DATABASE finalpart2;
+USE finalpart2;
 
 
 DROP TABLE IF EXISTS User_Industry;
