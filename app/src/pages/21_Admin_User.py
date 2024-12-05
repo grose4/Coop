@@ -1,6 +1,12 @@
 import streamlit as st
 import pandas as pd
 import requests
+from modules.nav import SideBarLinks
+
+
+SideBarLinks()
+
+
 
 
 # Define the base URL for your Flask API
