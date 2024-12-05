@@ -66,15 +66,13 @@ def get_support_tickets():
 
 
 
-# Delete a support ticket 
-@api.route('/SupportTickets/<int:ticket_id>', methods=['DELETE'])
-def delete_support_ticket():
-    ticket_id = request.args.get('id')
-    query = 'DELETE FROM SupportTickets WHERE id = %s'
+@api.route('/SupportTickets/<int:TikNum>', methods=['DELETE'])
+def delete_support_ticket(TikNum):
+    query = 'DELETE FROM SupportTickets WHERE TikNum = %s'
     cursor = db.get_db().cursor()
-    cursor.execute(query, (ticket_id,))
+    cursor.execute(query, (TikNum,))
     db.get_db().commit()
-    return 'Support ticket deleted successfully!'
+    return {"message": "Support ticket deleted successfully!"}, 200
 
 # Get interaction data 
 @api.route('/interactions', methods=['GET'])
