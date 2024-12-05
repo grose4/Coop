@@ -10,7 +10,7 @@ from backend.ml_models.model01 import predict
 users = Blueprint('customers', __name__)
 
 # Get users from specific industries:
-@users.route('/users/<industry>', methods=['GET'])
+@api.route('/users/<industry>', methods=['GET'])
 def get_users_by_industry(industry):
     
     query = f'''
@@ -32,7 +32,7 @@ def get_users_by_industry(industry):
     return the_response
 
 # update user info
-@users.route('/users/<userID>', methods=['PUT'])
+@api.route('/users/<userID>', methods=['PUT'])
 def update_user(userID):
     # log and make cursor
     current_app.logger.info('PUT /users/<userID> route')
@@ -64,7 +64,7 @@ def get_users_by_skills():
     SELECT u.Name, u.Bio, u.Occupation, c.CompanyName, e.SoftSkills, e.TechnicalSkills
     FROM Users u
 	JOIN User_Type ut ON u.UserID = ut.UserID
-	JOIN Employers e ON ut.EmpID = e.EmpID
+	JOIN Employer e ON ut.EmpID = e.EmpID
 	JOIN Companies c ON c.CompanyID = e.EmpID
     WHERE e.SoftSkills = %s AND e.TechnicalSkills = %s
     '''
@@ -81,7 +81,7 @@ def get_users_by_skills():
 
 # create a new user
 @users.route('/users', methods=['POST'])
-def add_new_product():
+def add_new_user():
     
     the_data = request.json
     current_app.logger.info(the_data)

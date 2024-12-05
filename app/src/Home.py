@@ -63,7 +63,7 @@ if st.button('Act as Mordecai, a student currently on co-op',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'student'
     st.session_state['first_name'] = 'Mordecai'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.switch_page('pages/student_home.py')
 
 if st.button('Act as an employer', 
             type = 'primary', 
