@@ -47,8 +47,3 @@ def create_app():
     # Don't forget to return the app object
     return app
 
-    print("DB_USER:", os.getenv('DB_USER'))
-    print("MYSQL_ROOT_PASSWORD:", os.getenv('MYSQL_ROOT_PASSWORD'))
-    print("DB_HOST:", os.getenv('DB_HOST'))
-    print("DB_PORT:", os.getenv('DB_PORT'))
-    print("DB_NAME:", os.getenv('DB_NAME'))

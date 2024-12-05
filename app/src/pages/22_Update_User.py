@@ -37,12 +37,16 @@ def main():
 
 def update_user(user_id, field, value):
     try:
-        payload = {"field": field, "value": value}
+        # Treat empty strings as NULL
+        payload = {"field": field, "value": None if value == "" else value}
+        
+        # Send the PUT request
         response = requests.put(f"{BASE_API_URL}/users/{user_id}", json=payload)
-        response.raise_for_status() 
+        response.raise_for_status()  # Raise an error if the status is not 200
         return True
     except requests.exceptions.RequestException as e:
         st.error(f"Error updating user: {e}")
         return False
+
 
 main()

@@ -37,7 +37,7 @@ CREATE TABLE Notifications (
     CreatedBy INT NOT NULL,
     Text TEXT,
     Active BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
 -- Create Student table
@@ -48,7 +48,7 @@ CREATE TABLE Student (
     PayTransparency BOOLEAN DEFAULT FALSE,
     Companies VARCHAR(100),
     Skills VARCHAR(100),
-    FOREIGN KEY (StuID) REFERENCES Users(UserID)
+    FOREIGN KEY (StuID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
 -- Create Faculty table
@@ -56,7 +56,7 @@ CREATE TABLE Faculty (
     FacID INT AUTO_INCREMENT PRIMARY KEY,
     ClassesTaught VARCHAR(100),
     Skills VARCHAR(100),
-    FOREIGN KEY (FacID) REFERENCES Users(UserID)
+    FOREIGN KEY (FacID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
 -- Create Company table
@@ -74,7 +74,7 @@ CREATE TABLE Employer (
     SoftSkills VARCHAR(100),
     PayOffered BOOLEAN DEFAULT FALSE,
     CompanyID INT,
-    FOREIGN KEY (EmpID) REFERENCES Users(UserID),
+    FOREIGN KEY (EmpID) REFERENCES Users(UserID) ON DELETE CASCADE,
     FOREIGN KEY (CompanyID) REFERENCES Company(CompanyID)
 );
 
@@ -84,10 +84,10 @@ CREATE TABLE User_Type (
     StuID INT UNIQUE,
     FacID INT UNIQUE,
     EmpID INT UNIQUE,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (StuID) REFERENCES Student(StuID),
-    FOREIGN KEY (FacID) REFERENCES Faculty(FacID),
-    FOREIGN KEY (EmpID) REFERENCES Employer(EmpID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (StuID) REFERENCES Student(StuID) ON DELETE CASCADE,
+    FOREIGN KEY (FacID) REFERENCES Faculty(FacID) ON DELETE CASCADE,
+    FOREIGN KEY (EmpID) REFERENCES Employer(EmpID) ON DELETE CASCADE
 );
 
 
@@ -103,7 +103,7 @@ CREATE TABLE SupportTickets (
     Active BOOLEAN DEFAULT FALSE,
     Text VARCHAR(500) NOT NULL,
     Urgency INT NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
 -- Create Job_Postings table
@@ -128,8 +128,8 @@ CREATE TABLE Interactions (
     Text VARCHAR(500),
     JobPostingID INT,
     Resume VARCHAR(100),
-    FOREIGN KEY (FromUserID) REFERENCES Users(UserID),
-    FOREIGN KEY (JobPostingID) REFERENCES Job_Postings(JobPostingID)
+    FOREIGN KEY (FromUserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (JobPostingID) REFERENCES Job_Postings(JobPostingID) 
 );
 
 -- Create Contact table
@@ -138,7 +138,7 @@ CREATE TABLE Contact (
     Name VARCHAR(50) NOT NULL,
     Phone VARCHAR(20),
     Email VARCHAR(50),
-    FOREIGN KEY (ContactID) REFERENCES Users(UserID)
+    FOREIGN KEY (ContactID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
 -- Create Industry table
@@ -153,7 +153,7 @@ CREATE TABLE User_Industry (
     UserID INT,
     IndustryID INT,
     PRIMARY KEY (UserID, IndustryID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     FOREIGN KEY (IndustryID) REFERENCES Industry(IndustryID)
 );
 
