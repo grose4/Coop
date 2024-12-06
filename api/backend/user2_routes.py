@@ -4,21 +4,23 @@ from flask import jsonify
 from flask import make_response
 from flask import current_app
 from backend.db_connection import db
-from backend.ml_models.model01 import predict
+import logging
 
 # create blueprint object
 api2 = Blueprint('api2', __name__)
 
 # Get users from specific industries:
-@api2.route('/users/<industry>', methods=['GET'])
-def get_users_by_industry(industry):
+@api2.route('/users/by-industry', methods=['GET'])
+def get_users_by_industry():
     
+    industry = request.args.get('industry')
+
     query = f'''
-    SELECT u.Name, u.Bio, i.Name AS Industry, i.NUCollege
+    SELECT u.UserID, u.Name, u.Bio, i.Name AS IndustryName, i.NUCollege
     FROM Users u
 	JOIN User_Industry ui ON u.UserID = ui.UserID
 	JOIN Industry i ON i.IndustryID = ui.IndustryID
-    WHERE i.Industry = {industry}
+    WHERE i.Name LIKE '{industry}';
     '''
 
     current_app.logger.info('GET /users/<Industry> route')
@@ -26,13 +28,15 @@ def get_users_by_industry(industry):
     cursor.execute(query)
     
     theData = cursor.fetchall()
-    
+
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
+    current_app.logger.info(the_response)
+
     return the_response
 
 # update user info
-@api2.route('/users/<userID>', methods=['PUT'])
+@api2.route('/users/update/<userID>', methods=['PUT'])
 def update_user(userID):
     # log and make cursor
     current_app.logger.info('PUT /users/<userID> route')
@@ -65,7 +69,7 @@ def get_users_by_skills():
     FROM Users u
 	JOIN User_Type ut ON u.UserID = ut.UserID
 	JOIN Employer e ON ut.EmpID = e.EmpID
-	JOIN Companies c ON c.CompanyID = e.EmpID
+	JOIN Company c ON c.CompanyID = e.EmpID
     WHERE e.SoftSkills = %s AND e.TechnicalSkills = %s
     '''
 
@@ -80,7 +84,7 @@ def get_users_by_skills():
     return the_response
 
 # create a new user
-@api2.route('/users', methods=['POST'])
+@api2.route('/users/create', methods=['POST'])
 def add_new_user():
     
     the_data = request.json
@@ -138,7 +142,7 @@ def create_notification():
     return response
 
 # delete a user
-@api2.route('/users/<userID>', methods = ['DELETE'])
+@api2.route('/users/delete/<userID>', methods = ['DELETE'])
 def delete_user(userID):
 
     # log the deletion
@@ -159,7 +163,7 @@ def delete_user(userID):
 
 
 @api2.route('/users/view/<int:UserID>', methods=['GET'])
-def get_users_by_industry(UserID):
+def get_single_user(UserID):
     
     query = f'''
     SELECT u.UserID, u.Name, u.Bio, u.Location, u.Occupation, u.Location, i.Name AS Industry, i.NUCollege
@@ -172,8 +176,9 @@ def get_users_by_industry(UserID):
     current_app.logger.info('GET /users/view/<int:UserID> route')
     cursor = db.get_db().cursor()
     cursor.execute(query)
-    
+
     theData = cursor.fetchall()
+    current_app.logger.info('request results:', theData)
     
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
