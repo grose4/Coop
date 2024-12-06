@@ -1,12 +1,10 @@
 import streamlit as st
 import pandas as pd
 import requests
-from modules.nav import SideBarLinks  # Assuming this is your navigation module
+from modules.nav import SideBarLinks  
 
-# Set up Sidebar Links
 SideBarLinks()
 
-# Base API URL for interactions
 BASE_API_URL = "http://api:4000/a/interactions"
 
 def main():

@@ -100,7 +100,6 @@ def send_notification():
         '''
         data = (user_id, message)
 
-        # Execute query
         cursor = db.get_db().cursor()
         cursor.execute(query, data)
         db.get_db().commit()

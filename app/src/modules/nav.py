@@ -50,6 +50,7 @@ def ClassificationNav():
 
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
+    selected_page = st.sidebar.radio
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon="🖥️")
     st.sidebar.page_link(
         "pages/21_Admin_User.py", label="Admin User View", icon="🏢"
@@ -68,6 +69,9 @@ def AdminPageNav():
     )
     st.sidebar.page_link(
         "pages/26_View_Interactions.py", label = "View Interaction Data", icon="🗺️"
+    )
+    st.sidebar.page_link(
+        "pages/27_Post_Notifications.py", label = "Post Notification", icon="🗺️"
     )
 
 

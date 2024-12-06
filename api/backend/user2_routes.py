@@ -1,16 +1,16 @@
+from flask import Flask 
 from flask import Blueprint
 from flask import request
 from flask import jsonify
 from flask import make_response
-from flask import current_app
 from backend.db_connection import db
-from backend.ml_models.model01 import predict
+import logging
 
 # create blueprint object
-api2 = Blueprint('api2', __name__)
+users = Blueprint('api2', __name__)
 
 # Get users from specific industries:
-@api2.route('/users/<industry>', methods=['GET'])
+@users.route('/users/<industry>', methods=['GET'])
 def get_users_by_industry(industry):
     
     query = f'''
@@ -32,7 +32,7 @@ def get_users_by_industry(industry):
     return the_response
 
 # update user info
-@api2.route('/users/<userID>', methods=['PUT'])
+@users.route('/users/<userID>', methods=['PUT'])
 def update_user(userID):
     # log and make cursor
     current_app.logger.info('PUT /users/<userID> route')
@@ -54,7 +54,7 @@ def update_user(userID):
     return 'customer updated!'
 
 # search users by their skills
-@api2.route('/users/by-skills', methods=['GET'])
+@users.route('/users/by-skills', methods=['GET'])
 def get_users_by_skills():
     
     soft_skills = request.args.get('soft_skills')
@@ -64,7 +64,7 @@ def get_users_by_skills():
     SELECT u.Name, u.Bio, u.Occupation, c.CompanyName, e.SoftSkills, e.TechnicalSkills
     FROM Users u
 	JOIN User_Type ut ON u.UserID = ut.UserID
-	JOIN Employer e ON ut.EmpID = e.EmpID
+	JOIN Employers e ON ut.EmpID = e.EmpID
 	JOIN Companies c ON c.CompanyID = e.EmpID
     WHERE e.SoftSkills = %s AND e.TechnicalSkills = %s
     '''
@@ -80,8 +80,8 @@ def get_users_by_skills():
     return the_response
 
 # create a new user
-@api2.route('/users', methods=['POST'])
-def add_new_user():
+@users.route('/users', methods=['POST'])
+def add_new_product():
     
     the_data = request.json
     current_app.logger.info(the_data)
@@ -112,7 +112,7 @@ def add_new_user():
 
 
 # create a notification
-@api2.route('/notifications', methods=['POST'])
+@notifications.route('/notifications', methods=['POST'])
 def create_notification():
     
     the_data = request.json
@@ -138,7 +138,7 @@ def create_notification():
     return response
 
 # delete a user
-@api2.route('/users/<userID>', methods = ['DELETE'])
+@users.route('/users/<userID>', methods = ['DELETE'])
 def delete_user(userID):
 
     # log the deletion
@@ -156,25 +156,3 @@ def delete_user(userID):
     response.status_code = 200
     
     return response
-
-
-@api2.route('/users/view/<int:UserID>', methods=['GET'])
-def get_users_by_industry(UserID):
-    
-    query = f'''
-    SELECT u.UserID, u.Name, u.Bio, u.Location, u.Occupation, u.Location, i.Name AS Industry, i.NUCollege
-    FROM Users u
-	JOIN User_Industry ui ON u.UserID = ui.UserID
-	JOIN Industry i ON i.IndustryID = ui.IndustryID
-    WHERE u.UserID = {UserID}
-    '''
-
-    current_app.logger.info('GET /users/view/<int:UserID> route')
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    
-    theData = cursor.fetchall()
-    
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
