@@ -23,7 +23,7 @@ def get_users_by_industry():
     WHERE i.Name LIKE '{industry}';
     '''
 
-    current_app.logger.info('GET /users/<Industry> route')
+    current_app.logger.info('GET /users/by-industry route')
     cursor = db.get_db().cursor()
     cursor.execute(query)
     

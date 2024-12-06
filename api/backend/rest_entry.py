@@ -4,6 +4,7 @@ from backend.db_connection import db
 from backend.user1_routes import api
 from backend.products.products_routes import products
 from backend.simple.simple_routes import simple_routes
+from backend.user2_routes import api2
 import os
 from dotenv import load_dotenv
 
@@ -41,6 +42,7 @@ def create_app():
     app.register_blueprint(simple_routes)
     app.register_blueprint(api, url_prefix='/a')
     app.register_blueprint(products,    url_prefix='/p')
+    app.register_blueprint(api2, url_prefix='/aa')
 
     # Don't forget to return the app object
     return app
