@@ -48,6 +48,14 @@ def ClassificationNav():
     )
 
 
+### Student on Co-op nav bar links:
+def student_on_coop_nav():
+    st.sidebar.page_link("pages/40_student_home.py", label='Student on Co-op Home', icon = '🖥️')
+    st.sidebar.page_link("pages/41_user_search.py", label='User Search', icon = '🔍')
+    st.sidebar.page_link("pages/42_view_profile.py", label='View Profile', icon = '👤')
+    st.sidebar.page_link("pages/43_account_settings.py", label='Account Settings', icon = '⚙️')
+
+
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
     selected_page = st.sidebar.radio
@@ -111,6 +119,10 @@ def SideBarLinks(show_home=False):
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state["role"] == "administrator":
             AdminPageNav()
+
+        # if the user is on co-op, give them access to relevant pages
+        if st.session_state['role'] == 'student':
+            student_on_coop_nav()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
