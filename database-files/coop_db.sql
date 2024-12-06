@@ -176,7 +176,7 @@ INSERT INTO Users (UserID, Occupation, Location, Name, Age, Bio, ReferredBy) VAL
 (14, 'Payment Adjustment Coordinator', 'Micronesia', 'wiorid', 24, 'sociis natoque penatibus et magnis', NULL),
 (15, 'Senior Quality Engineer', 'Indonesia', 'dcuncliffee', 57, 'justo in blandit ultrices enim', 61),
 (16, 'Physical Therapy Assistant', 'Philippines', 'dmcnuttf', 6, 'placerat ante nulla justo aliquam quis turpis eget elit', 22),
-(17, 'Senior Sales Associate', 'Philippines', 'jmonteithg', 93, 'quis orci', NULL),
+(17, 'Software Developer', 'Boston', 'Mordecai', 20, 'Hi my name is Mordecai and I am currently a second year student on Co-op at Apple as a software developer.', NULL),
 (18, 'Programmer Analyst III', 'Tanzania', 'lcheneryh', 83, 'vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis', NULL),
 (19, 'Senior Sales Associate', 'China', 'kcooli', 14, 'in faucibus orci luctus', NULL),
 (20, 'Senior Editor', 'Indonesia', 'aertelj', 17, 'eget nunc donec quis orci eget', 30),
@@ -269,7 +269,7 @@ insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills
 insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (3, 2, false, 'ipsum praesent blandit lacinia', null);
 insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (2, null, null, 'donec dapibus', null);
 insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (3, 3, null, 'mi', 'mauris');
-insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (2, 1, null, 'integer tincidunt ante', null);
+insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (2, 1, null, 'Apple', null);
 insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (3, null, null, 'vestibulum', null);
 insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (3, 1, true, 'vestibulum', 'consequat');
 insert into Student  (Year, NumPreviousCoOps, PayTransparency, Companies, Skills) values (1, 1, null, 'quis orci nullam molestie nibh', null);
@@ -465,7 +465,7 @@ INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (13, 13, NULL, NULL);
 INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (14, NULL, 14, NULL);
 INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (15, NULL, 15, NULL);
 INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (16, NULL, 16, NULL);
-INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (17, NULL, NULL, 17);
+INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (17, 17, NULL, NULL);
 INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (18, NULL, NULL, 18);
 INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (19, NULL, NULL, 19);
 INSERT INTO User_Type (UserID, StuID, FacID, EmpID) VALUES (20, 20, NULL, NULL);
@@ -692,7 +692,7 @@ insert into Industry (Name, NUCollege) values ('ac diam', null);
 insert into Industry (Name, NUCollege) values ('volutpat', null);
 insert into Industry (Name, NUCollege) values ('quis odio', 'a');
 insert into Industry (Name, NUCollege) values ('maecenas tristique', 'dolor quis');
-insert into Industry (Name, NUCollege) values ('etiam', null);
+insert into Industry (Name, NUCollege) values ('Computer Science', 'Khoury');
 insert into Industry (Name, NUCollege) values ('porta', null);
 insert into Industry (Name, NUCollege) values ('ac neque', 'donec');
 insert into Industry (Name, NUCollege) values ('nullam', 'bibendum');

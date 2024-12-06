@@ -17,14 +17,14 @@ st.write('### What would you like to do today?')
 if st.button('Search for users', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/user_search.py')
+  st.switch_page('pages/41_user_search.py')
 
 if st.button('View my profile', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/view_profile.py')
+  st.switch_page('pages/42_view_profile.py')
 
 if st.button('Account Settings', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/account_settings.py')
+  st.switch_page('pages/43_account_settings.py')

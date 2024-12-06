@@ -166,7 +166,7 @@ def delete_user(userID):
 def get_single_user(UserID):
     
     query = f'''
-    SELECT u.UserID, u.Name, u.Bio, u.Location, u.Occupation, u.Location, i.Name AS Industry, i.NUCollege
+    SELECT u.UserID, u.Name, u.Bio, u.Location, u.Occupation, u.age, i.Name AS Industry, i.NUCollege, u.Online, u.ReferredBy
     FROM Users u
 	JOIN User_Industry ui ON u.UserID = ui.UserID
 	JOIN Industry i ON i.IndustryID = ui.IndustryID
