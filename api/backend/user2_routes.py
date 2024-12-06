@@ -13,7 +13,7 @@ api2 = Blueprint('api2', __name__)
 @api2.route('/users/by-industry', methods=['GET'])
 def get_users_by_industry():
     
-    industry = request.args.get('industry')
+    industry = request.json['industry']
 
     query = f'''
     SELECT u.UserID, u.Name, u.Bio, i.Name AS IndustryName, i.NUCollege
@@ -61,21 +61,21 @@ def update_user(userID):
 @api2.route('/users/by-skills', methods=['GET'])
 def get_users_by_skills():
     
-    soft_skills = request.args.get('soft_skills')
-    tech_skills = request.args.get('tech_skills')
+    user_info = request.json
+    soft_skills = str(user_info['soft_skills'])
+    tech_skills = str(user_info['tech_skills'])
 
-    query = '''
-    SELECT u.Name, u.Bio, u.Occupation, c.CompanyName, e.SoftSkills, e.TechnicalSkills
-    FROM Users u
-	JOIN User_Type ut ON u.UserID = ut.UserID
-	JOIN Employer e ON ut.EmpID = e.EmpID
-	JOIN Company c ON c.CompanyID = e.EmpID
-    WHERE e.SoftSkills = %s AND e.TechnicalSkills = %s
+    query = f'''
+    SELECT u.UserID, u.Name, u.Bio, u.Occupation, e.SoftSkills, e.TechnicalSkills
+    FROM Employer e
+	JOIN User_Type ut ON e.EmpID = ut.UserID
+	JOIN Users u ON ut.UserID = u.UserID
+    WHERE e.SoftSkills LIKE '{soft_skills}' AND e.TechnicalSkills LIKE '{tech_skills}' AND u.UserID IS NOT NULL;
     '''
 
     current_app.logger.info('GET /users/by-skills route')
     cursor = db.get_db().cursor()
-    cursor.execute(query, (soft_skills, tech_skills))
+    cursor.execute(query)
     
     theData = cursor.fetchall()
     

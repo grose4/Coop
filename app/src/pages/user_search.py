@@ -51,7 +51,7 @@ def fetch_user_data_skills(soft_skills, tech_skills):
         response = requests.get("http://api:4000/aa/users/by-skills", json=skills_data)
         response.raise_for_status() 
         users = response.json() 
-        user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "IndustryName", "College"])
+        user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "Occupation", "CompanyName", 'SoftSkills', 'TechnicalSkills'])
         return user_data
     except requests.exceptions.RequestException as e:
         st.error(f"Failed to fetch  data from the API: {e}")
@@ -64,7 +64,7 @@ def main():
     """
     st.title('Users')
 
-    st.write('search by users')
+    st.write('Search by users')
     with st.form("search_user_form"):
     
         UserID = int(st.number_input("UserID", step=1))
@@ -98,7 +98,7 @@ def main():
             if not industry:
                 st.error("Please enter an Industry")
             else:
-                st.write(f'searching for users in industry: {industry}')
+                st.write(f"searching for users in industry: '{industry}'")
                 user_data = fetch_user_data_industry(industry)
                 # show user data
                 if user_data is not None and not user_data.empty:
@@ -107,7 +107,7 @@ def main():
                 else:
                     st.warning("No user data available.")
     
-    st.write('Search by Skills')
+    st.write('Search by Skills (Employers)')
     with st.form('search_user_skills_form'):
 
         soft_skills = st.text_area('Soft Skills')
