@@ -2,12 +2,9 @@ from flask import Flask
 
 from backend.db_connection import db
 from backend.user1_routes import api
-<<<<<<< HEAD
-=======
 from backend.products.products_routes import products
 from backend.simple.simple_routes import simple_routes
 from backend.user2_routes import api2
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
 import os
 from dotenv import load_dotenv
 
