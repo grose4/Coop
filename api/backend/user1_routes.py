@@ -26,21 +26,22 @@ def get_users():
 
 
 @api.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id, field, value):
+def update_user(user_id):
+    user_info = request.json
+    field = user_info.get('field')
+    value = user_info.get('value')
+
+
+    query = f"UPDATE Users SET {field} = %s WHERE UserID = %s"
+    data = (value, user_id)
+
     try:
-        # Treat empty strings as NULL
-        payload = {"field": field, "value": None if value == "" else value}
-        
-        # Send the PUT request
-        response = requests.put(f"{BASE_API_URL}/users/{user_id}", json=payload)
-        response.raise_for_status()  # Raise an error if the status is not 200
-        return True
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error updating user: {e}")
-        return False
-
-
-
+        cursor = db.get_db().cursor()
+        cursor.execute(query, data)
+        db.get_db().commit()
+        return {"message": "User updated successfully"}, 200
+    except Exception as e:
+        return {"error": str(e)}, 500
 
 
 # Delete a user 
@@ -56,31 +57,28 @@ def delete_user():
 
 # SUPPORT-TICKETS ENDPOINTS
 
-# Get all support tickets
-@api.route('/support-tickets', methods=['GET'])
+@api.route('/SupportTickets', methods=['GET'])
 def get_support_tickets():
-    cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, user_id, issue_description, status FROM SupportTickets')
-    tickets = cursor.fetchall()
-    response = make_response(jsonify(tickets))
-    response.status_code = 200
-    return response
+        cursor = db.get_db().cursor()
+        cursor.execute('SELECT TikNum, UserID, StartedAt, Category, RespondedAt, Active, Text, Urgency FROM SupportTickets')
+        tickets = cursor.fetchall()
+        return jsonify(tickets), 200
 
-# Delete a support ticket 
-@api.route('/support-tickets', methods=['DELETE'])
-def delete_support_ticket():
-    ticket_id = request.args.get('id')
-    query = 'DELETE FROM SupportTickets WHERE id = %s'
+
+
+@api.route('/SupportTickets/<int:TikNum>', methods=['DELETE'])
+def delete_support_ticket(TikNum):
+    query = 'DELETE FROM SupportTickets WHERE TikNum = %s'
     cursor = db.get_db().cursor()
-    cursor.execute(query, (ticket_id,))
+    cursor.execute(query, (TikNum,))
     db.get_db().commit()
-    return 'Support ticket deleted successfully!'
+    return {"message": "Support ticket deleted successfully!"}, 200
 
 # Get interaction data 
 @api.route('/interactions', methods=['GET'])
 def get_interactions():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, user_id, interaction_type, timestamp FROM Interactions')
+    cursor.execute('SELECT * FROM Interactions')
     interactions = cursor.fetchall()
     response = make_response(jsonify(interactions))
     response.status_code = 200
@@ -88,20 +86,27 @@ def get_interactions():
 
 @api.route('/notifications', methods=['POST'])
 def send_notification():
-    notification_data = request.json
-    
-    user_id = notification_data['user_id']
-    title = notification_data['title']
-    message = notification_data['message']
+    try:
+        notification_data = request.json
+        user_id = notification_data.get('user_id')  
+        message = notification_data.get('message')
 
-    query = '''
-        INSERT INTO notifications (user_id, title, message, created_at)
-        VALUES (%s, %s, %s, NOW())
-    '''
-    data = (user_id, title, message)
+        if not message:
+            return {"error": "Notification message is required."}, 400
 
-    cursor = db.get_db().cursor()
-    cursor.execute(query, data)
-    db.get_db().commit()
+        query = '''
+            INSERT INTO Notifications (CreatedBy, Text, Active)
+            VALUES (%s, %s, TRUE)
+        '''
+        data = (user_id, message)
 
-    return 'Notification Sent'
+        # Execute query
+        cursor = db.get_db().cursor()
+        cursor.execute(query, data)
+        db.get_db().commit()
+
+        return {"message": "Notification sent successfully!"}, 200
+    except Exception as e:
+        current_app.logger.error(f"Error sending notification: {e}")
+        return {"error": str(e)}, 500
+
