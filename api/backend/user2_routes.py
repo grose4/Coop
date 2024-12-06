@@ -7,16 +7,11 @@ from backend.db_connection import db
 import logging
 
 # create blueprint object
-users = Blueprint('api2', __name__)
+api2 = Blueprint('api2', __name__)
 
 # Get users from specific industries:
-<<<<<<< HEAD
-@users.route('/users/<industry>', methods=['GET'])
-def get_users_by_industry(industry):
-=======
 @api2.route('/users/by-industry', methods=['GET'])
 def get_users_by_industry():
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
     
     industry = request.json['industry']
 
@@ -41,11 +36,7 @@ def get_users_by_industry():
     return the_response
 
 # update user info
-<<<<<<< HEAD
-@users.route('/users/<userID>', methods=['PUT'])
-=======
 @api2.route('/users/update/<userID>', methods=['PUT'])
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
 def update_user(userID):
     # log and make cursor
     current_app.logger.info('PUT /users/<userID> route')
@@ -67,29 +58,19 @@ def update_user(userID):
     return 'customer updated!'
 
 # search users by their skills
-@users.route('/users/by-skills', methods=['GET'])
+@api2.route('/users/by-skills', methods=['GET'])
 def get_users_by_skills():
     
     user_info = request.json
     soft_skills = str(user_info['soft_skills'])
     tech_skills = str(user_info['tech_skills'])
 
-<<<<<<< HEAD
-    query = '''
-    SELECT u.Name, u.Bio, u.Occupation, c.CompanyName, e.SoftSkills, e.TechnicalSkills
-    FROM Users u
-	JOIN User_Type ut ON u.UserID = ut.UserID
-	JOIN Employers e ON ut.EmpID = e.EmpID
-	JOIN Companies c ON c.CompanyID = e.EmpID
-    WHERE e.SoftSkills = %s AND e.TechnicalSkills = %s
-=======
     query = f'''
     SELECT u.UserID, u.Name, u.Bio, u.Occupation, e.SoftSkills, e.TechnicalSkills
     FROM Employer e
 	JOIN User_Type ut ON e.EmpID = ut.UserID
 	JOIN Users u ON ut.UserID = u.UserID
     WHERE e.SoftSkills LIKE '{soft_skills}' AND e.TechnicalSkills LIKE '{tech_skills}' AND u.UserID IS NOT NULL;
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
     '''
 
     current_app.logger.info('GET /users/by-skills route')
@@ -103,13 +84,8 @@ def get_users_by_skills():
     return the_response
 
 # create a new user
-<<<<<<< HEAD
-@users.route('/users', methods=['POST'])
-def add_new_product():
-=======
 @api2.route('/users/create', methods=['POST'])
 def add_new_user():
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
     
     the_data = request.json
     current_app.logger.info(the_data)
@@ -140,7 +116,7 @@ def add_new_user():
 
 
 # create a notification
-@notifications.route('/notifications', methods=['POST'])
+@api2.route('/notifications', methods=['POST'])
 def create_notification():
     
     the_data = request.json
@@ -166,11 +142,7 @@ def create_notification():
     return response
 
 # delete a user
-<<<<<<< HEAD
-@users.route('/users/<userID>', methods = ['DELETE'])
-=======
 @api2.route('/users/delete/<userID>', methods = ['DELETE'])
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
 def delete_user(userID):
 
     # log the deletion
@@ -188,8 +160,6 @@ def delete_user(userID):
     response.status_code = 200
     
     return response
-<<<<<<< HEAD
-=======
 
 
 @api2.route('/users/view/<int:UserID>', methods=['GET'])
@@ -213,4 +183,3 @@ def get_single_user(UserID):
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
->>>>>>> c1364949e97ee85a7b5c69279f8340a1a35a441a
