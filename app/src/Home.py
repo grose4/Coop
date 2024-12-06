@@ -64,6 +64,7 @@ if st.button('Act as Mordecai, a student currently on co-op',
     st.session_state['role'] = 'student'
     st.session_state['first_name'] = 'Mordecai'
     st.session_state['UserID'] = 17
+    st.session_state['profile_view_UserID'] = 17
     st.switch_page('pages/40_student_home.py')
 
 if st.button('Act as an employer', 

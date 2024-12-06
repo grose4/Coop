@@ -129,5 +129,20 @@ def main():
                 else:
                     st.warning("No user data available.")
 
+    with st.form('view_user_search_form'):
+        UserID_toview = st.number_input('UserID', min_value = 0, step=1)
+        
+        submit_button = st.form_submit_button("Search for User")
+        if submit_button:
+            try:
+                response = requests.get("http://api:4000/aa/users/view/" + str(UserID))
+                response.raise_for_status() 
+                st.session_state['profile_view_UserID'] = UserID_toview
+                st.switch_page('pages/42_view_profile.py')
+            except requests.exceptions.RequestException as e:
+                st.error(f"Failed to fetch user data from the API: {e}")
+            
+
+
 
 main()

@@ -22,6 +22,7 @@ if st.button('Search for users',
 if st.button('View my profile', 
              type='primary',
              use_container_width=True):
+  st.session_state['profile_view_UserID'] = st.session_state['UserID']
   st.switch_page('pages/42_view_profile.py')
 
 if st.button('Account Settings', 
