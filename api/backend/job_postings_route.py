@@ -31,9 +31,9 @@ def get_all_job_postings():
 @api3.route('/job-postings/<int:job_id>', methods=['GET'])
 def get_job_posting(job_id):
     query = f'''
-    SELECT JobID, Title, Description, Location, Skills, Deadline, Salary
+    SELECT JobPostingID, Text, SalaryRange, Title, GPA_Range, Deadline, Experience_Level
     FROM Job_Postings
-    WHERE JobID = %s
+    WHERE JobPostingID = %s
     '''
     current_app.logger.info('GET /job-postings/<int:job_id> route')
     cursor = db.get_db().cursor()
@@ -49,19 +49,19 @@ def get_job_posting(job_id):
 def create_job_posting():
     job_data = request.json
     title = job_data['title']
-    description = job_data['description']
-    location = job_data['location']
-    skills = job_data['skills']
+    text = job_data['text']
+    experience_level = job_data['experience_level']
+    gpa_range = job_data['gpa_range']
     deadline = job_data['deadline']
-    salary = job_data['salary']
+    salary_range = job_data['salary_range']
 
     query = '''
-    INSERT INTO Job_Postings (Title, Description, Location, Skills, Deadline, Salary)
+    INSERT INTO Job_Postings (Text, SalaryRange, Title, GPA_Range, Deadline, Experience_Level)
     VALUES (%s, %s, %s, %s, %s, %s)
     '''
     current_app.logger.info('POST /job-postings route')
     cursor = db.get_db().cursor()
-    cursor.execute(query, (title, description, location, skills, deadline, salary))
+    cursor.execute(query, (text, salary_range, title, gpa_range, deadline, experience_level))
     db.get_db().commit()
     
     response = make_response("Job posting successfully created!")
@@ -72,21 +72,21 @@ def create_job_posting():
 @api3.route('/job-postings/<int:job_id>', methods=['PUT'])
 def update_job_posting(job_id):
     job_data = request.json
-    title = job_data.get('title')
-    description = job_data.get('description')
-    location = job_data.get('location')
-    skills = job_data.get('skills')
-    deadline = job_data.get('deadline')
-    salary = job_data.get('salary')
+    title = job_data['title']
+    text = job_data['text']
+    experience_level = job_data['experience_level']
+    gpa_range = job_data['gpa_range']
+    deadline = job_data['deadline']
+    salary_range = job_data['salary_range']
 
     query = '''
     UPDATE Job_Postings
-    SET Title = %s, Description = %s, Location = %s, Skills = %s, Deadline = %s, Salary = %s
-    WHERE JobID = %s
+    SET Title = %s, Text = %s, SalaryRange = %s, Title = %s, GPA_Range = %s, Location = %s, Deadline = %s, Experience_Level = %s
+    WHERE JobPostingID = %s
     '''
     current_app.logger.info(f'PUT /job-postings/<int:job_id> route')
     cursor = db.get_db().cursor()
-    cursor.execute(query, (title, description, location, skills, deadline, salary, job_id))
+    cursor.execute(query, (title, text, experience_level, deadline, salary_range))
     db.get_db().commit()
     
     response = make_response("Job posting successfully updated!")
