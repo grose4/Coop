@@ -90,7 +90,11 @@ def employer_nav():
     st.sidebar.page_link("pages/52_Create_Job_Post.py", label="Create Job Post", icon="📝")
     st.sidebar.page_link("pages/53_Manage_Job_Post.py", label="Manage Job Posts", icon="⚙️")
 
-
+def cooper_nav():
+    st.sidebar.page_link("pages/newcooper_home.py", label='Student on Co-op Home', icon = '🖥️')
+    st.sidebar.page_link("pages/student_profile.py", label='User Search', icon = '🔍') 
+    st.sidebar.page_link("pages/student_account.py", label='View Profile', icon = '👤')
+    st.sidebar.page_link("pages/create_cooper.py", label='Create New Account', icon = '📝') 
 
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
@@ -135,6 +139,9 @@ def SideBarLinks(show_home=False):
 
         if st.session_state["role"] == "employer":
             employer_nav()
+
+        if st.session_state["role"] == "cooper":
+            cooper_nav()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
