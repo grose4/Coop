@@ -5,40 +5,28 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-BASE_JP_API_URL = "http://api:4000/jp"
+BASE_API_URL = "http://api:4000/jp"
 
-def fetch_all_job_postings(location="%", skills="%", deadline="%"):
+def fetch_all_job_postings():
+    """
+    Fetch all job postings from the API.
+    Returns a Pandas DataFrame if successful, otherwise None.
+    """
     try:
-<<<<<<< HEAD
-        filters = {
-            "location": location,
-            "skills": skills,
-            "deadline": deadline,
-        }
-        response = requests.get(
-            f"{BASE_API_URL}/job-postings",
-            json=filters
-        )
-=======
-        response = requests.get(f"{BASE_JP_API_URL}/job-postings")
->>>>>>> 347f070c72bdfbc1685a4bf5d32877417c430525
+        response = requests.get(f"{BASE_API_URL}/job-postings")
         response.raise_for_status()
         postings = response.json()
-        return pd.DataFrame(
-            postings,
-            columns=["JobID", "Title", "Description", "Location", "Skills", "Deadline", "Salary"],
-        )
+        return pd.DataFrame(postings, columns=["JobID", "Title", "Description", "Location", "Skills", "Deadline", "Salary"])
     except requests.exceptions.RequestException as e:
         st.error(f"Failed to fetch job postings: {e}")
         return None
-
 
 def fetch_job_posting_by_id(job_id):
     """
     Fetch a specific job posting by ID from the API.
     """
     try:
-        response = requests.get(f"{BASE_JP_API_URL}/job-postings/{job_id}")
+        response = requests.get(f"{BASE_API_URL}/job-postings/{job_id}")
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -47,24 +35,21 @@ def fetch_job_posting_by_id(job_id):
 
 def main():
     st.title("View Job Postings")
-    st.subheader("Filter Job Postings")
-
-    # Filters
-    location = st.text_input("Location (Leave blank for all):", value="%")
-    skills = st.text_input("Skills (Leave blank for all):", value="%")
-    deadline = st.date_input("Deadline (Leave blank for all):")
-
-    # Fetch and display job postings
     st.subheader("All Job Postings")
-    if st.button("Apply Filters"):
-        job_data = fetch_all_job_postings(
-            location=location if location else "%",
-            skills=skills if skills else "%",
-            deadline=str(deadline) if deadline else "%",
-        )
-        if job_data is not None and not job_data.empty:
-            st.dataframe(job_data)
-        else:
-            st.warning("No job postings available.")
+    job_data = fetch_all_job_postings()
+    if job_data is not None and not job_data.empty:
+        st.dataframe(job_data)
+    else:
+        st.warning("No job postings available.")
 
-main()
+    st.subheader("Search Job Posting by ID")
+    job_id = st.number_input("Enter Job ID:", min_value=1, step=1)
+    if st.button("Search"):
+        job_posting = fetch_job_posting_by_id(job_id)
+        if job_posting:
+            st.json(job_posting)
+        else:
+            st.warning(f"No job posting found with ID {job_id}.")
+
+if __name__ == "__main__":
+    main()
