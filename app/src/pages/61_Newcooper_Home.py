@@ -23,14 +23,14 @@ if st.button('Edit your student profile',
              type='primary',
              use_container_width=True):
   st.session_state['profile_view_StuID'] = st.session_state['StuID']
-  st.switch_page('pages/student_profile.py') 
+  st.switch_page('pages/64_student_profile.py') 
 
 if st.button('View your Student Account', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/student_account.py') 
+  st.switch_page('pages/63_student_account.py') 
 
 if st.button('Explore Resources', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/resources.py')  
+  st.switch_page('pages/62_resources.py')  
