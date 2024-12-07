@@ -1,16 +1,15 @@
 import logging
-logger = logging.getLogger(__name__)
-
 import streamlit as st
 from modules.nav import SideBarLinks
 import requests
 
-st.set_page_config(layout = 'wide')
+logger = logging.getLogger(__name__)
+st.set_page_config(layout='wide')
 
-SideBarLinks() 
+SideBarLinks()
 
-#api call
-def add_new_student(year, prevcoops, pay, comps, skills): 
+# API call
+def add_new_student(year, prevcoops, pay, comps, skills):
     try:
         payload = {
             "Year": year,
@@ -18,46 +17,36 @@ def add_new_student(year, prevcoops, pay, comps, skills):
             "PayTransparency": pay,
             "Companies": comps,
             "bio": skills
-        } 
-        response = requests.post("http://api:4000/aaa/student/create", json=payload) 
-        response.raise_for_status() 
+        }
+        response = requests.post("http://api:4000/aaa/student/create", json=payload)
+        response.raise_for_status()
         return True
-    except requests.exceptions.RequestException as e: 
-        st.error(f"Error updating user: {e}")
-        return False 
-    
-st.title("Start your Journey by giving us important information!") 
+    except requests.exceptions.RequestException as e:
+        st.error(f"Error creating user: {e}")
+        return False
 
-st.subheader("Answer the following prompts") 
+st.title("Start your Journey by giving us important information!")
+st.subheader("Answer the following prompts")
 
-#year 
-valid_fields = [
-    "First", "Second", "Third", "Fourth", 
-    "Fifth"
-]
-year = st.selectbox("Select Year:", valid_fields) 
+# Year (as a number)
+year = st.number_input("Enter your current year (e.g., 1 for First Year, 2 for Second Year):", min_value=1, max_value=5, step=1)
 
-#previous coops 
-valid_fields2 = [
-    "zero", "one", "two", "three" 
-]
-prevcoops = st.selectbox("Select Number of Completed Co-ops:", valid_fields2) 
+# Previous Co-ops (as a number)
+prevcoops = st.number_input("Enter the number of completed Co-ops (e.g., 0, 1, 2):", min_value=0, max_value=3, step=1)
 
-#Paytransparency
-valid_fields3 = [
-    "yes", "no"
-]
-pay = st.selectbox("Select Pay Transparency Preference:", valid_fields3) 
+# Pay Transparency
+pay = st.radio("Do you prefer pay transparency?", options=["Yes", "No"])
+pay = True if pay == "Yes" else False
 
-#Companies 
-comps = st.text_input(f"Enter Company/s for:", "") 
+# Companies
+comps = st.text_input("Enter the companies you are interested in (comma-separated):", "")
 
-#Skills
-skills = st.text_input(f"Enter Skill/s for:", "") 
+# Skills
+skills = st.text_input("Enter your skills (comma-separated):", "")
 
-if st.button("Create New Cooper Customizations"):
+if st.button("Create New Co-op Customizations"):
     # Validate inputs
-    if not year or not prevcoops or not pay or not comps or not skills:
+    if not comps or not skills:
         st.error("Please fill in all fields.")
     else:
         # Call the function to add a new student
@@ -65,4 +54,4 @@ if st.button("Create New Cooper Customizations"):
         if add_status:
             st.success("New Co-op searcher created successfully!")
         else:
-            st.error("Failed to create new Co-op searcher.") 
+            st.error("Failed to create new Co-op searcher.")

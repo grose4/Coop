@@ -3,6 +3,7 @@ from flask import Blueprint
 from flask import request
 from flask import jsonify
 from flask import make_response
+from flask import current_app
 from backend.db_connection import db
 import logging
 
@@ -48,32 +49,40 @@ def delete_user(stu_id):
 
 @api3.route('/student/create', methods=['POST'])
 def add_new_student():
-    
-    the_data = request.json
-    current_app.logger.info(the_data)
+    try:
+        # Parse the incoming JSON data
+        the_data = request.json
+        current_app.logger.info(the_data)
 
-    # extract the variable
-    year = the_data['Year']
-    prevcoops = the_data['NumPreviousCoOps']
-    pay = the_data['PayTransparency']
-    comps = the_data['Companies']
-    skills = the_data['bio'] 
-    
-    query = '''
-        INSERT INTO Users (year, prevcoops, pay, comps, skills)
-        VALUES (%s, %s, %s, %s, %s) 
+        # Extract variables
+        year = the_data['Year']
+        prevcoops = the_data['NumPreviousCoOps']
+        pay = the_data['PayTransparency']
+        comps = the_data['Companies']
+        skills = the_data['bio']
+
+        # Use correct column names in the INSERT query
+        query = '''
+            INSERT INTO Student (Year, NumPreviousCoOps, PayTransparency, Companies, Skills)
+            VALUES (%s, %s, %s, %s, %s)
         '''
 
-    current_app.logger.info(query)
+        # Log the query for debugging
+        current_app.logger.info(f"Executing query: {query} with data: {year}, {prevcoops}, {pay}, {comps}, {skills}")
 
-    # execute and commit the insert statement 
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (year, prevcoops, pay, comps, skills))
-    db.get_db().commit()
-    
-    response = make_response("Successfully created student customizations!")
-    response.status_code = 200
-    return response 
+        # Execute the query
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (year, prevcoops, pay, comps, skills))
+        db.get_db().commit()
+
+        response = make_response("Successfully created student customizations!")
+        response.status_code = 200
+        return response
+
+    except Exception as e:
+        current_app.logger.error(f"Error creating student: {e}", exc_info=True)
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
+
 
 
 @api3.route('/student/by-paytransparency', methods=['GET'])
