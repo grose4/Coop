@@ -1,5 +1,8 @@
 import streamlit as st
 import requests
+from modules.nav import SideBarLinks
+
+SideBarLinks()
 
 BASE_API_URL = "http://api:4000/aa"
 
