@@ -8,10 +8,6 @@ SideBarLinks()
 BASE_API_URL = "http://api:4000/aa"
 
 def fetch_all_job_postings():
-    """
-    Fetch all job postings from the API.
-    Returns a Pandas DataFrame if successful, otherwise None.
-    """
     try:
         response = requests.get(f"{BASE_API_URL}/job-postings")
         response.raise_for_status()
