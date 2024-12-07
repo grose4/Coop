@@ -4,12 +4,12 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-BASE_API_URL = "http://api:4000/jp"
+BASE_JP_API_URL = "http://api:4000/jp"
 
 def update_job_posting(job_id, field, value):
     try:
         payload = {field: value}
-        response = requests.put(f"{BASE_API_URL}/job-postings/{job_id}", json=payload)
+        response = requests.put(f"{BASE_JP_API_URL}/job-postings/{job_id}", json=payload)
         response.raise_for_status()
         return True
     except requests.exceptions.RequestException as e:
@@ -18,7 +18,7 @@ def update_job_posting(job_id, field, value):
 
 def delete_job_posting(job_id):
     try:
-        response = requests.delete(f"{BASE_API_URL}/job-postings/{job_id}")
+        response = requests.delete(f"{BASE_JP_API_URL}/job-postings/{job_id}")
         response.raise_for_status()
         return True
     except requests.exceptions.RequestException as e:

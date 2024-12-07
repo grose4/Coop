@@ -5,10 +5,11 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-BASE_API_URL = "http://api:4000/jp"
+BASE_JP_API_URL = "http://api:4000/jp"
 
 def fetch_all_job_postings(location="%", skills="%", deadline="%"):
     try:
+<<<<<<< HEAD
         filters = {
             "location": location,
             "skills": skills,
@@ -18,6 +19,9 @@ def fetch_all_job_postings(location="%", skills="%", deadline="%"):
             f"{BASE_API_URL}/job-postings",
             json=filters
         )
+=======
+        response = requests.get(f"{BASE_JP_API_URL}/job-postings")
+>>>>>>> 347f070c72bdfbc1685a4bf5d32877417c430525
         response.raise_for_status()
         postings = response.json()
         return pd.DataFrame(
@@ -34,7 +38,7 @@ def fetch_job_posting_by_id(job_id):
     Fetch a specific job posting by ID from the API.
     """
     try:
-        response = requests.get(f"{BASE_API_URL}/job-postings/{job_id}")
+        response = requests.get(f"{BASE_JP_API_URL}/job-postings/{job_id}")
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
