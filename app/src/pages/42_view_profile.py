@@ -32,7 +32,7 @@ def main():
         user_data = fetch_user_data(st.session_state['UserID'])[0]
         st.header(st.session_state['first_name'], divider='red')
     else:
-        user_data = fetch_user_data(st.session_state['profile_view_UserID'])[0]
+        user_data = fetch_user_data(st.session_state['profile_view_UserID'])
         st.header(user_data['Name'], divider='red')
 
     for key, value in user_data.items():

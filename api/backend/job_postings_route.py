@@ -44,29 +44,36 @@ def get_job_posting(job_id):
     response.status_code = 200
     return response
 
-# Create a new job posting
 @api4.route('/job-postings', methods=['POST'])
 def create_job_posting():
     job_data = request.json
-    title = job_data['title']
-    text = job_data['text']
-    experience_level = job_data['experience_level']
-    gpa_range = job_data['gpa_range']
-    deadline = job_data['deadline']
-    salary_range = job_data['salary_range']
+
+    text = job_data['Text']
+    salary_range = job_data['SalaryRange']
+    title = job_data['Title']
+    gpa_range = job_data['GPA_Range']
+    location = job_data['Location']
+    deadline = job_data['Deadline']
+    experience_level = job_data['Experience_Level']
 
     query = '''
-    INSERT INTO Job_Postings (Text, SalaryRange, Title, GPA_Range, Deadline, Experience_Level)
-    VALUES (%s, %s, %s, %s, %s, %s)
+    INSERT INTO Job_Postings (Text, SalaryRange, Title, GPA_Range, Location, Deadline, Experience_Level)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
     '''
-    current_app.logger.info('POST /job-postings route')
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (text, salary_range, title, gpa_range, deadline, experience_level))
-    db.get_db().commit()
-    
-    response = make_response("Job posting successfully created!")
-    response.status_code = 201
-    return response
+    try:
+        current_app.logger.info('POST /job-postings route')
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (text, salary_range, title, gpa_range, location, deadline, experience_level))
+        db.get_db().commit()
+        response = make_response("Job posting successfully created!")
+        response.status_code = 201
+        return response
+    except Exception as e:
+        current_app.logger.error(f"Error while inserting job posting: {e}")
+        response = make_response(f"Error: {str(e)}")
+        response.status_code = 500
+        return response
+
 
 # Update an existing job posting
 @api4.route('/job-postings/<int:job_id>', methods=['PUT'])
@@ -79,7 +86,6 @@ def update_job_posting(job_id):
         field = job_data.get('field')
         value = job_data.get('value')
 
-        # Validate the field to ensure it's a valid column
         valid_fields = [
             "Text", "SalaryRange", "Title", 
             "GPA_Range", "Location", "Deadline", "Experience_Level"
@@ -87,11 +93,9 @@ def update_job_posting(job_id):
         if field not in valid_fields:
             return jsonify({"error": f"Invalid field: {field}"}), 400
 
-        # Build the SQL query dynamically
         query = f"UPDATE Job_Postings SET {field} = %s WHERE JobPostingID = %s"
         current_app.logger.info(f"Executing query: {query} with values: ({value}, {job_id})")
 
-        # Execute the query
         cursor = db.get_db().cursor()
         cursor.execute(query, (value, job_id))
         db.get_db().commit()
@@ -107,10 +111,8 @@ def update_job_posting(job_id):
 @api4.route('/job-postings/<int:job_id>', methods=['DELETE'])
 def delete_job_posting(job_id):
     try:
-        # Log the route
         current_app.logger.info(f"DELETE /job-postings/{job_id} route")
 
-        # Check if the job posting exists
         check_query = 'SELECT 1 FROM Job_Postings WHERE JobPostingID = %s'
         cursor = db.get_db().cursor()
         cursor.execute(check_query, (job_id,))
@@ -120,7 +122,6 @@ def delete_job_posting(job_id):
             current_app.logger.warning(f"Job posting with ID {job_id} not found.")
             return jsonify({"error": f"Job posting with ID {job_id} not found."}), 404
 
-        # Proceed with deletion
         delete_query = 'DELETE FROM Job_Postings WHERE JobPostingID = %s'
         cursor.execute(delete_query, (job_id,))
         db.get_db().commit()
