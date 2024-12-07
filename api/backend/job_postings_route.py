@@ -7,9 +7,9 @@ from flask import make_response
 from backend.db_connection import db
 import logging
 
-api3 = Blueprint('api3', __name__)
+api4 = Blueprint('api4', __name__)
 
-@api3.route('/job-postings', methods=['GET'])
+@api4.route('/job-postings', methods=['GET'])
 def get_all_job_postings():
     """
     Fetch all job postings from the database without filters.
@@ -28,7 +28,7 @@ def get_all_job_postings():
 
 
 # Retrieve specific job posting by ID
-@api3.route('/job-postings/<int:job_id>', methods=['GET'])
+@api4.route('/job-postings/<int:job_id>', methods=['GET'])
 def get_job_posting(job_id):
     query = f'''
     SELECT JobPostingID, Text, SalaryRange, Title, GPA_Range, Deadline, Experience_Level
@@ -45,7 +45,7 @@ def get_job_posting(job_id):
     return response
 
 # Create a new job posting
-@api3.route('/job-postings', methods=['POST'])
+@api4.route('/job-postings', methods=['POST'])
 def create_job_posting():
     job_data = request.json
     title = job_data['title']
@@ -69,7 +69,7 @@ def create_job_posting():
     return response
 
 # Update an existing job posting
-@api3.route('/job-postings/<int:job_id>', methods=['PUT'])
+@api4.route('/job-postings/<int:job_id>', methods=['PUT'])
 def update_job_posting(job_id):
     job_data = request.json
     title = job_data['title']
@@ -94,7 +94,7 @@ def update_job_posting(job_id):
     return response
 
 # Delete a job posting
-@api3.route('/job-postings/<int:job_id>', methods=['DELETE'])
+@api4.route('/job-postings/<int:job_id>', methods=['DELETE'])
 def delete_job_posting(job_id):
     query = 'DELETE FROM Job_Postings WHERE JobPostingID = %s'
     current_app.logger.info(f'DELETE /job-postings/<int:job_id> route')
