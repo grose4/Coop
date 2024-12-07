@@ -41,7 +41,7 @@ def create_app():
     app.logger.info('current_app(): registering blueprints with Flask app object.')   
     app.register_blueprint(api, url_prefix='/a')
     app.register_blueprint(api2, url_prefix='/aa')
-    app.register_blueprint(api3, url_prefix='/jp')
+    app.register_blueprint(job_postings, url_prefix='/jp')
 
 
     # Don't forget to return the app object
