@@ -4,6 +4,7 @@ from backend.db_connection import db
 from backend.user1_routes import api
 from backend.products.products_routes import products
 from backend.user2_routes import api2
+from backend.job_postings_route import job_postings
 import os
 from dotenv import load_dotenv
 
@@ -39,8 +40,9 @@ def create_app():
     # and give a url prefix to each
     app.logger.info('current_app(): registering blueprints with Flask app object.')   
     app.register_blueprint(api, url_prefix='/a')
-    app.register_blueprint(products,    url_prefix='/p')
     app.register_blueprint(api2, url_prefix='/aa')
+    app.register_blueprint(api3, url_prefix='/jp')
+
 
     # Don't forget to return the app object
     return app
