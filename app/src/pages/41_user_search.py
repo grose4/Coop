@@ -57,21 +57,38 @@ def fetch_user_data_skills(soft_skills, tech_skills):
         st.error(f"Failed to fetch  data from the API: {e}")
         return None
     
-def fetch_user_data_by_year(year):
+    
+def fetch_user_data_companies(companies):
     """
-    Fetch user data by year from the Flask API.
+    Fetch user data from the Flask API.
     Returns a Pandas DataFrame if successful, otherwise None.
     """
     try:
-        response = requests.get("http://api:4000/aaa/student/by-year", json={'year': year})
+        companies_data = {'companies' : companies}
+        response = requests.get("http://api:4000/aaa/users/by-companies", json=companies_data)
         response.raise_for_status() 
-        users = response.json()
-        user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "IndustryName", "NUCollege"])
+        users = response.json() 
+        user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "Occupation"])
         return user_data
     except requests.exceptions.RequestException as e:
-        st.error(f"Failed to fetch data from the API: {e}")
-        return None
-
+        st.error(f"Failed to fetch  data from the API: {e}")
+        return None 
+    
+def fetch_user_data_pay(paytransparency):
+    """
+    Fetch user data from the Flask API.
+    Returns a Pandas DataFrame if successful, otherwise None.
+    """
+    try:
+        pay_data = {'paytransparency' : paytransparency}
+        response = requests.get("http://api:4000/aaa/users/by-paytransparency", json=pay_data)
+        response.raise_for_status() 
+        users = response.json() 
+        user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "Occupation"])
+        return user_data
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to fetch  data from the API: {e}")
+        return None 
 
 def main():
     """
@@ -157,30 +174,45 @@ def main():
             except requests.exceptions.RequestException as e:
                 st.error(f"Failed to fetch user data from the API: {e}")
     
-    st.write('If you want to find an older student to talk to: Search by Student Year')
-    with st.form('search_user_year_form'):
-        year = st.text_input('Enter Year to Search for Students:')
 
-        # Add the submit button (which every form needs)
+    
+    st.write('If you want to find a student to talk to with companies: Search by Student Companies')
+    with st.form('search_user_companies_form'):
+        company = st.text_input('Enter Company to Search for Students:')
+
         submit_button = st.form_submit_button("Search for Users")
 
         if submit_button:
-            if not year:
-                st.error("Please enter a Year")
+            if not company:
+                st.error("Please enter a Company")
             else:
-                st.write(f"Searching for users in year: '{year}'")
-                user_data = fetch_user_data_by_year(year)
+                st.write(f"Searching for users with company: '{company}'")
+                user_data = fetch_user_data_companies(company)
                 
-                # Show user data
                 if user_data is not None and not user_data.empty:
                     st.success("Successfully fetched data from the API.")
                     st.dataframe(user_data)
                 else:
                     st.warning("No user data available for the specified year.") 
 
-    
-            
 
+    st.write('If you want to find a student to talk to about pay on co-op: Search by Student Pay Transparency')
+    with st.form('search_user_transparency_form'):
+        pay = st.text_input('Enter Value to Search for Students:')
 
+        submit_button = st.form_submit_button("Search for Users")
 
-main()
+        if submit_button:
+            if not pay:
+                st.error("Please enter a Value")
+            else:
+                st.write(f"Searching for users with pay: '{pay}'")
+                user_data = fetch_user_data_companies(pay)
+                
+                if user_data is not None and not user_data.empty:
+                    st.success("Successfully fetched data from the API.")
+                    st.dataframe(user_data)
+                else:
+                    st.warning("No user data available for the specified year.") 
+
+main() 
