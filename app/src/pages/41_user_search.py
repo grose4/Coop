@@ -65,7 +65,7 @@ def fetch_user_data_companies(companies):
     """
     try:
         companies_data = {'companies' : companies}
-        response = requests.get("http://api:4000/aaa/users/by-companies", json=companies_data)
+        response = requests.get("http://api:4000/aaa/student/by-companies", json=companies_data)
         response.raise_for_status() 
         users = response.json() 
         user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "Occupation"])
@@ -81,7 +81,7 @@ def fetch_user_data_pay(paytransparency):
     """
     try:
         pay_data = {'paytransparency' : paytransparency}
-        response = requests.get("http://api:4000/aaa/users/by-paytransparency", json=pay_data)
+        response = requests.get("http://api:4000/aaa/students/by-paytransparency", json=pay_data)
         response.raise_for_status() 
         users = response.json() 
         user_data = pd.DataFrame(users, columns=["UserID", "Name", "Bio", "Occupation"])
@@ -203,15 +203,12 @@ def main():
 
     # general view profile form
     with st.form('view_user_search_form'):
-        UserID_toview = st.number_input('UserID', min_value = 0, step=1)
         
         submit_button = st.form_submit_button("View User Profile")
         if submit_button:
             try:
                 response = requests.get("http://api:4000/aa/users/view/" + str(UserID))
                 response.raise_for_status() 
-                st.session_state['profile_view_UserID'] = UserID_toview
-                st.switch_page('pages/42_view_profile.py')
             except requests.exceptions.RequestException as e:
                 st.error(f"Failed to fetch user data from the API: {e}")
 
