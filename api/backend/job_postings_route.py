@@ -10,29 +10,27 @@ import logging
 job_postings = Blueprint('job_postings', __name__)
 
 # Retrieve all job postings with filters
-@job_postings_bp.route('/job-postings', methods=['GET'])
+@job_postings.route('/job-postings', methods=['GET'])
 def get_all_job_postings():
-    filters = request.json
-    location = filters.get('location', '%')
-    skills = filters.get('skills', '%')
-    deadline = filters.get('deadline', '%')
-
-    query = f'''
+    """
+    Fetch all job postings from the database. No filters required.
+    """
+    query = '''
     SELECT JobID, Title, Description, Location, Skills, Deadline, Salary
     FROM Job_Postings
-    WHERE Location LIKE %s AND Skills LIKE %s AND Deadline <= %s
     '''
     current_app.logger.info('GET /job-postings route')
     cursor = db.get_db().cursor()
-    cursor.execute(query, (location, skills, deadline))
-    
+    cursor.execute(query)  # No parameters since no filters are applied
+
     the_data = cursor.fetchall()
     response = make_response(jsonify(the_data))
     response.status_code = 200
     return response
 
+
 # Retrieve specific job posting by ID
-@job_postings_bp.route('/job-postings/<int:job_id>', methods=['GET'])
+@job_postings.route('/job-postings/<int:job_id>', methods=['GET'])
 def get_job_posting(job_id):
     query = f'''
     SELECT JobID, Title, Description, Location, Skills, Deadline, Salary
@@ -49,7 +47,7 @@ def get_job_posting(job_id):
     return response
 
 # Create a new job posting
-@job_postings_bp.route('/job-postings', methods=['POST'])
+@job_postings.route('/job-postings', methods=['POST'])
 def create_job_posting():
     job_data = request.json
     title = job_data['title']
@@ -73,7 +71,7 @@ def create_job_posting():
     return response
 
 # Update an existing job posting
-@job_postings_bp.route('/job-postings/<int:job_id>', methods=['PUT'])
+@job_postings.route('/job-postings/<int:job_id>', methods=['PUT'])
 def update_job_posting(job_id):
     job_data = request.json
     title = job_data.get('title')
@@ -98,7 +96,7 @@ def update_job_posting(job_id):
     return response
 
 # Delete a job posting
-@job_postings_bp.route('/job-postings/<int:job_id>', methods=['DELETE'])
+@job_postings.route('/job-postings/<int:job_id>', methods=['DELETE'])
 def delete_job_posting(job_id):
     query = 'DELETE FROM Job_Postings WHERE JobID = %s'
     current_app.logger.info(f'DELETE /job-postings/<int:job_id> route')
