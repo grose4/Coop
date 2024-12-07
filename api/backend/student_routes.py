@@ -74,3 +74,28 @@ def add_new_student():
     response = make_response("Successfully created student customizations!")
     response.status_code = 200
     return response 
+
+#search for an older student by year 
+@api3.route('/student/by-year', methods=['GET'])
+def get_users_by_industry():
+    
+    year = request.json['industry']
+
+    query = f'''
+    SELECT s.UserID, u.Name, u.Bio, i.Name AS IndustryName, i.NUCollege
+    FROM Users u
+	JOIN Student s ON u.UserID = s.StuID
+    WHERE s.Year LIKE '{year}';
+    '''
+
+    current_app.logger.info('GET /student/by-year route')
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    
+    theData = cursor.fetchall()
+
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    current_app.logger.info(the_response)
+
+    return the_response 
