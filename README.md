@@ -47,4 +47,6 @@ In most applications, when a user logs in, they assume a particular role.  For i
 
 The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords).  
 
+**Our Youtube Video Tutorial**
+https://youtu.be/a4gwYvoPvU8
 
