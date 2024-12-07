@@ -4,7 +4,8 @@ from backend.db_connection import db
 from backend.user1_routes import api
 from backend.products.products_routes import products
 from backend.user2_routes import api2
-from backend.job_postings_route import api3
+from backend.student_routes import api3
+from backend.job_postings_route import api4
 import os
 from dotenv import load_dotenv
 

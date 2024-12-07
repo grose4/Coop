@@ -63,5 +63,4 @@ def main():
             else:
                 st.error(f"Failed to delete job posting {delete_id}.")
 
-if __name__ == "__main__":
-    main()
+main()
