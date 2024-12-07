@@ -52,8 +52,8 @@ if st.button("Act as James, a student currently looking for a coop",
     # we add the first name of the user (so it can be displayed on 
     # subsequent pages). 
     st.session_state['first_name'] = 'James'
-    st.session_state['StuID'] = 16
-    st.session_state['profile_view_StuID'] = 16 
+    st.session_state['StuID'] = 8
+    st.session_state['profile_view_StuID'] = 8
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
     logger.info("Logging in as student looking for a co-op")

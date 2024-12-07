@@ -31,14 +31,20 @@ def update_stu(stu_id):
 
 
 # Delete a user 
-@api3.route('/student', methods=['DELETE'])
-def delete_user():
-    stu_id = request.args.get('id')
+@api3.route('/student/delete/<stu_id>', methods=['DELETE'])
+def delete_user(stu_id):
+    current_app.logger.info(f'Deleting user with ID: {stu_id}')
+
     query = 'DELETE FROM Student WHERE StuID = %s'
     cursor = db.get_db().cursor()
     cursor.execute(query, (stu_id,))
+    
     db.get_db().commit()
-    return 'User deleted successfully!' 
+
+    response = make_response("User successfully deleted!")
+    response.status_code = 200
+    
+    return response 
 
 @api3.route('/student/create', methods=['POST'])
 def add_new_student():
