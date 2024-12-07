@@ -7,15 +7,27 @@ SideBarLinks()
 
 BASE_API_URL = "http://api:4000/jp"
 
-def fetch_all_job_postings():
+def fetch_all_job_postings(location="%", skills="%", deadline="%"):
     try:
-        response = requests.get(f"{BASE_API_URL}/job-postings")
+        filters = {
+            "location": location,
+            "skills": skills,
+            "deadline": deadline,
+        }
+        response = requests.get(
+            f"{BASE_API_URL}/job-postings",
+            json=filters
+        )
         response.raise_for_status()
         postings = response.json()
-        return pd.DataFrame(postings, columns=["JobID", "Title", "Description", "Location", "Skills", "Deadline", "Salary"])
+        return pd.DataFrame(
+            postings,
+            columns=["JobID", "Title", "Description", "Location", "Skills", "Deadline", "Salary"],
+        )
     except requests.exceptions.RequestException as e:
         st.error(f"Failed to fetch job postings: {e}")
         return None
+
 
 def fetch_job_posting_by_id(job_id):
     """
@@ -31,21 +43,24 @@ def fetch_job_posting_by_id(job_id):
 
 def main():
     st.title("View Job Postings")
+    st.subheader("Filter Job Postings")
+
+    # Filters
+    location = st.text_input("Location (Leave blank for all):", value="%")
+    skills = st.text_input("Skills (Leave blank for all):", value="%")
+    deadline = st.date_input("Deadline (Leave blank for all):")
+
+    # Fetch and display job postings
     st.subheader("All Job Postings")
-    job_data = fetch_all_job_postings()
-    if job_data is not None and not job_data.empty:
-        st.dataframe(job_data)
-    else:
-        st.warning("No job postings available.")
-
-    st.subheader("Search Job Posting by ID")
-    job_id = st.number_input("Enter Job ID:", min_value=1, step=1)
-    if st.button("Search"):
-        job_posting = fetch_job_posting_by_id(job_id)
-        if job_posting:
-            st.json(job_posting)
+    if st.button("Apply Filters"):
+        job_data = fetch_all_job_postings(
+            location=location if location else "%",
+            skills=skills if skills else "%",
+            deadline=str(deadline) if deadline else "%",
+        )
+        if job_data is not None and not job_data.empty:
+            st.dataframe(job_data)
         else:
-            st.warning(f"No job posting found with ID {job_id}.")
+            st.warning("No job postings available.")
 
-if __name__ == "__main__":
-    main()
+main()
