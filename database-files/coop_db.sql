@@ -129,7 +129,7 @@ CREATE TABLE Interactions (
     JobPostingID INT,
     Resume VARCHAR(100),
     FOREIGN KEY (FromUserID) REFERENCES Users(UserID) ON DELETE CASCADE,
-    FOREIGN KEY (JobPostingID) REFERENCES Job_Postings(JobPostingID) 
+    FOREIGN KEY (JobPostingID) REFERENCES Job_Postings(JobPostingID) ON DELETE CASCADE
 );
 
 -- Create Contact table

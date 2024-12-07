@@ -106,12 +106,28 @@ def update_job_posting(job_id):
 # Delete a job posting
 @api4.route('/job-postings/<int:job_id>', methods=['DELETE'])
 def delete_job_posting(job_id):
-    query = 'DELETE FROM Job_Postings WHERE JobPostingID = %s'
-    current_app.logger.info(f'DELETE /job-postings/<int:job_id> route')
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (job_id,))
-    db.get_db().commit()
+    try:
+        # Log the route
+        current_app.logger.info(f"DELETE /job-postings/{job_id} route")
 
-    response = make_response("Job posting successfully deleted!")
-    response.status_code = 200
-    return response
+        # Check if the job posting exists
+        check_query = 'SELECT 1 FROM Job_Postings WHERE JobPostingID = %s'
+        cursor = db.get_db().cursor()
+        cursor.execute(check_query, (job_id,))
+        exists = cursor.fetchone()
+
+        if not exists:
+            current_app.logger.warning(f"Job posting with ID {job_id} not found.")
+            return jsonify({"error": f"Job posting with ID {job_id} not found."}), 404
+
+        # Proceed with deletion
+        delete_query = 'DELETE FROM Job_Postings WHERE JobPostingID = %s'
+        cursor.execute(delete_query, (job_id,))
+        db.get_db().commit()
+
+        current_app.logger.info(f"Job posting {job_id} successfully deleted.")
+        return jsonify({"message": f"Job posting {job_id} successfully deleted."}), 200
+
+    except Exception as e:
+        current_app.logger.error(f"Error deleting job posting: {e}", exc_info=True)
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
