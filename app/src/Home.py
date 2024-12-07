@@ -69,13 +69,14 @@ if st.button('Act as Mordecai, a student currently on co-op',
     st.session_state['profile_view_UserID'] = 17
     st.switch_page('pages/40_student_home.py')
 
-if st.button('Act as an employer', 
-            type = 'primary', 
-            use_container_width=True):
+if st.button('Act as Eesha, an employer', 
+             type='primary', 
+             use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'employer'
-    st.session_state['first_name'] = 'Employer'
-    st.switch_page('pages/20_Admin_Home.py')
+    st.session_state['first_name'] = 'Eesha'  
+    st.session_state['EmployerID'] = 25  
+    st.switch_page('pages/50_Employer_Home.py') 
 
 if st.button('Act as Jacob, a Systems Adminstrator', 
             type = 'primary', 
