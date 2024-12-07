@@ -125,6 +125,9 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'student':
             student_on_coop_nav()
 
+        if st.session_state["role"] == "employer":
+            employer_nav()
+
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
 
