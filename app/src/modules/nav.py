@@ -91,6 +91,7 @@ def employer_nav():
     st.sidebar.page_link("pages/53_Manage_Job_Post.py", label="Manage Job Posts", icon="⚙️")
 
 
+
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
     """
