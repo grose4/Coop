@@ -416,7 +416,7 @@ insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, Comp
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('velit nec nisi vulputate nonummy', 2.36, 'World War II', true, 16);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values (null, null, 'vRanger', true, 17);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('odio consequat varius integer ac', 2.73, 'ESB', false, 18);
-insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('tellus', null, 'Short Sales', false, 19);
+insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('SQL, Python', null, 'Communication', false, 19);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('nec euismod scelerisque quam', 1.33, 'Teacher Training', false, 20);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('lacinia aenean', 1.86, 'GSA Contracting', false, 21);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('amet sem', 2.43, null, null, 22);
@@ -437,7 +437,7 @@ insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, Comp
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('in hac habitasse platea dictumst', null, 'R&amp;TTE', null, 37);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('semper', null, 'Procurement Outsourcing', null, 38);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('felis sed interdum venenatis turpis', 2.05, 'Runway', null, 39);
-insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values (null, null, 'Ion', null, 40);
+insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('SQL', null, 'Communication', null, 40);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('sed ante vivamus', 1.66, 'OJEU', null, 41);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('vivamus tortor duis', 2.17, 'JMP', null, 42);
 insert into Employer (TechnicalSkills, GPARequired, SoftSkills, PayOffered, CompanyID) values ('cras', 3.53, null, null, 43);
