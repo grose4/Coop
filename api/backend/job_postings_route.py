@@ -12,24 +12,22 @@ job_postings = Blueprint('job_postings', __name__)
 # Retrieve all job postings with filters
 @job_postings.route('/job-postings', methods=['GET'])
 def get_all_job_postings():
-    filters = request.json
-    location = filters.get('location', '%')
-    skills = filters.get('skills', '%')
-    deadline = filters.get('deadline', '%')
-
-    query = f'''
+    """
+    Fetch all job postings from the database. No filters required.
+    """
+    query = '''
     SELECT JobID, Title, Description, Location, Skills, Deadline, Salary
     FROM Job_Postings
-    WHERE Location LIKE %s AND Skills LIKE %s AND Deadline <= %s
     '''
     current_app.logger.info('GET /job-postings route')
     cursor = db.get_db().cursor()
-    cursor.execute(query, (location, skills, deadline))
-    
+    cursor.execute(query)  # No parameters since no filters are applied
+
     the_data = cursor.fetchall()
     response = make_response(jsonify(the_data))
     response.status_code = 200
     return response
+
 
 # Retrieve specific job posting by ID
 @job_postings.route('/job-postings/<int:job_id>', methods=['GET'])
