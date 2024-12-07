@@ -7,7 +7,7 @@ from flask import make_response
 from backend.db_connection import db
 import logging
 
-job_postings_bp = Blueprint('job_postings', __name__)
+job_postings = Blueprint('job_postings', __name__)
 
 # Retrieve all job postings with filters
 @job_postings_bp.route('/job-postings', methods=['GET'])
