@@ -75,27 +75,50 @@ def add_new_student():
     response.status_code = 200
     return response 
 
-#search for an older student by year 
-@api3.route('/student/by-year', methods=['GET'])
-def get_users_by_industry():
+
+@api3.route('/student/by-paytransparency', methods=['GET'])
+def get_students_by_paytransparency():
     
-    year = request.json['industry']
+    student_info = request.json
+    pay = str(student_info['paytransparency'])
 
     query = f'''
-    SELECT s.UserID, u.Name, u.Bio, i.Name AS IndustryName, i.NUCollege
-    FROM Users u
-	JOIN Student s ON u.UserID = s.StuID
-    WHERE s.Year LIKE '{year}';
+    SELECT u.UserID, u.Name, u.Bio, u.Occupation
+    FROM Student s
+	JOIN Users u ON s.StuID = u.UserID
+    WHERE s.PayTransparency LIKE '{pay}' AND u.UserID IS NOT NULL;
     '''
 
-    current_app.logger.info('GET /student/by-year route')
+    current_app.logger.info('GET /users/by-paytransparency route')
     cursor = db.get_db().cursor()
     cursor.execute(query)
     
-    theData = cursor.fetchall()
-
+    theData = cursor.fetchall() 
+    
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
-    current_app.logger.info(the_response)
+    return the_response
 
-    return the_response 
+
+@api3.route('/student/by-companies', methods=['GET'])
+def get_students_by_companies():
+    
+    student_info = request.json
+    companies = str(student_info['companies'])
+
+    query = f'''
+    SELECT u.UserID, u.Name, u.Bio, u.Occupation
+    FROM Student s
+	JOIN Users u ON s.StuID = u.UserID
+    WHERE s.Companies LIKE '{companies}' AND u.UserID IS NOT NULL;
+    '''
+
+    current_app.logger.info('GET /users/by-companies route')
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    
+    theData = cursor.fetchall() 
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
