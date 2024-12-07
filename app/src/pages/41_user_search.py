@@ -203,17 +203,11 @@ def main():
 
     # general view profile form
     with st.form('view_user_search_form'):
-<<<<<<< HEAD
-        UserID_toview = st.number_input('UserID', min_value = 0, step=1)
-
-        
-=======
-        UserID = int(st.number_input("UserID", step=1))
->>>>>>> accb7069e8e10540e194b35c3666c4c83b6060c4
+        UserID_toview = int(st.number_input("UserID", step=1))
         submit_button = st.form_submit_button("View User Profile")
         if submit_button:
             try:
-                response = requests.get("http://api:4000/aa/users/view/" + str(UserID))
+                response = requests.get("http://api:4000/aa/users/view/" + str(UserID_toview))
                 response.raise_for_status()
                 st.session_state['profile_view_UserID'] = UserID_toview
                 st.switch_page('pages/42_view_profile.py') 
