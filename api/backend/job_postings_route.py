@@ -96,7 +96,7 @@ def update_job_posting(job_id):
 # Delete a job posting
 @api3.route('/job-postings/<int:job_id>', methods=['DELETE'])
 def delete_job_posting(job_id):
-    query = 'DELETE FROM Job_Postings WHERE JobID = %s'
+    query = 'DELETE FROM Job_Postings WHERE JobPostingID = %s'
     current_app.logger.info(f'DELETE /job-postings/<int:job_id> route')
     cursor = db.get_db().cursor()
     cursor.execute(query, (job_id,))
