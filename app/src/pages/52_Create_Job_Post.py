@@ -4,7 +4,7 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-BASE_API_URL = "http://api:4000/aa"
+BASE_API_URL = "http://api:4000/jp"
 
 def post_job_to_api(job_data):
     try:
