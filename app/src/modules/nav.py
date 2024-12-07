@@ -83,6 +83,13 @@ def AdminPageNav():
         "pages/27_Post_Notifications.py", label = "Post Notification", icon="🗺️"
     )
 
+### Employer-specific nav bar links:
+def employer_nav():
+    st.sidebar.page_link("pages/50_Employer_Home.py", label="Employer Home", icon="🏢")
+    st.sidebar.page_link("pages/51_View_Job_Post.py", label="View Job Posts", icon="🔍")
+    st.sidebar.page_link("pages/52_Create_Job_Post.py", label="Create Job Post", icon="📝")
+    st.sidebar.page_link("pages/53_Manage_Job_Post.py", label="Manage Job Posts", icon="⚙️")
+
 
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
