@@ -45,7 +45,7 @@ def get_job_posting(job_id):
     return response
 
 # Create a new job posting
-@api3.route('/job-postings', methods=['POST'])
+@api4.route('/job-postings', methods=['POST'])
 def create_job_posting():
     job_data = request.json
     title = job_data['title']
