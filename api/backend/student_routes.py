@@ -7,7 +7,7 @@ from backend.db_connection import db
 import logging
 
 # Create a new Blueprint object
-api3 = Blueprint('api', __name__) 
+api3 = Blueprint('api_3', __name__) 
 
 import sys
 
