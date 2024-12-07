@@ -203,7 +203,7 @@ def main():
 
     # general view profile form
     with st.form('view_user_search_form'):
-        
+        UserID = int(st.number_input("UserID", step=1))
         submit_button = st.form_submit_button("View User Profile")
         if submit_button:
             try:
