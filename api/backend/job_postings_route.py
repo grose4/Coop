@@ -1,6 +1,7 @@
 from flask import Flask 
 from flask import Blueprint
 from flask import request
+from flask import current_app
 from flask import jsonify
 from flask import make_response
 from backend.db_connection import db
