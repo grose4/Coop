@@ -55,10 +55,10 @@ def employer_nav():
     st.sidebar.page_link("pages/53_Manage_Job_Post.py", label="Manage Job Posts", icon="⚙️")
 
 def cooper_nav():
-    st.sidebar.page_link("pages/newcooper_home.py", label='Student on Co-op Home', icon = '🖥️')
-    st.sidebar.page_link("pages/student_profile.py", label='User Search', icon = '🔍') 
-    st.sidebar.page_link("pages/student_account.py", label='View Profile', icon = '👤')
-    st.sidebar.page_link("pages/create_cooper.py", label='Create New Account', icon = '📝') 
+    st.sidebar.page_link("pages/61_Newcooper_Home.py", label='Student on Co-op Home', icon = '🖥️')
+    st.sidebar.page_link("pages/64_student_profile.py", label='User Search', icon = '🔍') 
+    st.sidebar.page_link("pages/63_student_account.py", label='View Profile', icon = '👤')
+    st.sidebar.page_link("pages/60_Create_Cooper.py", label='Create New Account', icon = '📝') 
 
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):

@@ -16,7 +16,7 @@ st.title("Are you New to Coop? Create your Customizations!")
 if st.button('Create New Cooper Customizations',  
             type='primary',
             use_container_width=True):
-    st.switch_page('pages/create_cooper.py')  
+    st.switch_page('pages/60_create_cooper.py')  
 
 
 #update info
