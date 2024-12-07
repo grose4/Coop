@@ -44,29 +44,52 @@ def get_job_posting(job_id):
     response.status_code = 200
     return response
 
-# Create a new job posting
 @api3.route('/job-postings', methods=['POST'])
 def create_job_posting():
-    job_data = request.json
-    title = job_data['title']
-    description = job_data['description']
-    location = job_data['location']
-    skills = job_data['skills']
-    deadline = job_data['deadline']
-    salary = job_data['salary']
+    try:
+        # Log the incoming payload for debugging
+        job_data = request.json
+        current_app.logger.info(f"Received payload: {job_data}")
 
-    query = '''
-    INSERT INTO Job_Postings (Title, Description, Location, Skills, Deadline, Salary)
-    VALUES (%s, %s, %s, %s, %s, %s)
-    '''
-    current_app.logger.info('POST /job-postings route')
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (title, description, location, skills, deadline, salary))
-    db.get_db().commit()
-    
-    response = make_response("Job posting successfully created!")
-    response.status_code = 201
-    return response
+        # Extract fields from the payload
+        Text = job_data.get('Text')
+        SalaryRange = job_data.get('SalaryRange')
+        Title = job_data.get('Title')
+        GPA_Range = job_data.get('GPA_Range')
+        Location = job_data.get('Location')
+        Deadline = job_data.get('Deadline')
+        Experience_Level = job_data.get('Experience_Level')
+
+        # Validate all required fields
+        required_fields = ['Text', 'SalaryRange', 'Title', 'GPA_Range', 'Location', 'Deadline', 'Experience_Level']
+        for field in required_fields:
+            if not job_data.get(field):
+                current_app.logger.error(f"Missing key in request payload: '{field}'")
+                return jsonify({"error": f"Missing required field: '{field}'"}), 400
+
+        # SQL query to insert into the database
+        query = '''
+        INSERT INTO Job_Postings (Text, SalaryRange, Title, GPA_Range, Location, Deadline, Experience_Level)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        '''
+        current_app.logger.info('POST /job-postings route')
+
+        # Execute the query
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (Text, SalaryRange, Title, GPA_Range, Location, Deadline, Experience_Level))
+        db.get_db().commit()
+
+        # Return success response
+        response = make_response("Job posting successfully created!")
+        response.status_code = 201
+        return response
+
+    except Exception as e:
+        # Log unexpected errors
+        current_app.logger.error(f"Error creating job posting: {e}", exc_info=True)
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
+
+
 
 # Update an existing job posting
 @api3.route('/job-postings/<int:job_id>', methods=['PUT'])

@@ -7,8 +7,11 @@ SideBarLinks()
 BASE_JP_API_URL = "http://api:4000/jp"
 
 def update_job_posting(job_id, field, value):
+    """
+    Updates a specific field of a job posting.
+    """
     try:
-        payload = {field: value}
+        payload = {"field": field, "value": value}
         response = requests.put(f"{BASE_JP_API_URL}/job-postings/{job_id}", json=payload)
         response.raise_for_status()
         return True
@@ -17,6 +20,9 @@ def update_job_posting(job_id, field, value):
         return False
 
 def delete_job_posting(job_id):
+    """
+    Deletes a specific job posting by ID.
+    """
     try:
         response = requests.delete(f"{BASE_JP_API_URL}/job-postings/{job_id}")
         response.raise_for_status()
@@ -27,9 +33,14 @@ def delete_job_posting(job_id):
 
 def main():
     st.title("Manage Job Postings")
+
+    # Update Job Posting Section
     st.subheader("Update a Job Posting")
     job_id = st.number_input("Enter Job ID to Update:", min_value=1, step=1)
-    field = st.selectbox("Field to Update:", ["Title", "Description", "Location", "Skills", "Salary", "Deadline"])
+    field = st.selectbox(
+        "Field to Update:", 
+        ["Text", "SalaryRange", "Title", "GPA_Range", "Location", "Deadline", "Experience_Level"]
+    )
     value = st.text_input(f"Enter New Value for {field}:", "")
     if st.button("Update Job"):
         if not all([job_id, field, value]):
@@ -40,6 +51,7 @@ def main():
             else:
                 st.error(f"Failed to update job posting {job_id}.")
 
+    # Delete Job Posting Section
     st.subheader("Delete a Job Posting")
     delete_id = st.number_input("Enter Job ID to Delete:", min_value=1, step=1)
     if st.button("Delete Job Posting"):
