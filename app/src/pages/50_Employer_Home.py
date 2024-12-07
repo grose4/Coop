@@ -1,21 +1,30 @@
+import logging
+logger = logging.getLogger(__name__)
+
 import streamlit as st
 from modules.nav import SideBarLinks
 
+st.set_page_config(layout='wide')
 SideBarLinks()
 
-def main():
-    st.title("Employer Dashboard")
-    st.write(f"Welcome, {st.session_state.get('first_name', 'Employer')}!")
-    st.write("Manage your job postings using the options below:")
+st.title('Employer Home')
 
-    if st.button("View Job Postings"):
-        st.switch_page("51_View_Job_Post")
-    if st.button("Create Job Posting"):
-        st.switch_page("52_Create_Job_Post")
-    if st.button("Manage Job Postings"):
-        st.switch_page("53_Manage_Job_Post")
+if st.button('View Job Posts', 
+             type='primary', 
+             use_container_width=True):
+    st.switch_page('pages/51_View_Job_Post.py')
 
-if __name__ == "__main__":
-    main()
+if st.button('Create Job Post', 
+             type='primary', 
+             use_container_width=True):
+    st.switch_page('pages/52_Create_Job_Post.py')
 
+if st.button('Update Job Post', 
+             type='primary', 
+             use_container_width=True):
+    st.switch_page('pages/53_Manage_Job_Post.py')
 
+if st.button('Delete Job Post', 
+             type='primary', 
+             use_container_width=True):
+    st.switch_page('pages/53_Manage_Job_Post.py')
