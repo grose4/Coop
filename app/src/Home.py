@@ -48,7 +48,7 @@ if st.button("Act as James, a student currently looking for a coop",
     # when user clicks the button, they are now considered authenticated
     st.session_state['authenticated'] = True
     # we set the role of the current user
-    st.session_state['role'] = 'student'
+    st.session_state['role'] = 'cooper'
     # we add the first name of the user (so it can be displayed on 
     # subsequent pages). 
     st.session_state['first_name'] = 'James'
