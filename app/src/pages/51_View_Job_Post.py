@@ -51,5 +51,4 @@ def main():
         else:
             st.warning(f"No job posting found with ID {job_id}.")
 
-if __name__ == "__main__":
-    main()
+main()
