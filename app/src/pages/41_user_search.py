@@ -203,9 +203,13 @@ def main():
 
     # general view profile form
     with st.form('view_user_search_form'):
+<<<<<<< HEAD
         UserID_toview = st.number_input('UserID', min_value = 0, step=1)
 
         
+=======
+        UserID = int(st.number_input("UserID", step=1))
+>>>>>>> accb7069e8e10540e194b35c3666c4c83b6060c4
         submit_button = st.form_submit_button("View User Profile")
         if submit_button:
             try:
