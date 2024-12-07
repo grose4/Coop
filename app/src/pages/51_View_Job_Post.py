@@ -5,11 +5,11 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-BASE_API_URL = "http://api:4000/jp"
+BASE_JP_API_URL = "http://api:4000/jp"
 
 def fetch_all_job_postings():
     try:
-        response = requests.get(f"{BASE_API_URL}/job-postings")
+        response = requests.get(f"{BASE_JP_API_URL}/job-postings")
         response.raise_for_status()
         postings = response.json()
         return pd.DataFrame(postings, columns=["JobID", "Title", "Description", "Location", "Skills", "Deadline", "Salary"])
@@ -22,7 +22,7 @@ def fetch_job_posting_by_id(job_id):
     Fetch a specific job posting by ID from the API.
     """
     try:
-        response = requests.get(f"{BASE_API_URL}/job-postings/{job_id}")
+        response = requests.get(f"{BASE_JP_API_URL}/job-postings/{job_id}")
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:

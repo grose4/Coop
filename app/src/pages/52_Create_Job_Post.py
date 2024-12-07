@@ -4,11 +4,11 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-BASE_API_URL = "http://api:4000/jp"
+BASE_JP_API_URL = "http://api:4000/jp"
 
 def post_job_to_api(job_data):
     try:
-        response = requests.post(f"{BASE_API_URL}/job-postings", json=job_data)
+        response = requests.post(f"{BASE_JP_API_URL}/job-postings", json=job_data)
         response.raise_for_status()
         return True
     except requests.exceptions.RequestException as e:
